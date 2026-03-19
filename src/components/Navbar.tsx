@@ -912,13 +912,8 @@ const Navbar = (_props: NavbarProps) => {
     console.log("Logging out...");
     closeMobileMenu();
 
-    // Redirect to login page
-    navigate("/login");
-
-    // Force a small delay and refresh to clear all state
-    setTimeout(() => {
-      window.location.reload();
-    }, 100);
+    // Redirect to public home page
+    navigate("/home", { replace: true });
   };
 
   const handleDashboardClick = () => {

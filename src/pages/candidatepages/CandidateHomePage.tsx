@@ -20,13 +20,8 @@ const CandidateHomePage = () => {
     localStorage.removeItem("profilePictureBase64");
     localStorage.removeItem("profilePictureFileName");
 
-    // Redirect to login page
-    navigate("/login");
-
-    // Force page reload to clear all state
-    setTimeout(() => {
-      window.location.reload();
-    }, 100);
+    // Redirect to public home page
+    navigate("/home", { replace: true });
   };
 
   return (
