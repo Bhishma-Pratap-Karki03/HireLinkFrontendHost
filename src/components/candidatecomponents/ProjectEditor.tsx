@@ -5,7 +5,6 @@ import "../../styles/ProjectEditor.css";
 import closeIcon from "../../images/Candidate Profile Page Images/corss icon.png";
 import trashIcon from "../../images/Candidate Profile Page Images/trash.png";
 import uploadIcon from "../../images/Candidate Profile Page Images/upload-icon.svg";
-import editIcon from "../../images/Candidate Profile Page Images/261_2045.svg";
 
 // Define the Project interface
 export interface Project {
@@ -208,8 +207,6 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
         "image/webp",
         "image/gif",
       ];
-      const allowedExtensions = [".jpg", ".jpeg", ".png", ".webp", ".gif"];
-
       if (!allowedTypes.includes(file.type)) {
         setError("Only image files are allowed (JPG, JPEG, PNG, WEBP, GIF)");
         return;

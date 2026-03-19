@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -14,8 +14,6 @@ import heroIcon2 from "../images/Employers Page Images/8_209.svg";
 
 // Job list icons (paths reserved in Job List Page Images)
 import locationIcon from "../images/Employers Page Images/location-icond.svg";
-import jobTypeIcon from "../images/Job List Page Images/job-type.svg";
-import workModeIcon from "../images/Job List Page Images/work-mode.svg";
 
 // Interview stage icons (placeholders in Job List Page Images)
 import stageIcon1 from "../images/Job List Page Images/interview-stage-1.png";
@@ -716,7 +714,7 @@ const JobDetailsPage = () => {
                           <div>
                             <h3>{assessment.title}</h3>
                             <p className="job-details-muted">
-                              {formatDifficulty(assessment.difficulty)} �{" "}
+                              {formatDifficulty(assessment.difficulty)} ·{" "}
                               {assessment.type.toUpperCase()}
                             </p>
                           </div>
@@ -991,6 +989,7 @@ const JobDetailsPage = () => {
 };
 
 export default JobDetailsPage;
+
 
 
 

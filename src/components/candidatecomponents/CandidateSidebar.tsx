@@ -4,7 +4,6 @@ import "../../styles/CandidateSidebar.css";
 
 // Import images
 import logoImg from "../../images/Register Page Images/Logo.png";
-import avatarBg from "../../images/Candidate Profile Page Images/261_1901.svg";
 import dashboardIcon from "../../images/Candidate Profile Page Images/261_1905.svg";
 import profileIcon from "../../images/Candidate Profile Page Images/My Profile.png";
 import resumeIcon from "../../images/Candidate Profile Page Images/261_1918.svg";

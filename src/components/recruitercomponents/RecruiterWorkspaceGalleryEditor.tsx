@@ -32,7 +32,6 @@ const RecruiterWorkspaceGalleryEditor: React.FC<
   const [images, setImages] = useState<WorkspaceImage[]>(currentImages || []);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [deletedImageIds, setDeletedImageIds] = useState<string[]>([]);
-  const [isDragging, setIsDragging] = useState(false);
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);

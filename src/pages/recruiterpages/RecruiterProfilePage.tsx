@@ -1,4 +1,4 @@
-import PortalFooter from "../../components/PortalFooter";
+﻿import PortalFooter from "../../components/PortalFooter";
 // RecruiterProfilePage.tsx - Updated with dynamic reviews management
 import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,6 @@ import RecruiterAboutCompanyEditor from "../../components/recruitercomponents/Re
 import RecruiterWorkspaceGalleryEditor from "../../components/recruitercomponents/RecruiterWorkspaceGalleryEditor";
 
 // Import images
-import uploadIcon from "../../images/Recruiter Profile Page Images/6_10.svg";
 import cameraIcon from "../../images/Recruiter Profile Page Images/cameraIcon.svg";
 import phoneIcon from "../../images/Recruiter Profile Page Images/phoneIcon.svg";
 import infoIcon from "../../images/Recruiter Profile Page Images/6_27.svg";
@@ -33,15 +32,10 @@ import editIcon4 from "../../images/Recruiter Profile Page Images/6_353.svg";
 import uploadGalleryIcon from "../../images/Recruiter Profile Page Images/6_274.svg";
 import starIcon from "../../images/Recruiter Profile Page Images/6_55.svg";
 import starFilledIcon from "../../images/Recruiter Profile Page Images/6_55.svg";
-import avatar1 from "../../images/Recruiter Profile Page Images/6_67.svg";
-import avatar2 from "../../images/Recruiter Profile Page Images/6_104.svg";
-import avatar3 from "../../images/Recruiter Profile Page Images/6_141.svg";
 import hideIcon from "../../images/Recruiter Profile Page Images/6_75.svg";
 import deleteIcon from "../../images/Recruiter Profile Page Images/6_80.svg";
 import showIcon from "../../images/Recruiter Profile Page Images/6_112.svg";
 import loadMoreIcon from "../../images/Recruiter Profile Page Images/6_161.svg";
-import gallery1 from "../../images/Recruiter Profile Page Images/beb07c254bdd25265ad0c1b1f8d049b71468be1d.png";
-import gallery2 from "../../images/Recruiter Profile Page Images/b5b1cb7e9c2196c07a8a59ba8e3c3665a7c99eb2.png";
 import defaultAvatar from "../../images/Register Page Images/Default Profile.webp";
 
 interface WorkspaceImage {
@@ -552,10 +546,6 @@ const RecruiterProfilePage: React.FC = () => {
     return url.replace(/^(https?:\/\/)?(www\.)?/, "");
   };
 
-  const handleEditPersonalInfo = () => {
-    setIsPersonalInfoEditorOpen(true);
-  };
-
   const handleSaveAboutCompany = async (aboutText: string): Promise<void> => {
     const token = localStorage.getItem("authToken");
 
@@ -936,7 +926,7 @@ const RecruiterProfilePage: React.FC = () => {
                   <p>
                     This logo will be displayed on your company profile, job
                     posts and search results. Use a high-quality square image
-                    (400×400px recommended)
+                    (400Ã—400px recommended)
                   </p>
                   <div className="recruiter-profile-logo-actions">
                     <button
@@ -967,7 +957,7 @@ const RecruiterProfilePage: React.FC = () => {
                   </div>
                   <div className="recruiter-profile-logo-hint">
                     <img src={infoIcon} alt="Info" />
-                    <span>Recommended: 400×400px (JPG, PNG). Max Size 2MB</span>
+                    <span>Recommended: 400Ã—400px (JPG, PNG). Max Size 2MB</span>
                   </div>
                 </div>
               </div>
@@ -1483,5 +1473,6 @@ const RecruiterProfilePage: React.FC = () => {
 };
 
 export default RecruiterProfilePage;
+
 
 

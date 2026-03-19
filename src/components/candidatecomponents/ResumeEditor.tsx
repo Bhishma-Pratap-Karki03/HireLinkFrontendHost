@@ -5,7 +5,6 @@ import "../../styles/ResumeEditor.css";
 import closeIcon from "../../images/Candidate Profile Page Images/corss icon.png";
 import trashIcon from "../../images/Candidate Profile Page Images/trash.png";
 import fileIcon from "../../images/Candidate Profile Page Images/Resume-icon.png";
-import editIcon from "../../images/Candidate Profile Page Images/261_2045.svg";
 import uploadIcon from "../../images/Candidate Profile Page Images/upload-icon.svg";
 
 interface ResumeEditorProps {

@@ -1,4 +1,4 @@
-import PortalFooter from "../../components/PortalFooter";
+﻿import PortalFooter from "../../components/PortalFooter";
 // Current imports
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
@@ -29,11 +29,9 @@ import addIcon from "../../images/Candidate Profile Page Images/264_2241.svg";
 import addIcon2 from "../../images/Candidate Profile Page Images/264_2253.svg";
 import addIcon3 from "../../images/Candidate Profile Page Images/264_2262.svg";
 import addIcon4 from "../../images/Candidate Profile Page Images/264_2271.svg";
-import editIcon2 from "../../images/Candidate Profile Page Images/264_2282.svg";
 import addIcon5 from "../../images/Candidate Profile Page Images/264_2364.svg";
 import arrowIcon from "../../images/Candidate Profile Page Images/267_1325.svg";
 import addIcon6 from "../../images/Candidate Profile Page Images/267_1296.svg";
-import editIcon4 from "../../images/Candidate Profile Page Images/267_1301.svg";
 import projectImage from "../../images/Candidate Profile Page Images/493a4569683a62d53e1463f47634429e10edc7cf.png";
 import starIcon from "../../images/Candidate Profile Page Images/star-icon.svg";
 import emptyStarIcon from "../../images/Candidate Profile Page Images/empty-star-icon.png";
@@ -333,12 +331,14 @@ const CandidateProfilePage = () => {
       const hasStoredSelection = Array.isArray(showcaseData?.attemptIds);
       const storedIds = hasStoredSelection ? showcaseData.attemptIds : [];
       const validStoredIds = storedIds.filter((id: any) =>
-        results.some((r) => r.id === id),
+        results.some((r: QuizResult) => r.id === id),
       );
-      const defaultIds = results.slice(0, 5).map((r) => r.id);
+      const defaultIds = results.slice(0, 5).map((r: QuizResult) => r.id);
       const idsToUse = hasStoredSelection ? validStoredIds : defaultIds;
       setVisibleQuizIds(idsToUse);
-      setQuizResults(results.filter((r) => idsToUse.includes(r.id)).slice(0, 5));
+      setQuizResults(
+        results.filter((r: QuizResult) => idsToUse.includes(r.id)).slice(0, 5),
+      );
     } catch (error) {
       console.error("Error fetching quiz results:", error);
     } finally {
@@ -1340,32 +1340,6 @@ const CandidateProfilePage = () => {
   };
 
   /**
-   * Truncate file name for display
-   * Shows shortened name with ellipsis if too long
-   */
-  const truncateFileName = (
-    fileName: string,
-    maxLength: number = 15
-  ): string => {
-    if (!fileName) return "";
-
-    if (fileName.length <= maxLength) return fileName;
-
-    const extensionIndex = fileName.lastIndexOf(".");
-    if (extensionIndex === -1) {
-      return fileName.substring(0, maxLength) + "...";
-    }
-
-    const name = fileName.substring(0, extensionIndex);
-    const extension = fileName.substring(extensionIndex);
-    const maxNameLength = maxLength - extension.length - 3;
-
-    if (name.length <= maxNameLength) return fileName;
-
-    return name.substring(0, maxNameLength) + "..." + extension;
-  };
-
-  /**
    * Format date for display
    */
   const formatDate = (dateString: string | null): string => {
@@ -1527,27 +1501,6 @@ const CandidateProfilePage = () => {
         return "Not rated";
     }
   };
-  /**
-   * Render star ratings for languages
-   * Creates an array of star icons based on rating (1-6)
-   */
-  const renderStars = (rating: number) => {
-    const stars = [];
-    const totalStars = 6;
-
-    for (let i = 1; i <= totalStars; i++) {
-      stars.push(
-        <img
-          key={i}
-          src={i <= rating ? starIcon : emptyStarIcon}
-          alt={i <= rating ? "Filled Star" : "Empty Star"}
-          className="candidate-star-icon"
-        />
-      );
-    }
-    return stars;
-  };
-
   // Loading state - Show loading indicator while fetching data
   if (isLoading) {
     return (
@@ -1826,15 +1779,15 @@ const CandidateProfilePage = () => {
                         </div>
                         <p className="candidate-experience-company">
                           {experience.organization}
-                          {experience.location && ` • ${experience.location}`}
-                          {experience.jobType && ` • ${experience.jobType}`}
+                          {experience.location && ` â€¢ ${experience.location}`}
+                          {experience.jobType && ` â€¢ ${experience.jobType}`}
                         </p>
                         <p className="candidate-experience-dates">
                           {formatDate(experience.startDate)} -{" "}
                           {formatDate(experience.endDate)}
-                          {experience.isCurrent && " • Present"}
+                          {experience.isCurrent && " â€¢ Present"}
                           <span className="candidate-experience-duration">
-                            •{" "}
+                            â€¢{" "}
                             {calculateDuration(
                               experience.startDate,
                               experience.endDate
@@ -1908,15 +1861,15 @@ const CandidateProfilePage = () => {
                         </div>
                         <p className="candidate-education-institution">
                           {education.institution}
-                          {education.location && ` • ${education.location}`}
-                          {education.degreeType && ` • ${education.degreeType}`}
+                          {education.location && ` â€¢ ${education.location}`}
+                          {education.degreeType && ` â€¢ ${education.degreeType}`}
                         </p>
                         <p className="candidate-education-dates">
                           {formatDate(education.startDate)} -{" "}
                           {formatDate(education.endDate)}
-                          {education.isCurrent && " • Present"}
+                          {education.isCurrent && " â€¢ Present"}
                           <span className="candidate-education-duration">
-                            •{" "}
+                            â€¢{" "}
                             {calculateDuration(
                               education.startDate,
                               education.endDate
@@ -2167,7 +2120,7 @@ const CandidateProfilePage = () => {
                               : quiz.type === "task"
                                 ? "Task-Based"
                                 : "Writing"}{" "}
-                            • Completed {formatQuizDate(quiz.completedAt)}
+                            â€¢ Completed {formatQuizDate(quiz.completedAt)}
                           </span>
                         </div>
                       </label>
@@ -2245,7 +2198,7 @@ const CandidateProfilePage = () => {
                       <p className="candidate-sub-text">
                         {certification.issuingOrganization}
                         {certification.credentialId &&
-                          ` • ID: ${certification.credentialId}`}
+                          ` â€¢ ID: ${certification.credentialId}`}
                       </p>
                     </div>
                     <p className="candidate-meta-text">
@@ -2254,13 +2207,13 @@ const CandidateProfilePage = () => {
                         certification.expirationDate && (
                           <>
                             {" "}
-                            • Expires{" "}
+                            â€¢ Expires{" "}
                             {formatCertificationDate(
                               certification.expirationDate
                             )}
                           </>
                         )}
-                      {certification.doesNotExpire && " • No expiration"}
+                      {certification.doesNotExpire && " â€¢ No expiration"}
                     </p>
 
                     {certification.credentialUrl && (
@@ -2469,6 +2422,7 @@ const CandidateProfilePage = () => {
 };
 
 export default CandidateProfilePage;
+
 
 
 

@@ -125,7 +125,7 @@ const getNotificationTime = (item: NotificationItem) => {
 };
 const NOTIFICATION_DROPDOWN_LIMIT = 20;
 
-const Navbar = ({ userType = "candidate" }: NavbarProps) => {
+const Navbar = (_props: NavbarProps) => {
   const ADMIN_VIEWED_CONTACT_STORAGE_KEY = "adminViewedContactNotificationIds";
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() =>

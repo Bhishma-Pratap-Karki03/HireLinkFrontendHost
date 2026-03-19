@@ -14,14 +14,6 @@ import jobsIcon from "../../images/Recruiter Profile Page Images/6_312.svg";
 import contactUsIcon from "../../images/Recruiter Profile Page Images/contactUsIcon.png";
 import menuIcon from "../../images/Register Page Images/menu.png";
 
-interface UserData {
-  id: string;
-  fullName: string;
-  email: string;
-  role: string;
-  profilePicture?: string;
-}
-
 interface NavItem {
   id: string;
   path: string;
@@ -31,7 +23,6 @@ interface NavItem {
 
 const AdminSidebar: React.FC = () => {
   const [userName, setUserName] = useState<string>("Admin");
-  const [userData, setUserData] = useState<UserData | null>(null);
   const [profileImage, setProfileImage] = useState<string>(defaultAvatar);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
@@ -59,8 +50,6 @@ const AdminSidebar: React.FC = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setUserData(data.user);
-
         if (data.user.fullName) {
           setUserName(data.user.fullName);
         } else if (data.user.email) {

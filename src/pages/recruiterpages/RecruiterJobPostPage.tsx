@@ -1,4 +1,4 @@
-import PortalFooter from "../../components/PortalFooter";
+﻿import PortalFooter from "../../components/PortalFooter";
 import React, { useMemo, useState, useEffect, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -9,7 +9,6 @@ import "../../styles/RecruiterJobPostPage.css";
 import "../../styles/JobListingPage.css";
 
 // Import images
-import postJobCalendarIcon from "../../images/Recruiter Profile Page Images/postjobcalendar.svg";
 import deleteIcon from "../../images/Recruiter Job Post Page Images/deleteIcon.svg";
 import errorIcon from "../../images/Recruiter Job Post Page Images/Error icon.svg";
 import addResponsibilityIcon from "../../images/Recruiter Job Post Page Images/addIcon.svg";
@@ -27,7 +26,6 @@ import addStageIcon from "../../images/Recruiter Job Post Page Images/addIcon.sv
 // New preview section images
 import companyLogo from "../../images/Recruiter Job Post Page Images/companyLogo.png";
 import locationIcon from "../../images/Recruiter Job Post Page Images/location.svg";
-import timeIcon from "../../images/Recruiter Job Post Page Images/timeIcon.svg";
 import successIcon from "../../images/Recruiter Job Post Page Images/successIcon.svg";
 import workModeIcon from "../../images/Job List Page Images/work-mode.svg";
 import jobTypeIcon from "../../images/Job List Page Images/job-type.svg";
@@ -392,9 +390,9 @@ const RecruiterJobPostPage: React.FC = () => {
 
   const currencyOptions = [
     { code: "NPR", label: "NPR (Rs.)" },
-    { code: "INR", label: "INR (₹)" },
+    { code: "INR", label: "INR (â‚¹)" },
     { code: "USD", label: "USD ($)" },
-    { code: "GBP", label: "GBP (£)" },
+    { code: "GBP", label: "GBP (Â£)" },
   ];
 
   const selectedCurrencyLabel =
@@ -578,24 +576,6 @@ const RecruiterJobPostPage: React.FC = () => {
     }));
   };
 
-  const addAssessmentSkill = () => {
-    updateAssessmentForm("skillTags", [...assessmentForm.skillTags, ""]);
-  };
-
-  const updateAssessmentSkill = (index: number, value: string) => {
-    updateAssessmentForm(
-      "skillTags",
-      assessmentForm.skillTags.map((item, i) => (i === index ? value : item)),
-    );
-  };
-
-  const removeAssessmentSkill = (index: number) => {
-    updateAssessmentForm(
-      "skillTags",
-      assessmentForm.skillTags.filter((_, i) => i !== index),
-    );
-  };
-
   const addAssessmentLanguage = () => {
     updateAssessmentForm("codeLanguages", [...assessmentForm.codeLanguages, ""]);
   };
@@ -722,17 +702,6 @@ const RecruiterJobPostPage: React.FC = () => {
     setGender(value);
     setHasPosted(false);
   };
-
-  const userId = (() => {
-    try {
-      const userDataStr = localStorage.getItem("userData");
-      if (!userDataStr) return "";
-      const userData = JSON.parse(userDataStr);
-      return userData.id || "";
-    } catch {
-      return "";
-    }
-  })();
 
   const companyName = (() => {
     try {
@@ -998,7 +967,7 @@ const RecruiterJobPostPage: React.FC = () => {
                     onClick={() => setSubmitToast("")}
                     aria-label="Close"
                   >
-                    ×
+                    Ã—
                   </button>
                   <p className="recruiter-jobpost-toast-message">{submitToast}</p>
                 </div>
@@ -2394,5 +2363,6 @@ const RecruiterJobPostPage: React.FC = () => {
 };
 
 export default RecruiterJobPostPage;
+
 
 

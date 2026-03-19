@@ -18,8 +18,6 @@ import emailIcon from "../images/Employers Page Images/5_124.svg";
 import foundedIcon from "../images/Employers Page Images/5_131.svg";
 
 // Job meta icons from HTML
-import jobLocationIcon from "../images/Employers Page Images/I5_270_1_3220.svg";
-import jobTimeIcon from "../images/Employers Page Images/I5_270_1_3225.svg";
 import jobCardLocationIcon from "../images/Job List Page Images/location.svg";
 import jobCardTypeIcon from "../images/Job List Page Images/job-type.svg";
 import jobCardWorkModeIcon from "../images/Job List Page Images/work-mode.svg";
@@ -28,7 +26,6 @@ import jobCardSavedBookmarkIcon from "../images/Recruiter Job Post Page Images/b
 import jobCardShareIcon from "../images/Recruiter Job Post Page Images/shareFg.svg";
 
 // Share and save icons
-import shareIcon from "../images/Employers Page Images/I5_270_1_3212.svg";
 
 // Star icons from HTML
 import starFilled from "../images/Employers Page Images/5_169.svg";
@@ -596,19 +593,6 @@ const EmployerDetailsPage = () => {
       setSavedJobs((prev) => ({ ...prev, [jobId]: Boolean(data?.saved) }));
     } catch {
       // no-op
-    }
-  };
-
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: company?.name || "Company Details",
-        text: `Check out ${company?.name} on HireLink`,
-        url: window.location.href,
-      });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert("Link copied to clipboard!");
     }
   };
 

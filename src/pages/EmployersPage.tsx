@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 // Import images from Employers Page Images folder
 import searchIcon from "../images/Employers Page Images/8_285.svg";
 import locationIcon from "../images/Employers Page Images/8_298.svg";
-import saveIcon from "../images/Employers Page Images/8_426.svg";
-import savedIcon from "../images/Employers Page Images/Saved icon.svg";
 import prevIcon from "../images/Employers Page Images/Prev Icon.svg";
 import nextIcon from "../images/Employers Page Images/Next Icon.svg";
 import minusIcon from "../images/Employers Page Images/minus.png";
@@ -58,9 +56,6 @@ const EmployersPage = () => {
   });
   const navigate = useNavigate();
 
-  const [savedCompanies, setSavedCompanies] = useState<Record<string, boolean>>(
-    {}
-  );
   const [sortBy, setSortBy] = useState("");
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [page, setPage] = useState(1);
@@ -430,13 +425,6 @@ const EmployersPage = () => {
 
     fetchMutualConnections();
   }, [paginatedCompanies, currentUser?.role, currentUserId]);
-
-  const toggleSaveCompany = (id: string) => {
-    setSavedCompanies((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
 
   const sortOptions = [
     { value: "newest", label: "Newest Employers" },
