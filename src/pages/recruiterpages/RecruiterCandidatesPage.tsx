@@ -30,7 +30,7 @@ type CandidateItem = {
 const resolveAvatar = (profilePicture?: string) => {
   if (!profilePicture) return defaultAvatar;
   if (profilePicture.startsWith("http")) return profilePicture;
-  return `http://localhost:5000${profilePicture}`;
+  return `${import.meta.env.VITE_BACKEND_URL}${profilePicture}`;
 };
 
 const getExperienceYears = (experience?: CandidateExperience[]) => {
@@ -72,7 +72,7 @@ const RecruiterCandidatesPage = () => {
       try {
         setLoading(true);
         setError("");
-        const res = await fetch("http://localhost:5000/api/users/candidates", {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/candidates`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -242,5 +242,7 @@ const RecruiterCandidatesPage = () => {
 };
 
 export default RecruiterCandidatesPage;
+
+
 
 

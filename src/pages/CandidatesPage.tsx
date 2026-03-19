@@ -46,7 +46,7 @@ type MutualConnection = {
 const resolveAvatar = (profilePicture?: string) => {
   if (!profilePicture) return defaultAvatar;
   if (profilePicture.startsWith("http")) return profilePicture;
-  return `http://localhost:5000${profilePicture}`;
+  return `${import.meta.env.VITE_BACKEND_URL}${profilePicture}`;
 };
 
 const getExperienceYears = (experience?: CandidateExperience[]) => {
@@ -106,7 +106,7 @@ const CandidatesPage = () => {
       try {
         setLoading(true);
         setError("");
-        const res = await fetch("http://localhost:5000/api/users/candidates");
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/candidates`);
         const data = await res.json();
         if (!res.ok) {
           throw new Error(data?.message || "Failed to load candidates");
@@ -145,7 +145,7 @@ const CandidatesPage = () => {
 
       try {
         const res = await fetch(
-          `http://localhost:5000/api/connections/statuses?targetIds=${targetIds.join(",")}`,
+          `${import.meta.env.VITE_API_BASE_URL}/connections/statuses?targetIds=${targetIds.join(",")}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -193,7 +193,7 @@ const CandidatesPage = () => {
 
     try {
       setSendingConnectionId(targetUserId);
-      const res = await fetch("http://localhost:5000/api/connections/request", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/request`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -317,7 +317,7 @@ const CandidatesPage = () => {
         const results = await Promise.all(
           targetIds.map(async (targetId) => {
             const res = await fetch(
-              `http://localhost:5000/api/connections/mutual/${targetId}`,
+              `${import.meta.env.VITE_API_BASE_URL}/connections/mutual/${targetId}`,
               {
                 headers: { Authorization: `Bearer ${token}` },
               },
@@ -629,3 +629,5 @@ const CandidatesPage = () => {
 };
 
 export default CandidatesPage;
+
+

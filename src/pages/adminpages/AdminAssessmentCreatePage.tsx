@@ -323,7 +323,7 @@ const AdminAssessmentCreatePage: React.FC = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/assessments", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/assessments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -945,4 +945,6 @@ const AdminAssessmentCreatePage: React.FC = () => {
 };
 
 export default AdminAssessmentCreatePage;
+
+
 

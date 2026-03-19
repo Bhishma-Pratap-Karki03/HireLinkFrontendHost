@@ -48,7 +48,7 @@ const AdminProfilePage: React.FC = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:5000/api/profile/me", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -140,7 +140,7 @@ const AdminProfilePage: React.FC = () => {
           formData.append("profilePicture", data.imageFile);
 
           const response = await fetch(
-            "http://localhost:5000/api/profile/me/picture", // CHANGED FROM /upload-picture to /me/picture
+            `${import.meta.env.VITE_API_BASE_URL}/profile/me/picture`, // CHANGED FROM /upload-picture to /me/picture
             {
               method: "POST", // CHANGED FROM PUT to POST
               headers: {
@@ -160,7 +160,7 @@ const AdminProfilePage: React.FC = () => {
         } else {
           // Remove profile picture
           const response = await fetch(
-            "http://localhost:5000/api/profile/me/picture", // CHANGED FROM /remove-picture to /me/picture
+            `${import.meta.env.VITE_API_BASE_URL}/profile/me/picture`, // CHANGED FROM /remove-picture to /me/picture
             {
               method: "DELETE",
               headers: {
@@ -206,7 +206,7 @@ const AdminProfilePage: React.FC = () => {
     try {
       setIsLoading(true);
 
-      const response = await fetch("http://localhost:5000/api/profile/me", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -271,7 +271,7 @@ const AdminProfilePage: React.FC = () => {
     }
 
     // For relative paths, prepend the backend URL with cache busting
-    return `http://localhost:5000${userProfile.profilePicture}?t=${Date.now()}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${userProfile.profilePicture}?t=${Date.now()}`;
   };
 
   // Loading state
@@ -453,3 +453,5 @@ const AdminProfilePage: React.FC = () => {
 };
 
 export default AdminProfilePage;
+
+

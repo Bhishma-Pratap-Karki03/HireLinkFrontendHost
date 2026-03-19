@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
@@ -76,7 +76,7 @@ const AdminAssessmentEditPage: React.FC = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:5000/api/assessments/${id}`,
+          `${import.meta.env.VITE_API_BASE_URL}/assessments/${id}`,
         );
         const data = await response.json();
         if (!response.ok) {
@@ -461,7 +461,7 @@ const AdminAssessmentEditPage: React.FC = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/assessments/${id}`,{
+        `${import.meta.env.VITE_API_BASE_URL}/assessments/${id}`,{
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -530,7 +530,7 @@ const AdminAssessmentEditPage: React.FC = () => {
     try {
       setDeleting(true);
       const response = await fetch(
-        `http://localhost:5000/api/assessments/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/assessments/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -576,7 +576,7 @@ const AdminAssessmentEditPage: React.FC = () => {
                     onClick={() => setSubmitSuccess("")}
                     aria-label="Close"
                   >
-                    ×
+                    �
                   </button>
                   <p className="admin-assessment-toast-message">{submitSuccess}</p>
                 </div>
@@ -1155,3 +1155,5 @@ const AdminAssessmentEditPage: React.FC = () => {
 };
 
 export default AdminAssessmentEditPage;
+
+

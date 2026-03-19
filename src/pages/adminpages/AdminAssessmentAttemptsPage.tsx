@@ -53,7 +53,7 @@ const AdminAssessmentAttemptsPage = () => {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch("http://localhost:5000/api/assessments/admin/attempts", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/assessments/admin/attempts`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -129,7 +129,7 @@ const AdminAssessmentAttemptsPage = () => {
     try {
       setDismissingId(attemptId);
       const res = await fetch(
-        `http://localhost:5000/api/assessments/admin/attempts/${attemptId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/assessments/admin/attempts/${attemptId}`,
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
@@ -310,3 +310,5 @@ const AdminAssessmentAttemptsPage = () => {
 };
 
 export default AdminAssessmentAttemptsPage;
+
+

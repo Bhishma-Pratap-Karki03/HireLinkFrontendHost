@@ -132,7 +132,7 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
   const resolveReviewerAvatar = (avatar?: string) => {
     if (!avatar) return "";
     if (avatar.startsWith("http")) return avatar;
-    return `http://localhost:5000${avatar.startsWith("/") ? "" : "/"}${avatar}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${avatar.startsWith("/") ? "" : "/"}${avatar}`;
   };
 
   useEffect(() => {
@@ -145,7 +145,7 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
         setIsReviewsLoading(true);
         setReviewsError(null);
         const response = await fetch(
-          `http://localhost:5000/api/reviews/project/${candidateId}/${project._id}/manage`,
+          `${import.meta.env.VITE_API_BASE_URL}/reviews/project/${candidateId}/${project._id}/manage`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -356,7 +356,7 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
     try {
       setReviewActionLoadingId(reviewId);
       const response = await fetch(
-        `http://localhost:5000/api/reviews/${reviewId}/status`,
+        `${import.meta.env.VITE_API_BASE_URL}/reviews/${reviewId}/status`,
         {
           method: "PUT",
           headers: {
@@ -389,7 +389,7 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
     try {
       setReviewActionLoadingId(reviewId);
       const response = await fetch(
-        `http://localhost:5000/api/reviews/${reviewId}/manage`,
+        `${import.meta.env.VITE_API_BASE_URL}/reviews/${reviewId}/manage`,
         {
           method: "DELETE",
           headers: {
@@ -900,3 +900,5 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
 };
 
 export default ProjectEditor;
+
+

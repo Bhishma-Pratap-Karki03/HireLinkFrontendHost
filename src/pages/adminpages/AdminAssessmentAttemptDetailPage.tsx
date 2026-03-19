@@ -82,7 +82,7 @@ const AdminAssessmentAttemptDetailPage = () => {
         setLoading(true);
         setError("");
         const res = await fetch(
-          `http://localhost:5000/api/assessments/admin/attempts/${attemptId}`,
+          `${import.meta.env.VITE_API_BASE_URL}/assessments/admin/attempts/${attemptId}`,
           { headers: { Authorization: `Bearer ${token}` } },
         );
         const data = await res.json();
@@ -298,7 +298,7 @@ const AdminAssessmentAttemptDetailPage = () => {
                       <div className="recruiter-assessment-page-block">
                         <span>Uploaded File</span>
                         <a
-                          href={`http://localhost:5000${assessment.codeFileUrl}`}
+                          href={`${import.meta.env.VITE_BACKEND_URL}${assessment.codeFileUrl}`}
                           target="_blank"
                           rel="noreferrer"
                         >
@@ -327,3 +327,5 @@ const AdminAssessmentAttemptDetailPage = () => {
 };
 
 export default AdminAssessmentAttemptDetailPage;
+
+

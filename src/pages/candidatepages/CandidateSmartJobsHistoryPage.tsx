@@ -41,7 +41,7 @@ const CandidateSmartJobsHistoryPage = () => {
       setLoading(true);
       setError("");
       const res = await fetch(
-        `http://localhost:5000/api/recommendations/history/${historyId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/recommendations/history/${historyId}`,
         { headers: { Authorization: `Bearer ${token}` } },
       );
       const data = await res.json();
@@ -233,5 +233,7 @@ const CandidateSmartJobsHistoryPage = () => {
 };
 
 export default CandidateSmartJobsHistoryPage;
+
+
 
 

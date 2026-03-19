@@ -114,7 +114,7 @@ const getToastStorageKey = () => {
 const resolveAvatar = (value?: string) => {
   if (!value) return defaultAvatar;
   if (value.startsWith("http")) return value;
-  return `http://localhost:5000${value}`;
+  return `${import.meta.env.VITE_BACKEND_URL}${value}`;
 };
 
 const getNotificationTime = (item: NotificationItem) => {
@@ -197,7 +197,7 @@ const Navbar = ({ userType = "candidate" }: NavbarProps) => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/profile/me", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -253,7 +253,7 @@ const Navbar = ({ userType = "candidate" }: NavbarProps) => {
           if (data.user.profilePicture.startsWith("http")) {
             setProfileImage(data.user.profilePicture);
           } else {
-            setProfileImage(`http://localhost:5000${data.user.profilePicture}`);
+            setProfileImage(`${import.meta.env.VITE_BACKEND_URL}${data.user.profilePicture}`);
           }
         } else {
           // Use default avatar for users without profile picture
@@ -339,7 +339,7 @@ const Navbar = ({ userType = "candidate" }: NavbarProps) => {
         setNotificationError("");
       }
       const response = await fetch(
-        `http://localhost:5000/api/connections/notifications?limit=${NOTIFICATION_DROPDOWN_LIMIT}`,
+        `${import.meta.env.VITE_API_BASE_URL}/connections/notifications?limit=${NOTIFICATION_DROPDOWN_LIMIT}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -378,7 +378,7 @@ const Navbar = ({ userType = "candidate" }: NavbarProps) => {
         setNotificationLoading(true);
         setNotificationError("");
       }
-      const response = await fetch("http://localhost:5000/api/messages/conversations", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/messages/conversations`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -461,7 +461,7 @@ const Navbar = ({ userType = "candidate" }: NavbarProps) => {
         setNotificationError("");
       }
       const response = await fetch(
-        "http://localhost:5000/api/contact/admin/messages?status=all",
+        `${import.meta.env.VITE_API_BASE_URL}/contact/admin/messages?status=all`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -589,7 +589,7 @@ const Navbar = ({ userType = "candidate" }: NavbarProps) => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/connections/notifications/read",
+        `${import.meta.env.VITE_API_BASE_URL}/connections/notifications/read`,
         {
           method: "POST",
           headers: {
@@ -1009,7 +1009,7 @@ const Navbar = ({ userType = "candidate" }: NavbarProps) => {
         await Promise.all(
           unreadContacts.map((item) =>
             fetch(
-              `http://localhost:5000/api/contact/admin/messages/${item.contactMessageId}/read`,
+              `${import.meta.env.VITE_API_BASE_URL}/contact/admin/messages/${item.contactMessageId}/read`,
               {
                 method: "PATCH",
                 headers: {
@@ -1031,7 +1031,7 @@ const Navbar = ({ userType = "candidate" }: NavbarProps) => {
 
         await Promise.all(
           unreadConnectionIds.map((notificationId) =>
-            fetch("http://localhost:5000/api/connections/notifications/read", {
+            fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/notifications/read`, {
               method: "POST",
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -1588,3 +1588,5 @@ const Navbar = ({ userType = "candidate" }: NavbarProps) => {
 };
 
 export default Navbar;
+
+

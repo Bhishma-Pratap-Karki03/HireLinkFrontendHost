@@ -65,7 +65,7 @@ const RecruiterJobPostingsListPage = () => {
     }
     try {
       setTogglingId(jobId);
-      const res = await fetch(`http://localhost:5000/api/jobs/${jobId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/jobs/${jobId}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -100,7 +100,7 @@ const RecruiterJobPostingsListPage = () => {
         setLoading(true);
         setError("");
         const res = await fetch(
-          "http://localhost:5000/api/jobs/recruiter/list",
+          `${import.meta.env.VITE_API_BASE_URL}/jobs/recruiter/list`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -278,5 +278,7 @@ const RecruiterJobPostingsListPage = () => {
 };
 
 export default RecruiterJobPostingsListPage;
+
+
 
 

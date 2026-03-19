@@ -45,7 +45,7 @@ const SettingsContent = ({ title, subtitle }: SettingsContentProps) => {
 
     try {
       setIsSubmitting(true);
-      const response = await fetch("http://localhost:5000/api/password/change", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/password/change`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -154,3 +154,5 @@ const SettingsContent = ({ title, subtitle }: SettingsContentProps) => {
 };
 
 export default SettingsContent;
+
+

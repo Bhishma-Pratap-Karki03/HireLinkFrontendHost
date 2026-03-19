@@ -74,7 +74,7 @@ const SavedJobsPage = () => {
   const resolveLogo = (logo?: string) => {
     if (!logo) return defaultLogo;
     if (logo.startsWith("http")) return logo;
-    return `http://localhost:5000${logo.startsWith("/") ? "" : "/"}${logo}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${logo.startsWith("/") ? "" : "/"}${logo}`;
   };
 
   const formatWorkMode = (mode?: string) => {
@@ -93,7 +93,7 @@ const SavedJobsPage = () => {
       const entries = await Promise.all(
         jobIds.map(async (jobId) => {
           const res = await fetch(
-            `http://localhost:5000/api/applications/status/${jobId}`,
+            `${import.meta.env.VITE_API_BASE_URL}/applications/status/${jobId}`,
             { headers: { Authorization: `Bearer ${token}` } }
           );
           const data = await res.json();
@@ -115,7 +115,7 @@ const SavedJobsPage = () => {
     }
     try {
       setSavingJobId(jobId);
-      const res = await fetch("http://localhost:5000/api/saved-jobs/toggle", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/saved-jobs/toggle`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -158,8 +158,8 @@ const SavedJobsPage = () => {
     try {
       setApplyLoading(true);
       const [jobRes, profileRes] = await Promise.all([
-        fetch(`http://localhost:5000/api/jobs/${jobId}`),
-        fetch("http://localhost:5000/api/profile/me", {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/jobs/${jobId}`),
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -209,7 +209,7 @@ const SavedJobsPage = () => {
         formData.append("resumeUrl", applyProfileResume);
       }
 
-      const response = await fetch("http://localhost:5000/api/applications/apply", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/applications/apply`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
@@ -241,7 +241,7 @@ const SavedJobsPage = () => {
       try {
         setLoading(true);
         setError("");
-        const res = await fetch("http://localhost:5000/api/saved-jobs/mine", {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/saved-jobs/mine`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -465,7 +465,7 @@ const SavedJobsPage = () => {
                   <h5>Resume</h5>
                   {applyProfileResume ? (
                     <a
-                      href={`http://localhost:5000${applyProfileResume}`}
+                      href={`${import.meta.env.VITE_BACKEND_URL}${applyProfileResume}`}
                       target="_blank"
                       rel="noreferrer"
                       className="apply-modal-link"
@@ -590,5 +590,7 @@ const SavedJobsPage = () => {
 };
 
 export default SavedJobsPage;
+
+
 
 

@@ -232,7 +232,7 @@ const CandidateProfilePage = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:5000/api/profile/me", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -293,12 +293,12 @@ const CandidateProfilePage = () => {
     try {
       setQuizLoading(true);
       const [historyResponse, showcaseResponse] = await Promise.all([
-        fetch("http://localhost:5000/api/assessments/my-submissions", {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/assessments/my-submissions`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }),
-        fetch("http://localhost:5000/api/assessments/my-showcase", {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/assessments/my-showcase`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -478,8 +478,8 @@ const CandidateProfilePage = () => {
       setIsLoading(true);
 
       const url = formData.get("_id")
-        ? `http://localhost:5000/api/project/${formData.get("_id")}`
-        : "http://localhost:5000/api/project";
+        ? `${import.meta.env.VITE_API_BASE_URL}/project/${formData.get("_id")}`
+        : `${import.meta.env.VITE_API_BASE_URL}/project`;
 
       const method = formData.get("_id") ? "PUT" : "POST";
 
@@ -520,7 +520,7 @@ const CandidateProfilePage = () => {
       setIsLoading(true);
 
       const response = await fetch(
-        `http://localhost:5000/api/project/${projectId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/project/${projectId}`,
         {
           method: "DELETE",
           headers: {
@@ -582,7 +582,7 @@ const CandidateProfilePage = () => {
     if (!token) return;
     const nextIds = visibleQuizIds.slice(0, 5);
     try {
-      const response = await fetch("http://localhost:5000/api/assessments/my-showcase", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/assessments/my-showcase`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -621,7 +621,7 @@ const CandidateProfilePage = () => {
     if (!coverImage || coverImage.trim() === "") {
       return projectImage; // default project image
     }
-    return `http://localhost:5000${coverImage}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${coverImage}`;
   };
 
   /**
@@ -639,8 +639,8 @@ const CandidateProfilePage = () => {
       setIsLoading(true);
 
       const url = skillData._id
-        ? `http://localhost:5000/api/profile/me/skills/${skillData._id}`
-        : "http://localhost:5000/api/profile/me/skills";
+        ? `${import.meta.env.VITE_API_BASE_URL}/profile/me/skills/${skillData._id}`
+        : `${import.meta.env.VITE_API_BASE_URL}/profile/me/skills`;
 
       const method = skillData._id ? "PUT" : "POST";
 
@@ -684,7 +684,7 @@ const CandidateProfilePage = () => {
       setIsLoading(true);
 
       const response = await fetch(
-        `http://localhost:5000/api/profile/me/skills/${skillId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/profile/me/skills/${skillId}`,
         {
           method: "DELETE",
           headers: {
@@ -729,7 +729,7 @@ const CandidateProfilePage = () => {
       setIsLoading(true);
 
       // Persist profile basics managed by this modal
-      const updateResponse = await fetch("http://localhost:5000/api/profile/me", {
+      const updateResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -761,7 +761,7 @@ const CandidateProfilePage = () => {
           );
 
           const response = await fetch(
-            "http://localhost:5000/api/profile/me/picture", // CHANGED FROM /upload-picture to /me/picture
+            `${import.meta.env.VITE_API_BASE_URL}/profile/me/picture`, // CHANGED FROM /upload-picture to /me/picture
             {
               method: "POST", // CHANGED FROM PUT to POST
               headers: {
@@ -782,7 +782,7 @@ const CandidateProfilePage = () => {
         } else {
           // Remove profile picture via backend
           const response = await fetch(
-            "http://localhost:5000/api/profile/me/picture", // CHANGED FROM /remove-picture to /me/picture
+            `${import.meta.env.VITE_API_BASE_URL}/profile/me/picture`, // CHANGED FROM /remove-picture to /me/picture
             {
               method: "DELETE",
               headers: {
@@ -833,8 +833,8 @@ const CandidateProfilePage = () => {
       setIsLoading(true);
 
       const url = certificationData._id
-        ? `http://localhost:5000/api/profile/me/certifications/${certificationData._id}`
-        : "http://localhost:5000/api/profile/me/certifications";
+        ? `${import.meta.env.VITE_API_BASE_URL}/profile/me/certifications/${certificationData._id}`
+        : `${import.meta.env.VITE_API_BASE_URL}/profile/me/certifications`;
 
       const method = certificationData._id ? "PUT" : "POST";
 
@@ -876,7 +876,7 @@ const CandidateProfilePage = () => {
       setIsLoading(true);
 
       const response = await fetch(
-        `http://localhost:5000/api/profile/me/certifications/${certificationId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/profile/me/certifications/${certificationId}`,
         {
           method: "DELETE",
           headers: {
@@ -930,7 +930,7 @@ const CandidateProfilePage = () => {
     try {
       setIsLoading(true);
 
-      const response = await fetch("http://localhost:5000/api/profile/me", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -979,7 +979,7 @@ const CandidateProfilePage = () => {
     try {
       setIsLoading(true);
 
-      const response = await fetch("http://localhost:5000/api/profile/me", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -1035,7 +1035,7 @@ const CandidateProfilePage = () => {
         console.log("Uploading resume:", file.name, file.type, file.size);
 
         const response = await fetch(
-          "http://localhost:5000/api/resume/upload",
+          `${import.meta.env.VITE_API_BASE_URL}/resume/upload`,
           {
             method: "POST",
             headers: {
@@ -1061,7 +1061,7 @@ const CandidateProfilePage = () => {
       } else {
         // Remove resume via backend
         const response = await fetch(
-          "http://localhost:5000/api/resume/remove",
+          `${import.meta.env.VITE_API_BASE_URL}/resume/remove`,
           {
             method: "DELETE",
             headers: {
@@ -1110,8 +1110,8 @@ const CandidateProfilePage = () => {
       setIsLoading(true);
 
       const url = experienceData._id
-        ? `http://localhost:5000/api/profile/me/experience/${experienceData._id}`
-        : "http://localhost:5000/api/profile/me/experience";
+        ? `${import.meta.env.VITE_API_BASE_URL}/profile/me/experience/${experienceData._id}`
+        : `${import.meta.env.VITE_API_BASE_URL}/profile/me/experience`;
 
       const method = experienceData._id ? "PUT" : "POST";
 
@@ -1155,7 +1155,7 @@ const CandidateProfilePage = () => {
       setIsLoading(true);
 
       const response = await fetch(
-        `http://localhost:5000/api/profile/me/experience/${experienceId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/profile/me/experience/${experienceId}`,
         {
           method: "DELETE",
           headers: {
@@ -1207,8 +1207,8 @@ const CandidateProfilePage = () => {
       };
 
       const url = educationData._id
-        ? `http://localhost:5000/api/profile/me/education/${educationData._id}`
-        : "http://localhost:5000/api/profile/me/education";
+        ? `${import.meta.env.VITE_API_BASE_URL}/profile/me/education/${educationData._id}`
+        : `${import.meta.env.VITE_API_BASE_URL}/profile/me/education`;
 
       const method = educationData._id ? "PUT" : "POST";
 
@@ -1252,7 +1252,7 @@ const CandidateProfilePage = () => {
       setIsLoading(true);
 
       const response = await fetch(
-        `http://localhost:5000/api/profile/me/education/${educationId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/profile/me/education/${educationId}`,
         {
           method: "DELETE",
           headers: {
@@ -1302,7 +1302,7 @@ const CandidateProfilePage = () => {
     }
 
     // It's a relative path, prepend the backend URL with cache-busting
-    return `http://localhost:5000${userProfile.profilePicture}?t=${Date.now()}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${userProfile.profilePicture}?t=${Date.now()}`;
   };
 
   /**
@@ -1393,8 +1393,8 @@ const CandidateProfilePage = () => {
       setIsLoading(true);
 
       const url = languageData._id
-        ? `http://localhost:5000/api/profile/me/languages/${languageData._id}`
-        : "http://localhost:5000/api/profile/me/languages";
+        ? `${import.meta.env.VITE_API_BASE_URL}/profile/me/languages/${languageData._id}`
+        : `${import.meta.env.VITE_API_BASE_URL}/profile/me/languages`;
 
       const method = languageData._id ? "PUT" : "POST";
 
@@ -1438,7 +1438,7 @@ const CandidateProfilePage = () => {
       setIsLoading(true);
 
       const response = await fetch(
-        `http://localhost:5000/api/profile/me/languages/${languageId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/profile/me/languages/${languageId}`,
         {
           method: "DELETE",
           headers: {
@@ -1751,7 +1751,7 @@ const CandidateProfilePage = () => {
                       {formatFileSize(resumeData.fileSize)}
                     </span>
                     <a
-                      href={`http://localhost:5000${resumeData.url}`}
+                      href={`${import.meta.env.VITE_BACKEND_URL}${resumeData.url}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="resume-view-link"
@@ -2469,5 +2469,7 @@ const CandidateProfilePage = () => {
 };
 
 export default CandidateProfilePage;
+
+
 
 

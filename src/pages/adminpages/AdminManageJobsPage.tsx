@@ -46,7 +46,7 @@ const AdminManageJobsPage = () => {
       setError("");
       const query = new URLSearchParams({ search, status: statusFilter });
       const response = await fetch(
-        `http://localhost:5000/api/jobs/admin/list?${query.toString()}`,
+        `${import.meta.env.VITE_API_BASE_URL}/jobs/admin/list?${query.toString()}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -121,7 +121,7 @@ const AdminManageJobsPage = () => {
     try {
       setActingJobId(jobId);
       const response = await fetch(
-        `http://localhost:5000/api/jobs/admin/${jobId}/status`,
+        `${import.meta.env.VITE_API_BASE_URL}/jobs/admin/${jobId}/status`,
         {
           method: "PATCH",
           headers: {
@@ -393,3 +393,5 @@ const AdminManageJobsPage = () => {
 };
 
 export default AdminManageJobsPage;
+
+

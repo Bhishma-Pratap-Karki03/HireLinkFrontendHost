@@ -13,7 +13,7 @@ export const connectSocket = (token: string) => {
     socket.disconnect();
   }
 
-  socket = io("http://localhost:5000", {
+  socket = io(`${import.meta.env.VITE_BACKEND_URL}`, {
     transports: ["websocket", "polling"],
     auth: {
       token: `Bearer ${token}`,
@@ -31,3 +31,5 @@ export const disconnectSocket = () => {
     socket = null;
   }
 };
+
+

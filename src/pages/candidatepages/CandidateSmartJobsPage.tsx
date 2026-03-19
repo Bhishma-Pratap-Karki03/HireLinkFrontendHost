@@ -32,7 +32,7 @@ const CandidateSmartJobsPage = () => {
     const token = localStorage.getItem("authToken");
     if (!token) return;
     try {
-      const res = await fetch("http://localhost:5000/api/recommendations/history", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/recommendations/history`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -52,7 +52,7 @@ const CandidateSmartJobsPage = () => {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch("http://localhost:5000/api/recommendations/me?limit=12", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/recommendations/me?limit=12`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -76,7 +76,7 @@ const CandidateSmartJobsPage = () => {
     const token = localStorage.getItem("authToken");
     if (!token) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/recommendations/history/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/recommendations/history/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -300,5 +300,7 @@ const CandidateSmartJobsPage = () => {
 };
 
 export default CandidateSmartJobsPage;
+
+
 
 

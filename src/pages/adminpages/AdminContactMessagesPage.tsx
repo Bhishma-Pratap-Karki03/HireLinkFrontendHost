@@ -50,7 +50,7 @@ const AdminContactMessagesPage = () => {
         status: statusFilter,
       });
       const response = await fetch(
-        `http://localhost:5000/api/contact/admin/messages?${params.toString()}`,
+        `${import.meta.env.VITE_API_BASE_URL}/contact/admin/messages?${params.toString()}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -83,7 +83,7 @@ const AdminContactMessagesPage = () => {
     try {
       setActingMessageId(messageId);
       const response = await fetch(
-        `http://localhost:5000/api/contact/admin/messages/${messageId}/read`,
+        `${import.meta.env.VITE_API_BASE_URL}/contact/admin/messages/${messageId}/read`,
         {
           method: "PATCH",
           headers: {
@@ -120,7 +120,7 @@ const AdminContactMessagesPage = () => {
     try {
       setActingMessageId(messageId);
       const response = await fetch(
-        `http://localhost:5000/api/contact/admin/messages/${messageId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/contact/admin/messages/${messageId}`,
         {
           method: "DELETE",
           headers: {
@@ -493,3 +493,5 @@ const AdminContactMessagesPage = () => {
 };
 
 export default AdminContactMessagesPage;
+
+

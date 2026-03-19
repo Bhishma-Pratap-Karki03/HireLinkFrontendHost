@@ -54,7 +54,7 @@ const CandidateSidebar: React.FC = () => {
 
     try {
       setIsLoading(true);
-      const response = await fetch("http://localhost:5000/api/profile/me", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -87,7 +87,7 @@ const CandidateSidebar: React.FC = () => {
           } else {
             // Add cache-busting timestamp to prevent caching
             setProfileImage(
-              `http://localhost:5000${data.user.profilePicture}?t=${Date.now()}`,
+              `${import.meta.env.VITE_BACKEND_URL}${data.user.profilePicture}?t=${Date.now()}`,
             );
           }
         } else {
@@ -415,3 +415,5 @@ const CandidateSidebar: React.FC = () => {
 };
 
 export default CandidateSidebar;
+
+

@@ -449,7 +449,7 @@ const JobListingPage = () => {
       const entries = await Promise.all(
         jobIds.map(async (jobId) => {
           const res = await fetch(
-            `http://localhost:5000/api/applications/status/${jobId}`,
+            `${import.meta.env.VITE_API_BASE_URL}/applications/status/${jobId}`,
             { headers: { Authorization: `Bearer ${token}` } },
           );
           const data = await res.json();
@@ -470,7 +470,7 @@ const JobListingPage = () => {
       const entries = await Promise.all(
         jobIds.map(async (jobId) => {
           const res = await fetch(
-            `http://localhost:5000/api/saved-jobs/status/${jobId}`,
+            `${import.meta.env.VITE_API_BASE_URL}/saved-jobs/status/${jobId}`,
             { headers: { Authorization: `Bearer ${token}` } },
           );
           const data = await res.json();
@@ -559,7 +559,7 @@ const JobListingPage = () => {
         setLoading(true);
         setError("");
         const response = await fetch(
-          `http://localhost:5000/api/jobs?${buildQueryParams()}`,
+          `${import.meta.env.VITE_API_BASE_URL}/jobs?${buildQueryParams()}`,
         );
         const data = await response.json();
         if (!response.ok) {
@@ -584,7 +584,7 @@ const JobListingPage = () => {
 
         // Work mode counts should reflect current filters except work mode itself.
         const countResponse = await fetch(
-          `http://localhost:5000/api/jobs?${buildWorkModeCountQuery()}`,
+          `${import.meta.env.VITE_API_BASE_URL}/jobs?${buildWorkModeCountQuery()}`,
         );
         const countData = await countResponse.json();
         if (countResponse.ok) {
@@ -598,7 +598,7 @@ const JobListingPage = () => {
 
         // Job type counts should reflect current filters except job type itself.
         const jobTypeCountResponse = await fetch(
-          `http://localhost:5000/api/jobs?${buildJobTypeCountQuery()}`,
+          `${import.meta.env.VITE_API_BASE_URL}/jobs?${buildJobTypeCountQuery()}`,
         );
         const jobTypeCountData = await jobTypeCountResponse.json();
         if (jobTypeCountResponse.ok) {
@@ -617,7 +617,7 @@ const JobListingPage = () => {
 
         // Job level counts should reflect current filters except job level itself.
         const jobLevelCountResponse = await fetch(
-          `http://localhost:5000/api/jobs?${buildJobLevelCountQuery()}`,
+          `${import.meta.env.VITE_API_BASE_URL}/jobs?${buildJobLevelCountQuery()}`,
         );
         const jobLevelCountData = await jobLevelCountResponse.json();
         if (jobLevelCountResponse.ok) {
@@ -659,7 +659,7 @@ const JobListingPage = () => {
   const resolveLogo = (logo?: string) => {
     if (!logo) return images.companyLogo;
     if (logo.startsWith("http")) return logo;
-    return `http://localhost:5000${logo.startsWith("/") ? "" : "/"}${logo}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${logo.startsWith("/") ? "" : "/"}${logo}`;
   };
 
   const formatWorkMode = (mode?: string) => {
@@ -721,8 +721,8 @@ const JobListingPage = () => {
     try {
       setApplyLoading(true);
       const [jobRes, profileRes] = await Promise.all([
-        fetch(`http://localhost:5000/api/jobs/${jobId}`),
-        fetch("http://localhost:5000/api/profile/me", {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/jobs/${jobId}`),
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -749,7 +749,7 @@ const JobListingPage = () => {
     const token = localStorage.getItem("authToken");
     if (!token) return;
     try {
-      const res = await fetch("http://localhost:5000/api/saved-jobs/toggle", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/saved-jobs/toggle`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -794,7 +794,7 @@ const JobListingPage = () => {
       }
 
       const response = await fetch(
-        "http://localhost:5000/api/applications/apply",
+        `${import.meta.env.VITE_API_BASE_URL}/applications/apply`,
         {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
@@ -855,7 +855,7 @@ const JobListingPage = () => {
 
     try {
       setIsShareLoading(true);
-      const res = await fetch("http://localhost:5000/api/connections/friends", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/friends`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -898,7 +898,7 @@ const JobListingPage = () => {
       setIsSendingShare(true);
       setShareError("");
       const content = `Check out this job: ${shareJob.jobTitle} at ${shareJob.companyName}\n${shareLink}`;
-      const res = await fetch("http://localhost:5000/api/messages/send", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/messages/send`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -1839,6 +1839,8 @@ const JobListingPage = () => {
 };
 
 export default JobListingPage;
+
+
 
 
 

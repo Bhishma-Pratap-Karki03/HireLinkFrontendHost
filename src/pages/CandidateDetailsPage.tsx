@@ -139,13 +139,13 @@ const formatDate = (value?: string | null) => {
 const resolveAvatar = (profilePicture?: string) => {
   if (!profilePicture) return defaultAvatar;
   if (profilePicture.startsWith("http")) return profilePicture;
-  return `http://localhost:5000${profilePicture}`;
+  return `${import.meta.env.VITE_BACKEND_URL}${profilePicture}`;
 };
 
 const getProjectImageUrl = (coverImage?: string) => {
   if (!coverImage) return projectImage;
   if (coverImage.startsWith("http")) return coverImage;
-  return `http://localhost:5000${coverImage}`;
+  return `${import.meta.env.VITE_BACKEND_URL}${coverImage}`;
 };
 
 const formatProjectDateRange = (
@@ -239,7 +239,7 @@ const CandidateDetailsPage = () => {
         setPrivateNotice("");
         const token = localStorage.getItem("authToken");
 
-        const res = await fetch(`http://localhost:5000/api/profile/user/${id}`, {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/user/${id}`, {
           headers: token
             ? {
                 Authorization: `Bearer ${token}`,
@@ -253,7 +253,7 @@ const CandidateDetailsPage = () => {
               Boolean(currentUserId) && String(currentUserId) === String(id);
 
             if (isSelfRequest && token) {
-              const meRes = await fetch("http://localhost:5000/api/profile/me", {
+              const meRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
                 headers: {
                   Authorization: `Bearer ${token}`,
                   "Content-Type": "application/json",
@@ -275,7 +275,7 @@ const CandidateDetailsPage = () => {
             );
 
             // Keep hero card visible by loading basic candidate data.
-            const basicRes = await fetch("http://localhost:5000/api/users/candidates");
+            const basicRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/candidates`);
             const basicData = await basicRes.json();
             if (basicRes.ok && Array.isArray(basicData?.candidates)) {
               const matched = basicData.candidates.find((item: any) => {
@@ -329,7 +329,7 @@ const CandidateDetailsPage = () => {
 
       try {
         const res = await fetch(
-          `http://localhost:5000/api/connections/statuses?targetIds=${profile.id}`,
+          `${import.meta.env.VITE_API_BASE_URL}/connections/statuses?targetIds=${profile.id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -365,7 +365,7 @@ const CandidateDetailsPage = () => {
 
       try {
         const res = await fetch(
-          `http://localhost:5000/api/connections/mutual/${profile.id}`,
+          `${import.meta.env.VITE_API_BASE_URL}/connections/mutual/${profile.id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -393,7 +393,7 @@ const CandidateDetailsPage = () => {
 
     try {
       setSendingConnection(true);
-      const res = await fetch("http://localhost:5000/api/connections/request", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/request`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -472,7 +472,7 @@ const CandidateDetailsPage = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:5000/api/assessments/candidate/${profile.id}/showcase`,
+          `${import.meta.env.VITE_API_BASE_URL}/assessments/candidate/${profile.id}/showcase`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -514,7 +514,7 @@ const CandidateDetailsPage = () => {
 
           try {
             const response = await fetch(
-              `http://localhost:5000/api/reviews/project/${profile.id}/${projectKey}`,
+              `${import.meta.env.VITE_API_BASE_URL}/reviews/project/${profile.id}/${projectKey}`,
               token
                 ? { headers: { Authorization: `Bearer ${token}` } }
                 : undefined,
@@ -528,7 +528,7 @@ const CandidateDetailsPage = () => {
           if (token && canReviewProject) {
             try {
               const response = await fetch(
-                `http://localhost:5000/api/reviews/project/${profile.id}/${projectKey}/my-review`,
+                `${import.meta.env.VITE_API_BASE_URL}/reviews/project/${profile.id}/${projectKey}/my-review`,
                 { headers: { Authorization: `Bearer ${token}` } },
               );
               const data = await response.json();
@@ -600,8 +600,8 @@ const CandidateDetailsPage = () => {
       setProjectReviewSaving((prev) => ({ ...prev, [projectKey]: true }));
       const existing = myProjectReviews[projectKey];
       const url = existing
-        ? `http://localhost:5000/api/reviews/${existing.id}`
-        : `http://localhost:5000/api/reviews/project/${profile.id}/${projectKey}`;
+        ? `${import.meta.env.VITE_API_BASE_URL}/reviews/${existing.id}`
+        : `${import.meta.env.VITE_API_BASE_URL}/reviews/project/${profile.id}/${projectKey}`;
       const method = existing ? "PUT" : "POST";
 
       const response = await fetch(url, {
@@ -827,7 +827,7 @@ const CandidateDetailsPage = () => {
                       </span>
                     ) : null}
                     <a
-                      href={`http://localhost:5000${profile.resume}`}
+                      href={`${import.meta.env.VITE_BACKEND_URL}${profile.resume}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="candidate-details-resume-view"
@@ -916,7 +916,7 @@ const CandidateDetailsPage = () => {
                             href={
                               item.credentialUrl.startsWith("http")
                                 ? item.credentialUrl
-                                : `http://localhost:5000${item.credentialUrl}`
+                                : `${import.meta.env.VITE_BACKEND_URL}${item.credentialUrl}`
                             }
                             target="_blank"
                             rel="noopener noreferrer"
@@ -1273,4 +1273,6 @@ const CandidateDetailsPage = () => {
 };
 
 export default CandidateDetailsPage;
+
+
 

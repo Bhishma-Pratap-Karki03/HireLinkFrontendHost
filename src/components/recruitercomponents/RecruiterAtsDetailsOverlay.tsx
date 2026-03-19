@@ -171,7 +171,7 @@ const RecruiterAtsDetailsOverlay = ({
               <span className="recruiter-ats-overlay-label">Resume</span>
               {application?.resumeUrl ? (
                 <a
-                  href={`http://localhost:5000${application.resumeUrl}`}
+                  href={`${import.meta.env.VITE_BACKEND_URL}${application.resumeUrl}`}
                   target="_blank"
                   rel="noreferrer"
                   className="recruiter-ats-link-btn"
@@ -234,3 +234,5 @@ const RecruiterAtsDetailsOverlay = ({
 };
 
 export default RecruiterAtsDetailsOverlay;
+
+

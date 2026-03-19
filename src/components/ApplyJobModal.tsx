@@ -97,7 +97,7 @@ const ApplyJobModal = ({
               <h5>Resume</h5>
               {profileResume ? (
                 <a
-                  href={`http://localhost:5000${profileResume}`}
+                  href={`${import.meta.env.VITE_BACKEND_URL}${profileResume}`}
                   target="_blank"
                   rel="noreferrer"
                   className="apply-modal-link"
@@ -216,3 +216,5 @@ const ApplyJobModal = ({
 };
 
 export default ApplyJobModal;
+
+

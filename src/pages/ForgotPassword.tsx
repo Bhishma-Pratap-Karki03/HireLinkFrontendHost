@@ -32,7 +32,7 @@ const ForgotPassword = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/password/request-reset",
+        `${import.meta.env.VITE_API_BASE_URL}/password/request-reset`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -251,3 +251,5 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
+
+

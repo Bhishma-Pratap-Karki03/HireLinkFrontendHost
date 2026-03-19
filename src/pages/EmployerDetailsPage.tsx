@@ -173,7 +173,7 @@ const EmployerDetailsPage = () => {
       const token = localStorage.getItem("authToken");
 
       const response = await fetch(
-        `http://localhost:5000/api/employers/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/employers/${id}`,
         {
           method: "GET",
           headers: token
@@ -203,7 +203,7 @@ const EmployerDetailsPage = () => {
             Boolean(currentUserId) && String(currentUserId) === String(id);
 
           if (isSelfRequest && token) {
-            const meRes = await fetch("http://localhost:5000/api/profile/me", {
+            const meRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
               headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -220,7 +220,7 @@ const EmployerDetailsPage = () => {
                 logo: me.profilePicture
                   ? me.profilePicture.startsWith("http")
                     ? me.profilePicture
-                    : `http://localhost:5000${me.profilePicture}`
+                    : `${import.meta.env.VITE_BACKEND_URL}${me.profilePicture}`
                   : "",
                 location: me.address || "Location not specified",
                 email: me.email || "",
@@ -233,7 +233,7 @@ const EmployerDetailsPage = () => {
                     item?.imageUrl
                       ? item.imageUrl.startsWith("http")
                         ? item.imageUrl
-                        : `http://localhost:5000${item.imageUrl}`
+                        : `${import.meta.env.VITE_BACKEND_URL}${item.imageUrl}`
                       : null,
                   )
                   .filter(Boolean),
@@ -255,7 +255,7 @@ const EmployerDetailsPage = () => {
 
           // Keep hero card visible by loading basic employer listing data.
           const listResponse = await fetch(
-            "http://localhost:5000/api/employers",
+            `${import.meta.env.VITE_API_BASE_URL}/employers`,
           );
           const listData = await listResponse.json();
 
@@ -301,7 +301,7 @@ const EmployerDetailsPage = () => {
       setJobsLoading(true);
       setJobsError(null);
       const response = await fetch(
-        `http://localhost:5000/api/jobs?recruiterId=${id}&sort=newest&limit=6`,
+        `${import.meta.env.VITE_API_BASE_URL}/jobs?recruiterId=${id}&sort=newest&limit=6`,
       );
       const data = await response.json();
       if (!response.ok) {
@@ -336,7 +336,7 @@ const EmployerDetailsPage = () => {
     try {
       const token = localStorage.getItem("authToken");
       const response = await fetch(
-        `http://localhost:5000/api/reviews/company/${id}/my-review`,
+        `${import.meta.env.VITE_API_BASE_URL}/reviews/company/${id}/my-review`,
         {
           method: "GET",
           headers: {
@@ -377,7 +377,7 @@ const EmployerDetailsPage = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/reviews/company/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/reviews/company/${id}`,
         {
           method: "GET",
           headers: {
@@ -457,7 +457,7 @@ const EmployerDetailsPage = () => {
 
       try {
         const res = await fetch(
-          `http://localhost:5000/api/connections/statuses?targetIds=${company.id}`,
+          `${import.meta.env.VITE_API_BASE_URL}/connections/statuses?targetIds=${company.id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -494,7 +494,7 @@ const EmployerDetailsPage = () => {
 
       try {
         const res = await fetch(
-          `http://localhost:5000/api/connections/mutual/${company.id}`,
+          `${import.meta.env.VITE_API_BASE_URL}/connections/mutual/${company.id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -538,7 +538,7 @@ const EmployerDetailsPage = () => {
       const entries = await Promise.all(
         jobIds.map(async (jobId) => {
           const res = await fetch(
-            `http://localhost:5000/api/applications/status/${jobId}`,
+            `${import.meta.env.VITE_API_BASE_URL}/applications/status/${jobId}`,
             { headers: { Authorization: `Bearer ${token}` } },
           );
           const data = await res.json();
@@ -562,7 +562,7 @@ const EmployerDetailsPage = () => {
       const entries = await Promise.all(
         jobIds.map(async (jobId) => {
           const res = await fetch(
-            `http://localhost:5000/api/saved-jobs/status/${jobId}`,
+            `${import.meta.env.VITE_API_BASE_URL}/saved-jobs/status/${jobId}`,
             { headers: { Authorization: `Bearer ${token}` } },
           );
           const data = await res.json();
@@ -583,7 +583,7 @@ const EmployerDetailsPage = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/saved-jobs/toggle", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/saved-jobs/toggle`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -654,7 +654,7 @@ const EmployerDetailsPage = () => {
 
     try {
       setSendingConnection(true);
-      const res = await fetch("http://localhost:5000/api/connections/request", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/request`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -683,7 +683,7 @@ const EmployerDetailsPage = () => {
   const resolveLogo = (logo?: string) => {
     if (!logo) return defaultLogo;
     if (logo.startsWith("http")) return logo;
-    return `http://localhost:5000${logo.startsWith("/") ? "" : "/"}${logo}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${logo.startsWith("/") ? "" : "/"}${logo}`;
   };
 
   const formatRichTextForDisplay = (content?: string) => {
@@ -695,7 +695,7 @@ const EmployerDetailsPage = () => {
   const resolveProfileImage = (profilePicture?: string) => {
     if (!profilePicture || profilePicture.trim() === "") return defaultLogo;
     if (profilePicture.startsWith("http")) return profilePicture;
-    return `http://localhost:5000${profilePicture.startsWith("/") ? "" : "/"}${profilePicture}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${profilePicture.startsWith("/") ? "" : "/"}${profilePicture}`;
   };
 
   // Review form handlers
@@ -747,7 +747,7 @@ const EmployerDetailsPage = () => {
       }
 
       const response = await fetch(
-        `http://localhost:5000/api/reviews/company/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/reviews/company/${id}`,
         {
           method: "POST",
           headers: {
@@ -831,7 +831,7 @@ const EmployerDetailsPage = () => {
     try {
       const token = localStorage.getItem("authToken");
       const response = await fetch(
-        `http://localhost:5000/api/reviews/${existingReview.id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/reviews/${existingReview.id}`,
         {
           method: "PUT",
           headers: {
@@ -893,7 +893,7 @@ const EmployerDetailsPage = () => {
     try {
       const token = localStorage.getItem("authToken");
       const response = await fetch(
-        `http://localhost:5000/api/reviews/${existingReview.id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/reviews/${existingReview.id}`,
         {
           method: "DELETE",
           headers: {
@@ -1891,3 +1891,5 @@ const EmployerDetailsPage = () => {
 };
 
 export default EmployerDetailsPage;
+
+

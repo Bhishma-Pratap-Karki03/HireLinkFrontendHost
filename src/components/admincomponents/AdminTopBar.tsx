@@ -55,7 +55,7 @@ const AdminTopBar: React.FC<AdminTopBarProps> = ({
         setError("");
       }
       const response = await fetch(
-        "http://localhost:5000/api/contact/admin/messages?status=all",
+        `${import.meta.env.VITE_API_BASE_URL}/contact/admin/messages?status=all`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -226,7 +226,7 @@ const AdminTopBar: React.FC<AdminTopBarProps> = ({
       await Promise.all(
         unreadItems.map((item) =>
           fetch(
-            `http://localhost:5000/api/contact/admin/messages/${item._id}/read`,
+            `${import.meta.env.VITE_API_BASE_URL}/contact/admin/messages/${item._id}/read`,
             {
               method: "PATCH",
               headers: {
@@ -390,3 +390,5 @@ const AdminTopBar: React.FC<AdminTopBarProps> = ({
 };
 
 export default AdminTopBar;
+
+

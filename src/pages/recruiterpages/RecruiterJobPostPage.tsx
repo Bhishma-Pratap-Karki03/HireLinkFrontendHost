@@ -253,7 +253,7 @@ const RecruiterJobPostPage: React.FC = () => {
       setAssessmentSubmitSuccess("");
       const token = localStorage.getItem("authToken");
       const response = await fetch(
-        `http://localhost:5000/api/recruiter-assessments/${assessmentId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/recruiter-assessments/${assessmentId}`,
         {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         },
@@ -273,7 +273,7 @@ const RecruiterJobPostPage: React.FC = () => {
     const loadJobForEdit = async () => {
       if (!isEditMode || !jobIdParam) return;
       try {
-        const res = await fetch(`http://localhost:5000/api/jobs/${jobIdParam}`);
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/jobs/${jobIdParam}`);
         const data = await res.json();
         if (!res.ok) {
           throw new Error(data?.message || "Failed to load job");
@@ -641,7 +641,7 @@ const RecruiterJobPostPage: React.FC = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/jobs${isEditMode ? `/${jobIdParam}` : ""}`,
+        `${import.meta.env.VITE_API_BASE_URL}/jobs${isEditMode ? `/${jobIdParam}` : ""}`,
         {
         method: isEditMode ? "PUT" : "POST",
         headers: {
@@ -751,7 +751,7 @@ const RecruiterJobPostPage: React.FC = () => {
   const resolveCompanyLogoPath = (logo?: string) => {
     if (!logo) return "";
     if (logo.startsWith("http")) return logo;
-    return `http://localhost:5000${logo.startsWith("/") ? "" : "/"}${logo}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${logo.startsWith("/") ? "" : "/"}${logo}`;
   };
 
   const defaultEmail = (() => {
@@ -794,7 +794,7 @@ const RecruiterJobPostPage: React.FC = () => {
       try {
         const token = localStorage.getItem("authToken");
         if (!token) return;
-        const response = await fetch("http://localhost:5000/api/profile/me", {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -881,7 +881,7 @@ const RecruiterJobPostPage: React.FC = () => {
       setAssessmentSubmitError("");
       const isUpdate = Boolean(selectedAssessmentId);
       const response = await fetch(
-        `http://localhost:5000/api/recruiter-assessments${isUpdate ? `/${selectedAssessmentId}` : ""}`,
+        `${import.meta.env.VITE_API_BASE_URL}/recruiter-assessments${isUpdate ? `/${selectedAssessmentId}` : ""}`,
         {
         method: isUpdate ? "PUT" : "POST",
         headers: {
@@ -2394,3 +2394,5 @@ const RecruiterJobPostPage: React.FC = () => {
 };
 
 export default RecruiterJobPostPage;
+
+

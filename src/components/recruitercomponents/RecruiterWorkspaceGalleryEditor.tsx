@@ -294,7 +294,7 @@ const RecruiterWorkspaceGalleryEditor: React.FC<
       ? image.imageUrl
       : `/uploads/workspaceimages/${image.imageUrl}`;
 
-    return `http://localhost:5000${imageUrl}?t=${Date.now()}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${imageUrl}?t=${Date.now()}`;
   };
 
   // Save changes
@@ -728,3 +728,5 @@ const RecruiterWorkspaceGalleryEditor: React.FC<
 };
 
 export default RecruiterWorkspaceGalleryEditor;
+
+

@@ -36,8 +36,8 @@ const AssessmentPreviewPage = () => {
         setError("");
         const base =
           source === "recruiter"
-            ? "http://localhost:5000/api/recruiter-assessments"
-            : "http://localhost:5000/api/assessments";
+            ? `${import.meta.env.VITE_API_BASE_URL}/recruiter-assessments`
+            : `${import.meta.env.VITE_API_BASE_URL}/assessments`;
         const response = await fetch(`${base}/${assessmentId}`);
         const data = await response.json();
         if (!response.ok) {
@@ -175,3 +175,5 @@ const AssessmentPreviewPage = () => {
 };
 
 export default AssessmentPreviewPage;
+
+

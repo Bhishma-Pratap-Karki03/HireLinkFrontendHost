@@ -49,7 +49,7 @@ const AdminAssessmentsPage: React.FC = () => {
     try {
       setLoading(true);
       setError("");
-      const response = await fetch("http://localhost:5000/api/assessments");
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/assessments`);
       const data = await response.json();
       if (!response.ok) {
         throw new Error(data?.message || "Failed to load assessments");
@@ -89,7 +89,7 @@ const AdminAssessmentsPage: React.FC = () => {
     try {
       setDeleting(true);
       const response = await fetch(
-        `http://localhost:5000/api/assessments/${deleteTarget.id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/assessments/${deleteTarget.id}`,
         {
           method: "DELETE",
           headers: {
@@ -215,7 +215,7 @@ const AdminAssessmentsPage: React.FC = () => {
       setTogglingId(item.id);
       setError("");
       const response = await fetch(
-        `http://localhost:5000/api/assessments/${item.id}/status`,
+        `${import.meta.env.VITE_API_BASE_URL}/assessments/${item.id}/status`,
         {
           method: "PATCH",
           headers: {
@@ -621,4 +621,6 @@ const AdminAssessmentsPage: React.FC = () => {
 };
 
 export default AdminAssessmentsPage;
+
+
 

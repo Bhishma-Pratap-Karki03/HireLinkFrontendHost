@@ -185,7 +185,7 @@ const CandidateDashboard = () => {
       setError("");
       const query = new URLSearchParams({ from, to }).toString();
       const response = await fetch(
-        `http://localhost:5000/api/users/candidate/dashboard-stats?${query}`,
+        `${import.meta.env.VITE_API_BASE_URL}/users/candidate/dashboard-stats?${query}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -750,3 +750,5 @@ const CandidateDashboard = () => {
 };
 
 export default CandidateDashboard;
+
+

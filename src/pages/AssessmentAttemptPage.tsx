@@ -94,8 +94,8 @@ const AssessmentAttemptPage = () => {
       setError("");
       const response = await fetch(
         candidateId
-          ? `http://localhost:5000/api/assessments/candidate/${candidateId}/attempts/${attemptId}`
-          : `http://localhost:5000/api/assessments/attempts/${attemptId}`,
+          ? `${import.meta.env.VITE_API_BASE_URL}/assessments/candidate/${candidateId}/attempts/${attemptId}`
+          : `${import.meta.env.VITE_API_BASE_URL}/assessments/attempts/${attemptId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -212,8 +212,8 @@ const AssessmentAttemptPage = () => {
       setSaving(true);
       const base =
         attemptSource === "recruiter"
-          ? "http://localhost:5000/api/recruiter-assessments"
-          : "http://localhost:5000/api/assessments";
+          ? `${import.meta.env.VITE_API_BASE_URL}/recruiter-assessments`
+          : `${import.meta.env.VITE_API_BASE_URL}/assessments`;
       await fetch(`${base}/${assessmentId}/attempts/${attemptId}/answers`, {
           method: "POST",
           headers: {
@@ -259,8 +259,8 @@ const AssessmentAttemptPage = () => {
       }
       const base =
         attemptSource === "recruiter"
-          ? "http://localhost:5000/api/recruiter-assessments"
-          : "http://localhost:5000/api/assessments";
+          ? `${import.meta.env.VITE_API_BASE_URL}/recruiter-assessments`
+          : `${import.meta.env.VITE_API_BASE_URL}/assessments`;
       const endpoint = `${base}/${assessmentId}/attempts/${attemptId}/submit`;
       let response: Response;
       if (
@@ -673,7 +673,7 @@ const AssessmentAttemptPage = () => {
                                 Current upload:
                                 <a
                                   className="assessment-link-output"
-                                  href={`http://localhost:5000${codeFileUrl}`}
+                                  href={`${import.meta.env.VITE_BACKEND_URL}${codeFileUrl}`}
                                   target="_blank"
                                   rel="noreferrer"
                                 >
@@ -706,7 +706,7 @@ const AssessmentAttemptPage = () => {
                             {codeFileUrl ? (
                               <a
                                 className="assessment-link-output"
-                                href={`http://localhost:5000${codeFileUrl}`}
+                                href={`${import.meta.env.VITE_BACKEND_URL}${codeFileUrl}`}
                                 target="_blank"
                                 rel="noreferrer"
                               >
@@ -767,3 +767,5 @@ const AssessmentAttemptPage = () => {
 };
 
 export default AssessmentAttemptPage;
+
+

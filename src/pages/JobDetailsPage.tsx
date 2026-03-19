@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -152,7 +152,7 @@ const JobDetailsPage = () => {
     try {
       setLoading(true);
       setError("");
-      const response = await fetch(`http://localhost:5000/api/jobs/${id}`);
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/jobs/${id}`);
       const data = await response.json();
       if (!response.ok) {
         throw new Error(data?.message || "Failed to load job details");
@@ -177,7 +177,7 @@ const JobDetailsPage = () => {
     try {
       const jobId = job.id || job._id;
       const res = await fetch(
-        `http://localhost:5000/api/saved-jobs/status/${jobId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/saved-jobs/status/${jobId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -203,7 +203,7 @@ const JobDetailsPage = () => {
     try {
       const jobId = job.id || job._id;
       const res = await fetch(
-        `http://localhost:5000/api/applications/status/${jobId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/applications/status/${jobId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -233,8 +233,8 @@ const JobDetailsPage = () => {
         setAssessmentError("");
         const endpoint =
           job.assessmentSource === "admin"
-            ? `http://localhost:5000/api/assessments/${job.assessmentId}`
-            : `http://localhost:5000/api/recruiter-assessments/${job.assessmentId}`;
+            ? `${import.meta.env.VITE_API_BASE_URL}/assessments/${job.assessmentId}`
+            : `${import.meta.env.VITE_API_BASE_URL}/recruiter-assessments/${job.assessmentId}`;
         const response = await fetch(endpoint);
         const data = await response.json();
         if (!response.ok) {
@@ -285,7 +285,7 @@ const JobDetailsPage = () => {
 
         if (source === "recruiter") {
           const response = await fetch(
-            `http://localhost:5000/api/recruiter-assessments/${job.assessmentId}/meta`,
+            `${import.meta.env.VITE_API_BASE_URL}/recruiter-assessments/${job.assessmentId}/meta`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -311,7 +311,7 @@ const JobDetailsPage = () => {
         }
 
         const response = await fetch(
-          "http://localhost:5000/api/assessments/available",
+          `${import.meta.env.VITE_API_BASE_URL}/assessments/available`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -349,7 +349,7 @@ const JobDetailsPage = () => {
   const resolveLogo = (logo?: string) => {
     if (!logo) return defaultLogo;
     if (logo.startsWith("http")) return logo;
-    return `http://localhost:5000${logo.startsWith("/") ? "" : "/"}${logo}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${logo.startsWith("/") ? "" : "/"}${logo}`;
   };
 
   const formatWorkMode = (mode?: string) => {
@@ -424,7 +424,7 @@ const JobDetailsPage = () => {
     }
     try {
       setApplyLoading(true);
-      const profileRes = await fetch("http://localhost:5000/api/profile/me", {
+      const profileRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const profileData = await profileRes.json();
@@ -447,7 +447,7 @@ const JobDetailsPage = () => {
     if (!token || !job) return;
     const jobId = job.id || job._id;
     try {
-      const res = await fetch("http://localhost:5000/api/saved-jobs/toggle", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/saved-jobs/toggle`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -498,7 +498,7 @@ const JobDetailsPage = () => {
       }
 
       const response = await fetch(
-        "http://localhost:5000/api/applications/apply",
+        `${import.meta.env.VITE_API_BASE_URL}/applications/apply`,
         {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
@@ -716,7 +716,7 @@ const JobDetailsPage = () => {
                           <div>
                             <h3>{assessment.title}</h3>
                             <p className="job-details-muted">
-                              {formatDifficulty(assessment.difficulty)} ·{" "}
+                              {formatDifficulty(assessment.difficulty)} �{" "}
                               {assessment.type.toUpperCase()}
                             </p>
                           </div>
@@ -800,8 +800,8 @@ const JobDetailsPage = () => {
                                   }
                                   const base =
                                     job.assessmentSource === "admin"
-                                      ? "http://localhost:5000/api/assessments"
-                                      : "http://localhost:5000/api/recruiter-assessments";
+                                      ? `${import.meta.env.VITE_API_BASE_URL}/assessments`
+                                      : `${import.meta.env.VITE_API_BASE_URL}/recruiter-assessments`;
                                   fetch(
                                     `${base}/${job.assessmentId}/attempts/start`,
                                     {
@@ -991,5 +991,7 @@ const JobDetailsPage = () => {
 };
 
 export default JobDetailsPage;
+
+
 
 

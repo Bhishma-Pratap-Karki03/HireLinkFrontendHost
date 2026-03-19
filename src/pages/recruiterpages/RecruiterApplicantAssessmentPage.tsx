@@ -94,7 +94,7 @@ const RecruiterApplicantAssessmentPage = () => {
         setLoading(true);
         setError("");
         const res = await fetch(
-          `http://localhost:5000/api/applications/${applicationId}/assessment`,
+          `${import.meta.env.VITE_API_BASE_URL}/applications/${applicationId}/assessment`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -305,7 +305,7 @@ const RecruiterApplicantAssessmentPage = () => {
                       <div className="recruiter-assessment-page-block">
                         <span>Uploaded File</span>
                         <a
-                          href={`http://localhost:5000${assessment.codeFileUrl}`}
+                          href={`${import.meta.env.VITE_BACKEND_URL}${assessment.codeFileUrl}`}
                           target="_blank"
                           rel="noreferrer"
                         >
@@ -335,5 +335,7 @@ const RecruiterApplicantAssessmentPage = () => {
 };
 
 export default RecruiterApplicantAssessmentPage;
+
+
 
 

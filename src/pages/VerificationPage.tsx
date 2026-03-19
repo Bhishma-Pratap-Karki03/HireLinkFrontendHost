@@ -66,7 +66,7 @@ const VerificationPage = () => {
     setIsCheckingStatus(true);
     try {
       const response = await fetch(
-        `http://localhost:5000/api/verify/check-status?email=${encodeURIComponent(
+        `${import.meta.env.VITE_API_BASE_URL}/verify/check-status?email=${encodeURIComponent(
           userEmail
         )}`
       );
@@ -220,7 +220,7 @@ const VerificationPage = () => {
       if (isVerificationType) {
         // Email verification flow
         response = await fetch(
-          "http://localhost:5000/api/verify/verify-email",
+          `${import.meta.env.VITE_API_BASE_URL}/verify/verify-email`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -271,7 +271,7 @@ const VerificationPage = () => {
       } else {
         // Password reset verification flow
         response = await fetch(
-          "http://localhost:5000/api/password/verify-code",
+          `${import.meta.env.VITE_API_BASE_URL}/password/verify-code`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -336,7 +336,7 @@ const VerificationPage = () => {
       if (isVerificationType) {
         // Resend verification code
         response = await fetch(
-          "http://localhost:5000/api/verify/resend-verification",
+          `${import.meta.env.VITE_API_BASE_URL}/verify/resend-verification`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -346,7 +346,7 @@ const VerificationPage = () => {
       } else {
         // Resend password reset code
         response = await fetch(
-          "http://localhost:5000/api/password/resend-code",
+          `${import.meta.env.VITE_API_BASE_URL}/password/resend-code`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -618,3 +618,5 @@ const VerificationPage = () => {
 };
 
 export default VerificationPage;
+
+

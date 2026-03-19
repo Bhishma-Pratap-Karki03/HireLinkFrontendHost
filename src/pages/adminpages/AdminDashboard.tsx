@@ -172,7 +172,7 @@ const formatDate = (value?: string | null) => {
 const resolveImage = (value?: string) => {
   if (!value) return defaultAvatar;
   if (value.startsWith("http")) return value;
-  return `http://localhost:5000${value}`;
+  return `${import.meta.env.VITE_BACKEND_URL}${value}`;
 };
 
 const chartColors = [
@@ -231,7 +231,7 @@ const AdminDashboard = () => {
       setError("");
       const query = new URLSearchParams({ from, to }).toString();
       const response = await fetch(
-        `http://localhost:5000/api/users/admin/dashboard-stats?${query}`,
+        `${import.meta.env.VITE_API_BASE_URL}/users/admin/dashboard-stats?${query}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -883,3 +883,5 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
+

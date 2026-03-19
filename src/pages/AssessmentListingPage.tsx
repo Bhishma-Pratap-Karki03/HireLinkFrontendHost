@@ -81,7 +81,7 @@ const AssessmentListingPage = () => {
       setLoading(true);
       setError("");
       const response = await fetch(
-        "http://localhost:5000/api/assessments/available",
+        `${import.meta.env.VITE_API_BASE_URL}/assessments/available`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -189,7 +189,7 @@ const AssessmentListingPage = () => {
     }
     try {
       const response = await fetch(
-        `http://localhost:5000/api/assessments/${assessment.id}/attempts/start`,
+        `${import.meta.env.VITE_API_BASE_URL}/assessments/${assessment.id}/attempts/start`,
         {
           method: "POST",
           headers: {
@@ -500,3 +500,5 @@ const AssessmentListingPage = () => {
 };
 
 export default AssessmentListingPage;
+
+

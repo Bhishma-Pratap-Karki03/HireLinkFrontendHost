@@ -35,7 +35,7 @@ type ConnectionNotificationsPanelProps = {
 const resolveAvatar = (value?: string) => {
   if (!value) return defaultAvatar;
   if (value.startsWith("http")) return value;
-  return `http://localhost:5000${value}`;
+  return `${import.meta.env.VITE_BACKEND_URL}${value}`;
 };
 
 const ConnectionNotificationsPanel = ({
@@ -78,7 +78,7 @@ const ConnectionNotificationsPanel = ({
       }
 
       const res = await fetch(
-        `http://localhost:5000/api/connections/notifications?${params.toString()}`,
+        `${import.meta.env.VITE_API_BASE_URL}/connections/notifications?${params.toString()}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -138,7 +138,7 @@ const ConnectionNotificationsPanel = ({
     if (!token) return;
 
     try {
-      await fetch("http://localhost:5000/api/connections/notifications/read", {
+      await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/notifications/read`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -179,7 +179,7 @@ const ConnectionNotificationsPanel = ({
 
     try {
       const res = await fetch(
-        "http://localhost:5000/api/connections/notifications/delete",
+        `${import.meta.env.VITE_API_BASE_URL}/connections/notifications/delete`,
         {
           method: "POST",
           headers: {
@@ -402,3 +402,5 @@ const ConnectionNotificationsPanel = ({
 };
 
 export default ConnectionNotificationsPanel;
+
+

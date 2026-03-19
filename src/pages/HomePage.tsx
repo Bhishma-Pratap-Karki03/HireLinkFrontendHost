@@ -169,7 +169,7 @@ const HomePage = () => {
         setCompaniesLoading(true);
         setCompaniesError("");
         const response = await fetch(
-          "http://localhost:5000/api/jobs/companies-summary?limit=7",
+          `${import.meta.env.VITE_API_BASE_URL}/jobs/companies-summary?limit=7`,
         );
         const data = await response.json();
         if (!response.ok) {
@@ -203,7 +203,7 @@ const HomePage = () => {
         setJobsLoading(true);
         setJobsError("");
         const response = await fetch(
-          "http://localhost:5000/api/jobs?sort=newest&page=1&limit=6",
+          `${import.meta.env.VITE_API_BASE_URL}/jobs?sort=newest&page=1&limit=6`,
         );
         const data = await response.json();
         if (!response.ok) {
@@ -249,7 +249,7 @@ const HomePage = () => {
         const checks = await Promise.all(
           jobs.map(async (job) => {
             const response = await fetch(
-              `http://localhost:5000/api/applications/status/${job.id}`,
+              `${import.meta.env.VITE_API_BASE_URL}/applications/status/${job.id}`,
               {
                 headers: { Authorization: `Bearer ${token}` },
               },
@@ -289,7 +289,7 @@ const HomePage = () => {
         const checks = await Promise.all(
           jobs.map(async (job) => {
             const response = await fetch(
-              `http://localhost:5000/api/saved-jobs/status/${job.id}`,
+              `${import.meta.env.VITE_API_BASE_URL}/saved-jobs/status/${job.id}`,
               {
                 headers: { Authorization: `Bearer ${token}` },
               },
@@ -320,7 +320,7 @@ const HomePage = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/saved-jobs/toggle", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/saved-jobs/toggle`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -341,7 +341,7 @@ const HomePage = () => {
   const resolveLogo = (logo?: string) => {
     if (!logo) return "";
     if (logo.startsWith("http")) return logo;
-    return `http://localhost:5000${logo.startsWith("/") ? "" : "/"}${logo}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${logo.startsWith("/") ? "" : "/"}${logo}`;
   };
 
   const formatWorkMode = (mode?: string) => {
@@ -462,8 +462,8 @@ const HomePage = () => {
     try {
       setApplyLoading(true);
       const [jobRes, profileRes] = await Promise.all([
-        fetch(`http://localhost:5000/api/jobs/${jobId}`),
-        fetch("http://localhost:5000/api/profile/me", {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/jobs/${jobId}`),
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -519,7 +519,7 @@ const HomePage = () => {
 
     try {
       setIsShareLoading(true);
-      const res = await fetch("http://localhost:5000/api/connections/friends", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/friends`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -562,7 +562,7 @@ const HomePage = () => {
       setIsSendingShare(true);
       setShareError("");
       const content = `Check out this job: ${shareJob.jobTitle} at ${shareJob.companyName}\n${shareLink}`;
-      const res = await fetch("http://localhost:5000/api/messages/send", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/messages/send`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -613,7 +613,7 @@ const HomePage = () => {
         formData.append("resumeUrl", applyProfileResume);
       }
 
-      const response = await fetch("http://localhost:5000/api/applications/apply", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/applications/apply`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
@@ -1202,6 +1202,8 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+
 
 
 

@@ -133,7 +133,7 @@ const RecruiterProfilePage: React.FC = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:5000/api/profile/me", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -184,7 +184,7 @@ const RecruiterProfilePage: React.FC = () => {
         const token = localStorage.getItem("authToken");
 
         const response = await fetch(
-          `http://localhost:5000/api/reviews/company/${userProfile.id}/manage?status=${tab}&page=${page}`,
+          `${import.meta.env.VITE_API_BASE_URL}/reviews/company/${userProfile.id}/manage?status=${tab}&page=${page}`,
           {
             method: "GET",
             headers: {
@@ -236,7 +236,7 @@ const RecruiterProfilePage: React.FC = () => {
     try {
       const token = localStorage.getItem("authToken");
       const response = await fetch(
-        `http://localhost:5000/api/reviews/${reviewId}/status`,
+        `${import.meta.env.VITE_API_BASE_URL}/reviews/${reviewId}/status`,
         {
           method: "PUT",
           headers: {
@@ -287,7 +287,7 @@ const RecruiterProfilePage: React.FC = () => {
     try {
       const token = localStorage.getItem("authToken");
       const response = await fetch(
-        `http://localhost:5000/api/reviews/${reviewId}/manage`,
+        `${import.meta.env.VITE_API_BASE_URL}/reviews/${reviewId}/manage`,
         {
           method: "DELETE",
           headers: {
@@ -373,7 +373,7 @@ const RecruiterProfilePage: React.FC = () => {
       setIsLoading(true);
 
       const profileSettingsResponse = await fetch(
-        "http://localhost:5000/api/profile/me",
+        `${import.meta.env.VITE_API_BASE_URL}/profile/me`,
         {
           method: "PUT",
           headers: {
@@ -397,7 +397,7 @@ const RecruiterProfilePage: React.FC = () => {
           formData.append("profilePicture", data.imageFile);
 
           const response = await fetch(
-            "http://localhost:5000/api/profile/me/picture",
+            `${import.meta.env.VITE_API_BASE_URL}/profile/me/picture`,
             {
               method: "POST",
               headers: {
@@ -416,7 +416,7 @@ const RecruiterProfilePage: React.FC = () => {
           }
         } else {
           const response = await fetch(
-            "http://localhost:5000/api/profile/me/picture",
+            `${import.meta.env.VITE_API_BASE_URL}/profile/me/picture`,
             {
               method: "DELETE",
               headers: {
@@ -461,7 +461,7 @@ const RecruiterProfilePage: React.FC = () => {
     try {
       setIsLoading(true);
 
-      const response = await fetch("http://localhost:5000/api/profile/me", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -512,7 +512,7 @@ const RecruiterProfilePage: React.FC = () => {
     try {
       setIsLoading(true);
 
-      const response = await fetch("http://localhost:5000/api/profile/me", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -567,7 +567,7 @@ const RecruiterProfilePage: React.FC = () => {
     try {
       setIsLoading(true);
 
-      const response = await fetch("http://localhost:5000/api/profile/me", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -616,7 +616,7 @@ const RecruiterProfilePage: React.FC = () => {
       // Handle deletions first
       for (const imageId of data.deletedImageIds) {
         const response = await fetch(
-          `http://localhost:5000/api/workspace/image/${imageId}`,
+          `${import.meta.env.VITE_API_BASE_URL}/workspace/image/${imageId}`,
           {
             method: "DELETE",
             headers: {
@@ -637,7 +637,7 @@ const RecruiterProfilePage: React.FC = () => {
         formData.append("workspaceImage", imageFile);
 
         const response = await fetch(
-          "http://localhost:5000/api/workspace/upload",
+          `${import.meta.env.VITE_API_BASE_URL}/workspace/upload`,
           {
             method: "POST",
             headers: {
@@ -656,7 +656,7 @@ const RecruiterProfilePage: React.FC = () => {
       // Handle reordering if there are existing images
       if (data.reorderedImageIds.length > 0) {
         const response = await fetch(
-          "http://localhost:5000/api/workspace/reorder",
+          `${import.meta.env.VITE_API_BASE_URL}/workspace/reorder`,
           {
             method: "PUT",
             headers: {
@@ -705,7 +705,7 @@ const RecruiterProfilePage: React.FC = () => {
       finalUrl = `/uploads/workspaceimages/${imageUrl.split("/").pop()}`;
     }
 
-    return `http://localhost:5000${finalUrl}?t=${Date.now()}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${finalUrl}?t=${Date.now()}`;
   };
 
   const formatRichTextForDisplay = (content: string) => {
@@ -751,7 +751,7 @@ const RecruiterProfilePage: React.FC = () => {
       return `${userProfile.profilePicture}${separator}t=${Date.now()}`;
     }
 
-    return `http://localhost:5000${userProfile.profilePicture}?t=${Date.now()}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${userProfile.profilePicture}?t=${Date.now()}`;
   };
 
   const handlePostJob = () => {
@@ -776,7 +776,7 @@ const RecruiterProfilePage: React.FC = () => {
 
     try {
       setIsUpdatingVisibility(true);
-      const response = await fetch("http://localhost:5000/api/profile/me", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -1483,3 +1483,5 @@ const RecruiterProfilePage: React.FC = () => {
 };
 
 export default RecruiterProfilePage;
+
+

@@ -44,7 +44,7 @@ type MessagePanelProps = {
 const resolveAvatar = (value?: string) => {
   if (!value) return defaultAvatar;
   if (value.startsWith("http")) return value;
-  return `http://localhost:5000${value}`;
+  return `${import.meta.env.VITE_BACKEND_URL}${value}`;
 };
 
 const formatTime = (value?: string) => {
@@ -98,7 +98,7 @@ const MessagePanel = ({
         setError("");
       }
       const res = await fetch(
-        "http://localhost:5000/api/messages/conversations",
+        `${import.meta.env.VITE_API_BASE_URL}/messages/conversations`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -139,7 +139,7 @@ const MessagePanel = ({
         setError("");
       }
       const res = await fetch(
-        `http://localhost:5000/api/messages/conversation/${targetUserId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/messages/conversation/${targetUserId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -305,7 +305,7 @@ const MessagePanel = ({
     try {
       setSending(true);
       setError("");
-      const res = await fetch("http://localhost:5000/api/messages/send", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/messages/send`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -535,3 +535,5 @@ const MessagePanel = ({
 };
 
 export default MessagePanel;
+
+

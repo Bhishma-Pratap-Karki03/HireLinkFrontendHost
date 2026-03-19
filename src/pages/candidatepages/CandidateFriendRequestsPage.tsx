@@ -54,7 +54,7 @@ const CandidateFriendRequestsPage = () => {
         setLoading(true);
         setError("");
       }
-      const res = await fetch("http://localhost:5000/api/connections/incoming", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/incoming`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -78,7 +78,7 @@ const CandidateFriendRequestsPage = () => {
     if (!token || !requesterId) return;
     try {
       setActionLoadingId(requesterId);
-      const res = await fetch("http://localhost:5000/api/connections/respond", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/respond`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -142,7 +142,7 @@ const CandidateFriendRequestsPage = () => {
     const token = localStorage.getItem("authToken");
     if (!token) return;
     try {
-      const res = await fetch("http://localhost:5000/api/connections/friends", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/friends`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -160,7 +160,7 @@ const CandidateFriendRequestsPage = () => {
     if (!token || !targetUserId) return;
     try {
       setActionLoadingId(targetUserId);
-      const res = await fetch("http://localhost:5000/api/connections/remove", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/remove`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -183,7 +183,7 @@ const CandidateFriendRequestsPage = () => {
   const resolveAvatar = (value?: string) => {
     if (!value) return defaultAvatar;
     if (value.startsWith("http")) return value;
-    return `http://localhost:5000${value}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${value}`;
   };
 
   const formatDate = (value?: string) => {
@@ -505,5 +505,7 @@ const CandidateFriendRequestsPage = () => {
 };
 
 export default CandidateFriendRequestsPage;
+
+
 
 

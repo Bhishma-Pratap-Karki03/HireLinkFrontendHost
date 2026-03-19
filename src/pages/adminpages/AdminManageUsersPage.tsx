@@ -67,7 +67,7 @@ const AdminManageUsersPage = () => {
       });
 
       const response = await fetch(
-        `http://localhost:5000/api/users/admin/list?${query.toString()}`,
+        `${import.meta.env.VITE_API_BASE_URL}/users/admin/list?${query.toString()}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -156,7 +156,7 @@ const AdminManageUsersPage = () => {
   const resolveAvatar = (value?: string) => {
     if (!value) return defaultAvatar;
     if (value.startsWith("http")) return value;
-    return `http://localhost:5000${value}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${value}`;
   };
 
   const updateStatus = async (
@@ -172,7 +172,7 @@ const AdminManageUsersPage = () => {
     try {
       setActingUserId(userId);
       const response = await fetch(
-        `http://localhost:5000/api/users/admin/${userId}/status`,
+        `${import.meta.env.VITE_API_BASE_URL}/users/admin/${userId}/status`,
         {
           method: "PATCH",
           headers: {
@@ -208,7 +208,7 @@ const AdminManageUsersPage = () => {
     try {
       setActingUserId(userId);
       const response = await fetch(
-        `http://localhost:5000/api/users/admin/${userId}/role`,
+        `${import.meta.env.VITE_API_BASE_URL}/users/admin/${userId}/role`,
         {
           method: "PATCH",
           headers: {
@@ -752,3 +752,5 @@ const AdminManageUsersPage = () => {
 };
 
 export default AdminManageUsersPage;
+
+

@@ -107,7 +107,7 @@ const EmployersPage = () => {
       setError(null);
 
       // Make API call to fetch recruiters
-      const response = await fetch("http://localhost:5000/api/employers", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/employers`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -192,7 +192,7 @@ const EmployersPage = () => {
 
       try {
         const res = await fetch(
-          `http://localhost:5000/api/connections/statuses?targetIds=${targetIds.join(",")}`,
+          `${import.meta.env.VITE_API_BASE_URL}/connections/statuses?targetIds=${targetIds.join(",")}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -238,7 +238,7 @@ const EmployersPage = () => {
 
     try {
       setSendingConnectionId(targetUserId);
-      const res = await fetch("http://localhost:5000/api/connections/request", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/request`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -405,7 +405,7 @@ const EmployersPage = () => {
         const results = await Promise.all(
           targetIds.map(async (targetId) => {
             const res = await fetch(
-              `http://localhost:5000/api/connections/mutual/${targetId}`,
+              `${import.meta.env.VITE_API_BASE_URL}/connections/mutual/${targetId}`,
               {
                 headers: { Authorization: `Bearer ${token}` },
               },
@@ -767,7 +767,7 @@ const EmployersPage = () => {
                                         item.profilePicture
                                           ? item.profilePicture.startsWith("http")
                                             ? item.profilePicture
-                                            : `http://localhost:5000${item.profilePicture}`
+                                            : `${import.meta.env.VITE_BACKEND_URL}${item.profilePicture}`
                                           : defaultLogo
                                       }
                                       alt={item.fullName}
@@ -921,3 +921,5 @@ const EmployersPage = () => {
 };
 
 export default EmployersPage;
+
+

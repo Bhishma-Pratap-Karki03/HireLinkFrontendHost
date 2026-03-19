@@ -59,7 +59,7 @@ const CandidateAppliedStatusPage = () => {
   const resolveResume = (resumeUrl?: string) => {
     if (!resumeUrl) return "";
     if (resumeUrl.startsWith("http")) return resumeUrl;
-    return `http://localhost:5000${resumeUrl}`;
+    return `${import.meta.env.VITE_BACKEND_URL}${resumeUrl}`;
   };
 
   const cleanLabel = (value?: string) =>
@@ -133,7 +133,7 @@ const CandidateAppliedStatusPage = () => {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch("http://localhost:5000/api/applications/mine", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/applications/mine`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -324,6 +324,8 @@ const CandidateAppliedStatusPage = () => {
 };
 
 export default CandidateAppliedStatusPage;
+
+
 
 
 

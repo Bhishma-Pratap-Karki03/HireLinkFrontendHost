@@ -77,7 +77,7 @@ type ReportItem = {
 const resolveAvatar = (profilePicture?: string) => {
   if (!profilePicture) return defaultAvatar;
   if (profilePicture.startsWith("http")) return profilePicture;
-  return `http://localhost:5000${profilePicture}`;
+  return `${import.meta.env.VITE_BACKEND_URL}${profilePicture}`;
 };
 
 const formatDate = (value?: string) => {
@@ -161,10 +161,10 @@ const RecruiterJobApplicantsPage = () => {
       setError("");
 
       const [applicationsRes, atsRes] = await Promise.all([
-        fetch(`http://localhost:5000/api/applications/job/${id}`, {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/applications/job/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch(`http://localhost:5000/api/ats/results/${id}`, {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/ats/results/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -219,7 +219,7 @@ const RecruiterJobApplicantsPage = () => {
       setRunError("");
       setScanMessage("");
 
-      const scanRes = await fetch(`http://localhost:5000/api/ats/scan/${id}`, {
+      const scanRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/ats/scan/${id}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -253,7 +253,7 @@ const RecruiterJobApplicantsPage = () => {
     try {
       setStatusUpdating(applicationId);
       const res = await fetch(
-        `http://localhost:5000/api/applications/${applicationId}/status`,
+        `${import.meta.env.VITE_API_BASE_URL}/applications/${applicationId}/status`,
         {
           method: "PATCH",
           headers: {
@@ -629,3 +629,5 @@ const RecruiterJobApplicantsPage = () => {
 };
 
 export default RecruiterJobApplicantsPage;
+
+
