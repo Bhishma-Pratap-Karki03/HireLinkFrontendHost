@@ -1,0 +1,48 @@
+.portal-page-footer {
+  margin-top: auto;
+  width: 100%;
+  border-top: 1px solid #dce8f6;
+  padding: 16px 4px 4px;
+  color: #5f7694;
+  text-align: center;
+}
+
+.portal-page-footer p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #355478;
+}
+
+.portal-page-footer small {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #738aa5;
+}
+
+/* When footer is rendered as a direct child of recruiter containers,
+   keep it in the right content area (not under the sidebar). */
+.recruiter-dashboard-page-container > .portal-page-footer,
+.recruiter-postjob-container > .portal-page-footer,
+.recruiter-profile-page-container > .portal-page-footer,
+.recruiter-profile-layout > .portal-page-footer {
+  margin-left: 290px;
+  width: calc(100% - 290px);
+}
+
+@media (max-width: 1024px) {
+  .recruiter-dashboard-page-container > .portal-page-footer,
+  .recruiter-postjob-container > .portal-page-footer,
+  .recruiter-profile-page-container > .portal-page-footer,
+  .recruiter-profile-layout > .portal-page-footer {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .portal-page-footer {
+    padding: 14px 2px 2px;
+  }
+}

@@ -1,0 +1,17 @@
+:root {
+  font-family: "Montserrat", sans-serif;
+}
+
+body {
+  font-family: inherit;
+  margin: 0;
+  background-color: white;
+}
+
+#root,
+input,
+textarea,
+button,
+select {
+  font-family: "Montserrat", sans-serif;
+}

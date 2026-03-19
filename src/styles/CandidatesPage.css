@@ -1,0 +1,559 @@
+.candidates-page {
+  background: #ffffff;
+  min-height: 100vh;
+  font-family: "Montserrat", sans-serif;
+}
+
+.candidates-hero {
+  background: #fff7ef;
+  padding: 32px 20px 20px;
+}
+
+.candidates-hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.candidates-hero-text {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.candidates-hero-text h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f283c;
+  font-family: "Montserrat", sans-serif;
+}
+
+.candidates-hero-text p {
+  margin: 0;
+  color: #6c86c2;
+  font-size: 14px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.candidates-hero-search {
+  max-width: 1440px;
+  margin: 20px auto 0;
+}
+
+.candidates-search-pill {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 30px rgba(15, 40, 60, 0.08);
+  flex-wrap: wrap;
+}
+
+.candidates-search-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f7f9fc;
+  border-radius: 10px;
+  padding: 12px 14px;
+  flex: 1 1 180px;
+}
+
+.candidates-search-field img {
+  width: 16px;
+  height: 16px;
+}
+
+.candidates-search-field input {
+  width: 100%;
+  border: 1px solid #d7e0ef;
+  outline: none;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 10px 36px 10px 12px;
+  font-size: 14px;
+  color: #2c3a4b;
+  font-family: "Montserrat", sans-serif;
+}
+
+.candidates-search-field input::placeholder {
+  font-family: "Montserrat", sans-serif;
+}
+
+.candidates-search-btn {
+  background: #7c5cff;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+  cursor: pointer;
+}
+
+.candidates-body {
+  display: grid;
+  grid-template-columns: minmax(230px, 280px) 1fr;
+  gap: 24px;
+  padding: 24px 8% 60px;
+  align-items: start;
+}
+
+.candidates-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.candidates-filter-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.05);
+}
+
+.candidates-filter-card h3 {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: #0f283c;
+}
+
+.candidates-filter-card input {
+  width: 100%;
+  border: 1px solid #d7dfea;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #1f2937;
+  font-family: "Montserrat", sans-serif;
+}
+
+.candidates-filter-card input::placeholder {
+  font-family: "Montserrat", sans-serif;
+}
+
+.candidates-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  grid-auto-rows: 1fr;
+}
+
+.candidates-results {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.candidates-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid #dfe7f2;
+  box-shadow: 0 18px 34px rgba(15, 23, 42, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 250px;
+  height: 100%;
+  cursor: pointer;
+}
+
+.candidates-card-header {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  min-height: 0;
+}
+
+.candidates-card-header img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #e6eef7;
+  flex-shrink: 0;
+}
+
+.candidates-card-header div {
+  min-width: 0;
+}
+
+.candidates-card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #0f283c;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.candidates-card-header p {
+  margin: 3px 0 0;
+  color: #6b7280;
+  font-size: 13.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.candidates-card-header span {
+  display: block;
+  margin-top: 4px;
+  color: #2563eb;
+  font-size: 12.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.candidates-card-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 6px;
+  color: #6b7280;
+  font-size: 13.5px;
+  min-height: 34px;
+  align-content: start;
+}
+
+.candidates-card-meta span {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.candidates-card-meta strong {
+  font-size: 14.5px;
+  color: #0f283c;
+}
+
+.candidates-mutuals {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.candidates-mutual-avatars {
+  display: flex;
+  align-items: center;
+}
+
+.candidates-mutual-avatars img {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ffffff;
+  margin-left: -7px;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.12);
+}
+
+.candidates-mutual-avatars img:first-child {
+  margin-left: 0;
+}
+
+.candidates-mutual-avatars img.candidates-mutual-logo {
+  width: 36px;
+  height: 22px;
+  border-radius: 0 !important;
+  object-fit: contain !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none;
+  margin-left: -5px;
+}
+
+.candidates-mutuals span {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.candidates-card-skills {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  align-items: center;
+  overflow: hidden;
+}
+
+.candidates-card-skills span {
+  background: #f3f6ff;
+  color: #1f4acc;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.candidates-card-skills span.more {
+  background: #e9f0ff;
+  color: #1f4acc;
+  flex-shrink: 0;
+}
+
+.candidates-card-skills span.empty {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.candidates-card-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  align-items: center;
+  margin-top: auto;
+}
+
+.candidates-card-actions.is-single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.candidates-card-actions.is-admin-view {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.candidates-card-actions.is-admin-view button {
+  width: 100%;
+}
+
+.candidates-card-actions button {
+  width: 100%;
+  height: 42px;
+  border: 1px solid #d7e0ef;
+  background: #ffffff;
+  border-radius: 12px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0 12px;
+  box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    border-color 0.2s ease;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f283c;
+}
+
+.candidates-card-actions img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.candidates-card-actions button:hover {
+  border-color: #9bb7f0;
+  box-shadow: 0 12px 22px rgba(15, 23, 42, 0.12);
+  transform: translateY(-1px);
+}
+
+.candidates-card-actions button:disabled {
+  cursor: default;
+  transform: none;
+  box-shadow: 0 8px 14px rgba(15, 23, 42, 0.06);
+}
+
+.candidates-card-actions button.is-pending {
+  border-color: #f59e0b;
+  background: #fff8eb;
+  color: #b45309;
+}
+
+.candidates-card-actions button.is-friend {
+  border-color: #10b981;
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.candidates-state {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 14px;
+  color: #5f6f88;
+}
+
+.candidates-state.error {
+  background: #fff5f4;
+  color: #c0392b;
+}
+
+.public-empty-state {
+  border: 1px dashed #bfd1e8;
+  border-radius: 12px;
+  padding: 22px 16px;
+  text-align: center;
+  color: #5f7696;
+  font-size: 15px;
+  font-weight: 500;
+  background: #f7fbff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.candidates-grid > .public-empty-state {
+  grid-column: 1 / -1;
+}
+
+.candidates-pagination {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 18px 0;
+  border-top: 1px solid #e2e8f0;
+}
+
+.candidates-page-controls {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  order: 1;
+}
+
+.candidates-page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.candidates-page-num {
+  font-size: 14px;
+  cursor: pointer;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: 500;
+  color: #1e2937;
+  background: #ffffff;
+}
+
+.candidates-page-num.candidates-active {
+  background: #e0d6fc;
+  color: #000;
+  font-weight: 600;
+}
+
+.candidates-page-num.candidates-dots {
+  background: none;
+  cursor: default;
+  color: #75747a;
+}
+
+.candidates-page-nav {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.candidates-page-nav:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.candidates-page-nav img {
+  width: 22px;
+  height: 22px;
+}
+
+.candidates-page-info {
+  font-size: 12px;
+  color: #5f6f88;
+  font-weight: 500;
+  margin-left: auto;
+  order: 2;
+}
+
+@media (max-width: 1100px) {
+  .candidates-hero {
+    padding: 28px 16px 18px;
+  }
+
+  .candidates-body {
+    padding: 22px 8% 50px;
+  }
+}
+
+@media (max-width: 900px) {
+  .candidates-body {
+    grid-template-columns: 1fr;
+  }
+
+  .candidates-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .candidates-hero {
+    padding: 24px 12px 16px;
+  }
+
+  .candidates-search-pill {
+    padding: 12px;
+  }
+
+  .candidates-body {
+    padding: 20px 6% 40px;
+  }
+
+  .candidates-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .candidates-pagination {
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .candidates-page-controls {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .candidates-page-info {
+    align-self: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .candidates-search-pill {
+    gap: 8px;
+  }
+
+  .candidates-search-field {
+    flex: 1 1 100%;
+  }
+
+  .candidates-search-btn {
+    width: 100%;
+  }
+
+  .candidates-hero-text h1 {
+    font-size: 24px;
+  }
+
+  .candidates-hero-text p {
+    font-size: 13px;
+  }
+}

@@ -1,0 +1,145 @@
+.site-footer {
+  background-color: #ffffff;
+  padding-bottom: 36px;
+}
+
+.footer-main {
+  display: flex;
+  justify-content: space-between;
+  gap: 100px;
+  margin-bottom: 32px;
+}
+
+.footer-about {
+  max-width: 530px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.footer-logo {
+  width: 128px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.footer-about p {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #8183a7;
+}
+
+.footer-links-grid {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.footer-links-col {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.footer-links-col h4 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #252040;
+  margin-bottom: 0;
+}
+
+.footer-links-col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-links-col ul li a {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #75747a;
+}
+
+.footer-divider {
+  border: none;
+  height: 1px;
+  background-color: #0068ce;
+  margin: 36px 0;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.copyright {
+  font-size: 12px;
+  font-weight: 500;
+  color: #000000;
+}
+
+.copyright a {
+  font-weight: 700;
+  color: #0068ce;
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.social-icon {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-bg,
+.social-fg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.social-bg {
+  width: 28px;
+  height: 28px;
+}
+
+.social-fg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 1200px) {
+  .footer-main {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .footer-links-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-links-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 20px;
+  }
+}

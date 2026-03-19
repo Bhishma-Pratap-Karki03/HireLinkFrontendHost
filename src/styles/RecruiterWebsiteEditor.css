@@ -1,0 +1,389 @@
+/* Recruiter Website Editor Styles */
+
+/* Modal Overlay */
+.recruiter-website-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+/* Modal Container */
+.recruiter-website-modal-container {
+  background-color: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Close Button */
+.recruiter-website-close-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recruiter-website-close-button img {
+  width: 24px;
+  height: 24px;
+}
+
+.recruiter-website-close-button:hover {
+  opacity: 0.8;
+}
+
+/* Modal Content */
+.recruiter-website-modal-content {
+  padding: 32px;
+}
+
+/* Header */
+.recruiter-website-modal-header {
+  margin-bottom: 32px;
+}
+
+.recruiter-website-modal-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #0f283c;
+  margin: 0 0 8px 0;
+}
+
+.recruiter-website-modal-subtitle {
+  font-size: 14px;
+  color: #6c86c2;
+  margin: 0;
+}
+
+/* Form */
+.recruiter-website-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.recruiter-website-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Field */
+.recruiter-website-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.recruiter-website-field-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.recruiter-website-field-header img {
+  width: 20px;
+  height: 20px;
+  opacity: 0.7;
+}
+
+.recruiter-website-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0f283c;
+}
+
+/* Input Wrapper */
+.recruiter-website-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.recruiter-website-input-wrapper:focus-within {
+  border-color: #2481fb;
+}
+
+.recruiter-website-url-prefix {
+  padding: 12px 16px;
+  background-color: #f5f5f5;
+  color: #666;
+  font-size: 14px;
+  border-right: 1px solid #dcdcdc;
+  white-space: nowrap;
+}
+
+/* Input */
+.recruiter-website-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  font-size: 14px;
+  color: #333;
+  background-color: white;
+  min-width: 0;
+}
+
+.recruiter-website-input:focus {
+  outline: none;
+}
+
+.recruiter-website-input.error {
+  background-color: #fff5f5;
+}
+
+.recruiter-website-input:disabled {
+  background-color: #f9f9f9;
+  cursor: not-allowed;
+}
+
+/* Error Message */
+.recruiter-website-error {
+  color: #ff2020;
+  font-size: 12px;
+  margin: 4px 0 0 0;
+}
+
+/* Field Help Text */
+.recruiter-website-field-help {
+  color: #666;
+  font-size: 12px;
+  margin: 4px 0 0 0;
+  line-height: 1.4;
+}
+
+/* Action Buttons */
+.recruiter-website-action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 8px;
+  padding-top: 24px;
+  border-top: 1px solid #eee;
+}
+
+.recruiter-website-btn {
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: "Montserrat", sans-serif;
+}
+
+.recruiter-website-btn-cancel {
+  background: none;
+  border: 1px solid #dcdcdc;
+  color: #666;
+}
+
+.recruiter-website-btn-cancel:hover {
+  background-color: #f5f5f5;
+  border-color: #bbb;
+}
+
+.recruiter-website-btn-cancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.recruiter-website-btn-save {
+  background-color: #2481fb;
+  border: 1px solid #2481fb;
+  color: white;
+}
+
+.recruiter-website-btn-save:hover {
+  background-color: #1a6fd8;
+  border-color: #1a6fd8;
+}
+
+.recruiter-website-btn-save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #2481fb;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .recruiter-website-modal-container {
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .recruiter-website-modal-content {
+    padding: 24px 20px;
+  }
+
+  .recruiter-website-modal-title {
+    font-size: 20px;
+  }
+
+  .recruiter-website-action-buttons {
+    flex-direction: column;
+  }
+
+  .recruiter-website-btn {
+    width: 100%;
+  }
+
+  .recruiter-website-url-prefix {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .recruiter-website-input {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}
+.workspace-gallery-error-message {
+  background-color: #fee;
+  border: 1px solid #fcc;
+  border-radius: 4px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: slideIn 0.3s ease;
+}
+
+.error-icon {
+  background-color: #f00;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.error-text {
+  flex: 1;
+  color: #c00;
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+
+.error-close {
+  background: none;
+  border: none;
+  color: #c00;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-close:hover {
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
+.workspace-gallery-dropzone.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.workspace-gallery-dropzone.disabled .workspace-gallery-dropzone-content {
+  cursor: not-allowed;
+}
+
+.workspace-gallery-status {
+  margin: 20px 0;
+  padding: 10px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.upload-status {
+  color: #4caf50;
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.delete-status {
+  color: #f44336;
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.workspace-gallery-image-item:active {
+  cursor: grabbing;
+}
+
+.workspace-gallery-image-item.dragging {
+  opacity: 0.5;
+}
+
+.workspace-gallery-btn-save:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.workspace-gallery-delete-btn:disabled,
+.workspace-gallery-close-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

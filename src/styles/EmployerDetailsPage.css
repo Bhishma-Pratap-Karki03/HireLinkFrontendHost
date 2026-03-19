@@ -1,0 +1,2043 @@
+/* Employer Details Page Styles */
+.employer-details-page {
+  font-family: "Montserrat", sans-serif;
+  background-color: #ffffff;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.employer-details-page * {
+  font-family: "Montserrat", sans-serif;
+}
+
+/* Hero Section */
+.employer-details-hero {
+  background-color: #e7f7ff;
+  position: relative;
+  overflow: hidden;
+  padding: 80px 12%;
+}
+
+.employer-details-hero-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.employer-details-hero-bg-elements {
+  display: none;
+}
+
+.employer-details-bg-left {
+  position: absolute;
+  left: -130px;
+  bottom: 0;
+  height: 40%;
+}
+
+.employer-details-bg-right {
+  position: absolute;
+  right: -130px;
+  bottom: 0;
+  height: 60%;
+}
+
+.employer-details-bg-circle {
+  position: absolute;
+  right: -140px;
+  top: -20%;
+  width: 200px;
+  height: 200px;
+}
+
+.employer-details-bg-icon-1 {
+  position: absolute;
+  right: 20%;
+  top: 20%;
+  opacity: 0.15;
+  width: 40px;
+}
+
+.employer-details-bg-icon-2 {
+  position: absolute;
+  left: 5%;
+  top: 20%;
+  opacity: 0.15;
+  width: 40px;
+}
+
+.employer-details-hero-content {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.employer-details-company-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  text-align: left;
+  width: 100%;
+  max-width: 1060px;
+}
+
+.employer-details-company-header > div:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Remove background from logo wrapper */
+.employer-details-logo-wrapper {
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+.employer-details-logo-skeleton {
+  width: 200px;
+  height: 60px;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* Logo without background */
+.employer-details-logo {
+  max-width: 200px;
+  max-height: 120px;
+  object-fit: contain;
+  width: auto;
+  height: auto;
+  background-color: transparent;
+}
+
+.employer-details-company-text h1 {
+  font-size: 40px;
+  font-weight: 700;
+  color: #1e2937;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.employer-details-company-text p {
+  font-size: 18px;
+  color: rgba(30, 41, 55, 0.84);
+  margin: 14px 0 0 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.employer-details-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.employer-details-hero-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.employer-details-hero-btn {
+  border: 1px solid #d7e0ef;
+  background: #ffffff;
+  border-radius: 12px;
+  height: 42px;
+  min-width: 140px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f283c;
+  box-shadow: 0 8px 14px rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+}
+
+.employer-details-hero-btn img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
+}
+
+.employer-details-hero-btn span {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  color: inherit;
+  line-height: 1;
+}
+
+.employer-details-hero-btn:disabled {
+  cursor: default;
+  box-shadow: 0 6px 10px rgba(15, 23, 42, 0.05);
+}
+
+.employer-details-hero-btn.is-pending {
+  border-color: #f59e0b;
+  background: #fff8eb;
+  color: #b45309;
+}
+
+.employer-details-hero-btn.is-friend {
+  border-color: #10b981;
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.employer-details-mutuals {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.employer-details-mutual-avatars {
+  display: flex;
+  align-items: center;
+}
+
+.employer-details-mutual-avatars img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ffffff;
+  margin-left: -8px;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.12);
+}
+
+.employer-details-mutual-avatars img.employer-details-mutual-logo {
+  width: 40px;
+  height: 26px;
+  border-radius: 0 !important;
+  object-fit: contain !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none;
+  margin-left: -6px;
+}
+
+.employer-details-mutual-avatars img:first-child {
+  margin-left: 0;
+}
+
+.employer-details-mutuals span {
+  font-size: 12.5px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* Main Content */
+.employer-details-main-content {
+  padding: 60px 0;
+  background-color: #ffffff;
+}
+
+.employer-details-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 20px;
+  overflow: visible;
+  width: 100%;
+}
+
+/* Loading and Error States */
+.employer-details-loading {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 18px;
+  color: #0068ce;
+}
+
+.employer-details-error {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #ffe6e6;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.employer-details-error p {
+  color: #d32f2f;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.employer-details-btn-back {
+  background-color: #0068ce;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.employer-details-btn-back:hover {
+  background-color: #0056b3;
+}
+
+/* Content Grid */
+.employer-details-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 30px;
+  margin-bottom: 60px;
+  overflow: visible;
+  width: 100%;
+  align-items: start;
+}
+
+.employer-details-content-left {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  overflow: visible;
+  width: 100%;
+}
+
+/* Overview Section */
+.employer-details-overview-section {
+  position: relative;
+  padding-bottom: 60px;
+  width: 100%;
+}
+
+.employer-details-overview-section h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #1e2937;
+  font-family: "Montserrat", sans-serif;
+}
+
+.employer-details-overview-text {
+  color: #36404d;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+  width: 100%;
+}
+
+.employer-details-overview-text p {
+  margin: 0 0 14px;
+}
+
+.employer-details-overview-text p:last-child {
+  margin-bottom: 0;
+}
+
+.employer-details-overview-text ul,
+.employer-details-overview-text ol {
+  margin: 0 0 14px 22px;
+  padding: 0;
+}
+
+.employer-details-overview-text li {
+  margin-bottom: 6px;
+}
+
+.employer-details-overview-text .ql-align-center {
+  text-align: center;
+}
+
+.employer-details-overview-text .ql-align-right {
+  text-align: right;
+}
+
+.employer-details-overview-text .ql-align-justify {
+  text-align: justify;
+}
+
+.employer-details-overview-text blockquote {
+  border-left: 4px solid #cfe0f5;
+  margin: 0 0 14px;
+  padding-left: 14px;
+  color: #4e5d71;
+  font-style: italic;
+}
+
+.employer-details-overview-text h1,
+.employer-details-overview-text h2,
+.employer-details-overview-text h3 {
+  margin: 0 0 12px;
+  color: #0f283c;
+  line-height: 1.3;
+}
+
+.employer-details-overview-section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #e1e1e1;
+  opacity: 0.5;
+}
+
+/* Gallery Section */
+.employer-details-gallery-section {
+  position: relative;
+  padding-bottom: 60px;
+  width: 100%;
+}
+
+.employer-details-gallery-section h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #1e2937;
+  font-family: "Montserrat", sans-serif;
+}
+
+.employer-details-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.employer-details-gallery-img {
+  width: 100%;
+  height: 200px;
+  border-radius: 12px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  background-color: #f0f0f0;
+}
+
+.employer-details-gallery-img:hover {
+  transform: scale(1.03);
+}
+
+.employer-details-no-gallery {
+  color: #666;
+  font-style: italic;
+  padding: 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  grid-column: 1 / -1;
+}
+
+.employer-details-gallery-section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #e1e1e1;
+  opacity: 0.5;
+}
+
+/* Enhanced Reviews Section */
+.employer-details-reviews-section {
+  position: relative;
+  padding-bottom: 60px;
+  width: 100%;
+}
+
+.employer-details-reviews-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.employer-details-reviews-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #1e2937;
+  font-family: "Montserrat", sans-serif;
+}
+
+.employer-details-overall-rating {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.employer-details-rating-big {
+  font-size: 48px;
+  font-weight: 700;
+  color: #1e2937;
+  line-height: 1;
+}
+
+.employer-details-rating-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.employer-details-stars-large {
+  display: flex;
+  gap: 6px;
+}
+
+.employer-details-star-large {
+  width: 28px;
+  height: 28px;
+}
+
+.employer-details-review-count {
+  color: #666;
+  font-size: 14px;
+}
+
+.employer-details-write-review-btn {
+  background-color: #0068ce;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.employer-details-write-review-btn:hover {
+  background-color: #0056b3;
+}
+
+.employer-details-write-review-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Review Error Message */
+.employer-details-review-error {
+  background-color: #ffe6e6;
+  color: #d32f2f;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  border: 1px solid #ffcdd2;
+}
+
+/* Review Success Message */
+.employer-details-review-success {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  border: 1px solid #c3e6cb;
+}
+
+/* All Reviews Section */
+.employer-details-all-reviews {
+  margin-top: 40px;
+  width: 100%;
+}
+
+.employer-details-all-reviews-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e7f7ff;
+  width: 100%;
+}
+
+.employer-details-all-reviews-header h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: #1e2937;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.employer-details-toggle-reviews-btn {
+  background-color: transparent;
+  border: 1px solid #dcdcdc;
+  color: #666;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.employer-details-toggle-reviews-btn:hover {
+  background-color: #f5f5f5;
+  border-color: #bbb;
+  color: #333;
+}
+
+.employer-details-toggle-icon {
+  font-size: 12px;
+  transition: transform 0.2s;
+}
+
+/* UPDATED: Reviews Grid - 3 columns with full width alignment */
+.employer-details-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* UPDATED: Increased width of review cards */
+.employer-details-review-card-small {
+  background-color: white;
+  border: 1px solid #e1e1e1;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: fit-content;
+  min-height: 180px;
+  position: relative;
+  width: 400px;
+  box-sizing: border-box;
+}
+
+.employer-details-review-card-small:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border-color: #0068ce;
+}
+
+.employer-details-review-card-small.expanded {
+  min-height: 220px;
+  box-shadow: 0 8px 24px rgba(0, 104, 206, 0.12);
+}
+
+/* UPDATED: Review Header - Fixed width and layout */
+.employer-details-review-header-small {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  position: relative;
+  min-height: 50px;
+  width: 100%;
+}
+
+/* UPDATED: Avatar/logo container */
+.employer-details-reviewer-avatar-small {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0068ce 0%, #00c7b9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 104, 206, 0.2);
+  overflow: hidden;
+}
+
+.employer-details-reviewer-avatar-small.employer-details-reviewer-avatar-small-logo {
+  border-radius: 10px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.employer-details-reviewer-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.employer-details-reviewer-avatar-img.employer-details-reviewer-avatar-logo {
+  border-radius: 0;
+  object-fit: contain;
+  background: transparent;
+  padding: 2px;
+}
+
+/* UPDATED: Reviewer Info - Only name and location */
+.employer-details-reviewer-info-small {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+  max-width: calc(100% - 120px); /* Account for avatar + stars */
+  overflow: hidden;
+}
+
+.employer-details-reviewer-name-small {
+  font-weight: 600;
+  color: #1e2937;
+  font-size: 16px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.employer-details-reviewer-location-small {
+  color: #888;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* UPDATED: Rating position - Fixed to top right */
+.employer-details-review-rating-small {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 3px;
+  background: white;
+  padding: 2px;
+  border-radius: 4px;
+  z-index: 1;
+}
+
+/* Show preview text (first 60 characters) when not expanded */
+.employer-details-review-preview-small {
+  color: #5b636e;
+  line-height: 1.5;
+  font-size: 14px;
+  margin: 10px 0 0 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Show full text when expanded */
+.employer-details-review-text-small {
+  color: #5b636e;
+  line-height: 1.5;
+  font-size: 14px;
+  margin: 10px 0 0 0;
+  display: none;
+}
+
+.employer-details-review-card-small.expanded
+  .employer-details-review-preview-small {
+  display: none;
+}
+
+.employer-details-review-card-small.expanded
+  .employer-details-review-text-small {
+  display: block;
+}
+
+.employer-details-read-more {
+  color: #0068ce;
+  font-weight: 500;
+  font-size: 13px;
+  margin-left: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.employer-details-read-less {
+  color: #0068ce;
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+  margin-left: 12px;
+}
+
+.employer-details-review-footer-small {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+  margin-top: auto;
+}
+
+.employer-details-review-date-small {
+  color: #888;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Full Width Write Review Form */
+.employer-details-write-review-form-wrapper.full-width {
+  margin-top: 56px;
+  padding: 34px;
+  background: white;
+  border: 1px solid #e1e1e1;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 104, 206, 0.08);
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.employer-details-write-review-content.full-width {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.92fr);
+  gap: 36px;
+  align-items: start;
+  max-width: 100%;
+  width: 100%;
+}
+
+.employer-details-write-review-form {
+  padding-right: 32px;
+  border-right: 1px solid #e1e1e1;
+}
+
+.employer-details-write-review-form h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1e2937;
+}
+
+.employer-details-write-review-form > p {
+  color: #666;
+  margin-bottom: 32px;
+  font-size: 15px;
+}
+
+.employer-details-form-group {
+  margin-bottom: 24px;
+}
+
+.employer-details-form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #1e2937;
+  font-size: 15px;
+}
+
+.employer-details-star-input {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.employer-details-rating-star {
+  width: 36px;
+  height: 36px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.employer-details-rating-text-input {
+  font-size: 14px;
+  color: #666;
+  margin-left: 8px;
+}
+
+.employer-details-review-title-input,
+.employer-details-review-textarea {
+  width: 100%;
+  padding: 16px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: "Montserrat", sans-serif;
+  transition: border-color 0.2s;
+}
+
+.employer-details-review-title-input:focus,
+.employer-details-review-textarea:focus {
+  outline: none;
+  border-color: #0068ce;
+}
+
+.employer-details-review-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.employer-details-review-hint {
+  font-size: 13px;
+  color: #888;
+  margin-top: 4px;
+}
+
+/* Form actions with multiple buttons */
+.employer-details-form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.employer-details-form-actions button {
+  flex: 1;
+  min-width: 120px;
+}
+
+.employer-details-submit-review-btn {
+  background-color: #00c7b9;
+  color: white;
+  padding: 14px 32px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.employer-details-submit-review-btn:hover:not(:disabled) {
+  background-color: #00b3a6;
+}
+
+.employer-details-submit-review-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Delete review button */
+.employer-details-delete-review-btn {
+  background-color: #ff4444;
+  color: white;
+  padding: 14px 24px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.employer-details-delete-review-btn:hover:not(:disabled) {
+  background-color: #cc0000;
+}
+
+.employer-details-delete-review-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.employer-details-cancel-review-btn {
+  background-color: transparent;
+  color: #666;
+  padding: 14px 32px;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.employer-details-cancel-review-btn:hover:not(:disabled) {
+  background-color: #f5f5f5;
+  border-color: #bbb;
+}
+
+.employer-details-cancel-review-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Review Illustration */
+.employer-details-review-illustration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 12px 8px 12px 16px;
+}
+
+.employer-details-illustration-img {
+  width: 430px;
+  height: 230px;
+  object-fit: contain;
+  margin-bottom: 14px;
+  opacity: 0.9;
+  display: flex;
+  margin-top: 52px;
+}
+
+.employer-details-illustration-text {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 320px;
+  margin: 0;
+}
+
+/* Sidebar */
+.employer-details-sidebar {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+  width: 400px;
+  flex-shrink: 0;
+}
+
+.employer-details-sidebar-card {
+  background-color: #e7f7ff;
+  border-radius: 12px;
+  padding: 50px 40px;
+  box-shadow: 2px 2px 12px rgba(0, 104, 206, 0.1);
+  margin: 0;
+  width: 100%;
+  min-height: 680px;
+  box-sizing: border-box;
+}
+
+.employer-details-sidebar-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+/* Remove background from sidebar logo */
+.employer-details-sidebar-logo {
+  width: 200px;
+  height: auto;
+  max-height: 120px;
+  object-fit: contain;
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+.employer-details-sidebar-header h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e2937;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.employer-details-website-link {
+  color: #4285f4;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 16px;
+  transition: all 0.2s;
+  padding: 8px 16px;
+  border: 1px solid #4285f4;
+  border-radius: 6px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.employer-details-website-link:hover {
+  color: white;
+  background-color: #4285f4;
+  text-decoration: none;
+}
+
+.employer-details-divider {
+  height: 1px;
+  background-color: #0068ce;
+  width: 100%;
+  margin-bottom: 40px;
+  opacity: 0.2;
+}
+
+.employer-details-sidebar-info {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  margin-bottom: 50px;
+}
+
+.employer-details-info-item {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.employer-details-icon-box {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.employer-details-icon-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.employer-details-info-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.employer-details-info-label {
+  font-weight: 700;
+  font-size: 16px;
+  color: #1e2937;
+}
+
+.employer-details-info-value {
+  color: #0068ce;
+  font-size: 16px;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+/* Connect with Us section */
+.employer-details-connect-section {
+  margin: 30px 0;
+}
+
+.employer-details-connect-section h4 {
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e2937;
+  font-family: "Montserrat", sans-serif;
+}
+
+.employer-details-connect-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.employer-details-connect-btn {
+  background: white;
+  border: 1px solid #e5e7e9;
+  border-radius: 8px;
+  padding: 15px 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+.employer-details-connect-btn:hover {
+  background-color: #f8f9fa;
+  border-color: #d1d5db;
+  transform: translateY(-2px);
+}
+
+.employer-details-connect-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Save button */
+.employer-details-save-btn {
+  background: white;
+  border: 1px solid #e5e7e9;
+  border-radius: 8px;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.employer-details-save-btn:hover {
+  background-color: #f8f9fa;
+  border-color: #d1d5db;
+}
+
+.employer-details-save-btn.saved {
+  background-color: #e7f7ff;
+  border-color: #0068ce;
+  color: #0068ce;
+}
+
+.employer-details-save-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+.employer-details-send-message-btn {
+  width: 100%;
+  background-color: #0068ce;
+  color: white;
+  padding: 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-family: "Montserrat", sans-serif;
+  margin-top: 10px;
+}
+
+.employer-details-send-message-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Jobs Section */
+.employer-details-jobs-section {
+  margin-top: 80px;
+  position: relative;
+  padding-top: 60px;
+}
+
+.employer-details-jobs-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #e1e1e1;
+  opacity: 0.5;
+}
+
+.employer-details-jobs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.employer-details-jobs-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e2937;
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+}
+
+.employer-details-explore-more {
+  color: #4285f4;
+  font-weight: 500;
+  font-size: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.employer-details-explore-more:hover {
+  color: #3367d6;
+  text-decoration: underline;
+}
+
+.employer-details-jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.employer-details-jobs-grid-compact {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.employer-details-jobs-state {
+  background: #ffffff;
+  border: 1px solid #e6edf5;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 14px;
+  color: #5f6f88;
+  margin-top: 16px;
+}
+
+.employer-details-jobs-section .joblist-card-item {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 6px 18px rgba(15, 40, 60, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid #e6edf5;
+  min-height: 260px;
+}
+
+.employer-details-jobs-section .joblist-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.employer-details-jobs-section .joblist-company-logo {
+  width: 64px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.employer-details-jobs-section .joblist-card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.employer-details-jobs-section .joblist-icon-btn {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: #edf4ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.employer-details-jobs-section .joblist-card-company {
+  font-weight: 600;
+}
+
+.employer-details-jobs-section .joblist-card-meta {
+  font-size: 12px;
+  color: #6c86c2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+}
+
+.employer-details-jobs-section .joblist-card-title {
+  font-size: 16px;
+  margin: 0;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.employer-details-jobs-section .joblist-card-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #5f6f88;
+  gap: 12px;
+}
+
+.employer-details-jobs-section .joblist-card-info span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.employer-details-jobs-section .joblist-card-info img {
+  width: 14px;
+  height: 14px;
+}
+
+.employer-details-jobs-section .joblist-card-buttons {
+  display: flex;
+  gap: 10px;
+  height: 44px;
+  margin-top: auto;
+}
+
+.employer-details-jobs-section .joblist-btn-outline,
+.employer-details-jobs-section .joblist-btn-primary {
+  flex: 1;
+  padding: 9px 12px;
+  font-size: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.employer-details-jobs-section .joblist-btn-outline {
+  background: #ffffff;
+  color: #4c8bf5;
+  border: 1px solid #4c8bf5;
+}
+
+.employer-details-jobs-section .joblist-btn-primary {
+  background: #4c8bf5;
+  color: #fff;
+  border: none;
+}
+
+.employer-details-job-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 2px 2px 16px rgba(0, 104, 206, 0.1);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #f0f0f0;
+}
+
+.employer-details-job-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 4px 4px 24px rgba(0, 104, 206, 0.15);
+}
+
+.employer-details-job-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.employer-details-job-logo {
+  height: 32px;
+  width: auto;
+  max-width: 100px;
+  object-fit: contain;
+}
+
+.employer-details-job-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.employer-details-icon-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0px 2px 4px rgba(36, 129, 251, 0.14);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.employer-details-icon-circle:hover {
+  background-color: #f8f9fa;
+  box-shadow: 0px 4px 8px rgba(36, 129, 251, 0.2);
+}
+
+.employer-details-icon-circle img {
+  width: 18px;
+  height: 18px;
+}
+
+.employer-details-job-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.employer-details-job-info h3 {
+  font-size: 16px;
+  color: #1e2937;
+  font-weight: 600;
+  margin: 0;
+}
+
+.employer-details-job-type {
+  color: #505050;
+  font-size: 14px;
+  background-color: #f0f0f0;
+  padding: 4px 12px;
+  border-radius: 4px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.employer-details-job-title {
+  font-size: 18px;
+  color: #1e2937;
+  font-weight: 700;
+  margin: 0;
+}
+
+.employer-details-job-meta {
+  display: flex;
+  gap: 20px;
+}
+
+.employer-details-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #505050;
+}
+
+.employer-details-meta-item img {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+
+.employer-details-job-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.employer-details-btn-outline {
+  flex: 1;
+  border: 1px solid #2481fb;
+  color: #2481fb;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  background: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.employer-details-btn-outline:hover {
+  background-color: #2481fb;
+  color: white;
+}
+
+.employer-details-btn-primary {
+  flex: 1;
+  background-color: #00c7b9;
+  color: white;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.employer-details-btn-primary:hover {
+  background-color: #00b3a6;
+}
+
+/* Star Styles */
+.employer-details-star {
+  width: 24px;
+  height: 24px;
+}
+
+.employer-details-star-small {
+  width: 18px;
+  height: 18px;
+}
+
+.employer-details-star-medium {
+  width: 24px;
+  height: 24px;
+}
+
+.employer-details-star-large {
+  width: 28px;
+  height: 28px;
+}
+
+/* Login Prompt */
+.employer-details-login-prompt {
+  text-align: center;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.employer-details-login-prompt h3 {
+  margin-bottom: 15px;
+  color: #1e2937;
+}
+
+.employer-details-login-prompt p {
+  margin-bottom: 15px;
+  color: #666;
+}
+
+.employer-details-login-btn {
+  background-color: #0068ce;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.employer-details-login-btn:hover {
+  background-color: #0056b3;
+}
+
+/* UI polish overrides */
+.employer-details-page {
+  background: #f5f8fc;
+}
+
+.employer-details-hero {
+  background: linear-gradient(180deg, #eaf6ff 0%, #f4fbff 100%);
+  padding: 72px 10%;
+}
+
+.employer-details-company-header {
+  background: #ffffff;
+  border: 1px solid #dfe8f4;
+  border-radius: 18px;
+  box-shadow: 0 14px 32px rgba(15, 40, 60, 0.08);
+  padding: 24px 28px;
+  max-width: 1140px;
+}
+
+.employer-details-main-content {
+  background: white;
+  padding: 42px 0 78px;
+}
+
+.employer-details-container {
+  max-width: 1320px;
+  padding: 0 24px;
+}
+
+.employer-details-content-grid {
+  gap: 28px;
+}
+
+.employer-details-content-left {
+  gap: 34px;
+}
+
+.employer-details-overview-section,
+.employer-details-gallery-section,
+.employer-details-reviews-section {
+  background: #ffffff;
+  border: 1px solid #e4ecf6;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 10px 26px rgba(15, 40, 60, 0.06);
+}
+
+/* Keep reviews section constrained to left content column to avoid sidebar overlap */
+.employer-details-reviews-section {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin-top: 28px;
+}
+
+.employer-details-overview-section::after,
+.employer-details-gallery-section::after,
+.employer-details-jobs-section::before {
+  display: none;
+}
+
+.employer-details-overview-section h2,
+.employer-details-gallery-section h2,
+.employer-details-reviews-header h2,
+.employer-details-jobs-header h2 {
+  margin-bottom: 16px;
+}
+
+.employer-details-sidebar-card {
+  background: #edf8ff;
+  border: 1px solid #dce9f8;
+  border-radius: 16px;
+  padding: 34px 30px;
+  box-shadow: 0 10px 24px rgba(15, 40, 60, 0.08);
+  min-height: auto;
+}
+
+.employer-details-connect-section {
+  margin: 24px 0;
+}
+
+.employer-details-connect-buttons {
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.employer-details-connect-btn {
+  height: 50px;
+  border-radius: 10px;
+  border-color: #d9e2ef;
+  font-weight: 600;
+}
+
+.employer-details-send-message-btn {
+  border-radius: 10px;
+  height: 50px;
+  padding: 0 18px;
+  box-shadow: 0 10px 20px rgba(0, 104, 206, 0.24);
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.employer-details-send-message-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 24px rgba(0, 104, 206, 0.3);
+}
+
+.employer-details-jobs-section {
+  margin-top: 46px;
+  padding-top: 0;
+}
+
+.employer-details-jobs-header {
+  margin-bottom: 24px;
+}
+
+.employer-details-jobs-section .joblist-card-item {
+  box-shadow: 0 10px 24px rgba(15, 40, 60, 0.08);
+}
+
+.employer-details-review-card-small {
+  width: 100%;
+  min-height: 190px;
+}
+
+.employer-details-write-review-form-wrapper.full-width {
+  box-shadow: 0 12px 28px rgba(15, 40, 60, 0.08);
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .employer-details-content-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .employer-details-reviews-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .employer-details-reviews-section {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .employer-details-jobs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .employer-details-sidebar {
+    position: static;
+    order: -1;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .employer-details-write-review-content.full-width {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .employer-details-review-illustration {
+    order: -1;
+  }
+
+  .employer-details-reviewer-info-small {
+    max-width: calc(100% - 100px);
+  }
+}
+
+@media (max-width: 1100px) {
+  .employer-details-jobs-grid-compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .employer-details-hero {
+    padding: 70px 8%;
+  }
+
+  .employer-details-company-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .employer-details-company-text h1 {
+    font-size: 36px;
+  }
+
+  .employer-details-company-text p {
+    font-size: 16px;
+  }
+
+  .employer-details-logo-wrapper {
+    width: auto;
+    height: auto;
+  }
+
+  .employer-details-logo {
+    width: 180px;
+  }
+
+  .employer-details-hero-actions {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .employer-details-hero-side {
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .employer-details-hero {
+    padding: 60px 6%;
+  }
+
+  .employer-details-main-content {
+    padding: 40px 0;
+  }
+
+  .employer-details-content-left {
+    gap: 40px;
+  }
+
+  .employer-details-gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .employer-details-reviews-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .employer-details-write-review-form-wrapper.full-width {
+    padding: 24px;
+    width: 100%;
+  }
+
+  .employer-details-jobs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .employer-details-sidebar-card {
+    padding: 40px 30px;
+    margin: 0 auto;
+    max-width: calc(100% - 40px);
+  }
+
+  .employer-details-reviewer-info-small {
+    max-width: calc(100% - 100px);
+  }
+
+  .employer-details-form-actions {
+    flex-direction: column;
+  }
+
+  .employer-details-form-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .employer-details-jobs-grid-compact {
+    grid-template-columns: 1fr;
+  }
+
+  .employer-details-jobs-section .joblist-card-buttons {
+    flex-direction: column;
+    height: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .employer-details-company-text h1 {
+    font-size: 32px;
+  }
+
+  .employer-details-logo-wrapper {
+    width: auto;
+    height: auto;
+  }
+
+  .employer-details-logo {
+    width: 160px;
+  }
+
+  .employer-details-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .employer-details-all-reviews-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .employer-details-toggle-reviews-btn {
+    align-self: flex-start;
+  }
+
+  .employer-details-container {
+    padding: 0 15px;
+  }
+
+  .employer-details-write-review-form-wrapper.full-width {
+    padding: 20px;
+  }
+
+  .employer-details-sidebar {
+    width: 100%;
+    padding: 0;
+  }
+
+  .employer-details-sidebar-card {
+    padding: 35px 25px;
+    max-width: calc(100% - 30px);
+  }
+
+  .employer-details-review-header-small {
+    flex-wrap: wrap;
+  }
+
+  .employer-details-reviewer-info-small {
+    max-width: 100%;
+    order: 2;
+    margin-top: 8px;
+  }
+
+  .employer-details-review-rating-small {
+    position: static;
+    order: 3;
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .employer-details-company-text h1 {
+    font-size: 28px;
+  }
+
+  .employer-details-company-text p {
+    font-size: 15px;
+  }
+
+  .employer-details-overview-section h2,
+  .employer-details-gallery-section h2,
+  .employer-details-reviews-section h2,
+  .employer-details-jobs-header h2 {
+    font-size: 22px;
+  }
+
+  .employer-details-content-left {
+    gap: 32px;
+  }
+
+  .employer-details-review-card-small {
+    padding: 16px;
+  }
+
+  .employer-details-review-header-small {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .employer-details-reviewer-info-small {
+    max-width: 100%;
+    margin-top: 0;
+  }
+
+  .employer-details-review-rating-small {
+    position: static;
+    margin-top: 4px;
+    justify-content: flex-start;
+  }
+
+  .employer-details-job-buttons {
+    flex-direction: column;
+  }
+
+  .employer-details-sidebar-logo {
+    width: 160px;
+    max-height: 90px;
+  }
+
+  .employer-details-sidebar-card {
+    padding: 30px 20px;
+  }
+
+  .employer-details-form-actions {
+    flex-direction: column;
+  }
+
+  .employer-details-form-actions button {
+    width: 100%;
+  }
+
+  .employer-details-illustration-img {
+    width: 300px;
+    height: 150px;
+    margin-top: 50px;
+  }
+}

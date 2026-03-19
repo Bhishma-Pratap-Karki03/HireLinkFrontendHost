@@ -1,0 +1,487 @@
+/* Resume Editor Modal Styles - Consistent with other editors */
+
+/* Overlay - Background dimming effect */
+.resume-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: resume-fadeIn 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+/* Fade in animation for overlay */
+@keyframes resume-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Container */
+.resume-modal-container {
+  background-color: #ffffff;
+  border-radius: 24px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: resume-slideUp 0.3s ease;
+}
+
+/* Slide up animation for modal */
+@keyframes resume-slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Close Button */
+.resume-close-button {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s;
+}
+
+.resume-close-button:hover {
+  background-color: #f0f0f0;
+}
+
+.resume-close-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.resume-close-button img {
+  width: 16px;
+  height: 16px;
+}
+
+/* Modal Content Area */
+.resume-modal-content {
+  padding: 40px;
+  overflow-y: auto;
+  max-height: calc(90vh - 80px);
+}
+
+/* Modal Header */
+.resume-modal-header {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.resume-modal-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f283c;
+  margin: 0 0 8px 0;
+}
+
+.resume-modal-subtitle {
+  font-size: 16px;
+  color: #656565;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Form Section */
+.resume-modal-form {
+  width: 100%;
+}
+
+.resume-form-fields-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+/* Upload Area */
+.resume-upload-area {
+  border: 2px dashed #0068ce;
+  border-radius: 12px;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  background-color: #f8fbff;
+}
+
+.resume-upload-area:hover {
+  background-color: #f0f8ff;
+  border-color: #0056b3;
+}
+
+.resume-upload-icon svg {
+  transition: transform 0.3s;
+}
+
+.resume-upload-area:hover .resume-upload-icon svg {
+  transform: translateY(-5px);
+}
+
+.resume-upload-text {
+  text-align: center;
+}
+
+.resume-upload-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0068ce;
+  margin: 0 0 4px 0;
+}
+
+.resume-upload-subtitle {
+  font-size: 14px;
+  color: #8c8c8c;
+  margin: 0;
+}
+
+/* File Row */
+.resume-file-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e8e8e8;
+}
+
+.resume-file-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.resume-icon-file {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.resume-file-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.resume-file-name {
+  font-size: 16px;
+  color: #333333;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.resume-file-size {
+  font-size: 14px;
+  color: #8c8c8c;
+  font-family: "Montserrat", sans-serif;
+}
+
+.resume-remove-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  background-color: #ffebee;
+  color: #ff1e0d;
+}
+
+.resume-remove-button:hover {
+  background-color: #ffcdd2;
+}
+
+.resume-icon-trash {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.resume-remove-text {
+  font-size: 14px;
+  color: #ff1e0d;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* Error Message */
+.resume-error-message {
+  padding: 12px 16px;
+  background-color: #ffebee;
+  border: 1px solid #ffcdd2;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.resume-error-text {
+  font-size: 14px;
+  color: #ff1e0d;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* Info Text */
+.resume-info-text {
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #0068ce;
+}
+
+.resume-info-text p {
+  margin: 0;
+  font-size: 14px;
+  color: #656565;
+  line-height: 1.6;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* Action Buttons */
+.resume-action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  padding-top: 32px;
+  border-top: 1px solid #e8e8e8;
+}
+
+.resume-btn {
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.resume-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Cancel Button */
+.resume-btn-cancel {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.resume-btn-cancel:hover:not(:disabled) {
+  background-color: #e0e0e0;
+}
+
+/* Save Button */
+.resume-btn-save {
+  background-color: #0068ce;
+  color: white;
+}
+
+.resume-btn-save:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+/* Saving Spinner */
+.resume-saving-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: resume-spin 0.6s linear infinite;
+}
+
+@keyframes resume-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .resume-modal-container {
+    width: 95%;
+    max-height: 95vh;
+    margin: 10px;
+  }
+
+  .resume-modal-content {
+    padding: 24px;
+    max-height: calc(95vh - 48px);
+  }
+
+  .resume-modal-title {
+    font-size: 24px;
+  }
+
+  .resume-modal-subtitle {
+    font-size: 14px;
+  }
+
+  .resume-action-buttons {
+    flex-direction: column;
+  }
+
+  .resume-btn {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .resume-form-fields-wrapper {
+    gap: 20px;
+  }
+
+  .resume-upload-area {
+    padding: 30px 16px;
+  }
+
+  .resume-file-row {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .resume-file-info {
+    width: 100%;
+  }
+
+  .resume-remove-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .resume-file-name {
+    max-width: 180px;
+  }
+}
+
+/* Tablet Styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .resume-modal-container {
+    width: 80%;
+  }
+}
+
+/* Ensure fonts match the system */
+.resume-file-name,
+.resume-file-size,
+.resume-info-text p {
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, sans-serif;
+}
+
+/* Custom scrollbar for modal content */
+.resume-modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.resume-modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.resume-modal-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.resume-modal-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+/* Remove Confirmation Dialog */
+.resume-confirm-dialog {
+  padding: 16px;
+  background-color: #fff8f8;
+  border: 1px solid #ffcdd2;
+  border-radius: 8px;
+  margin-top: 16px;
+}
+
+.resume-confirm-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.resume-confirm-text {
+  font-size: 16px;
+  color: #d32f2f;
+  margin: 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+.resume-confirm-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.resume-btn-remove {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.resume-btn-remove:hover:not(:disabled) {
+  background-color: #b71c1c;
+}
+
+/* Update button states */
+.resume-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Adjust file row for better spacing */
+.resume-file-row {
+  margin-bottom: 8px;
+}
+

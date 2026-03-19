@@ -1,0 +1,435 @@
+.recruiter-friend-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f2f6fb;
+  overflow-x: clip;
+}
+
+.recruiter-friend-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f2f6fb;
+  min-width: 0;
+}
+
+.recruiter-friend-topbar-wrapper {
+  position: fixed;
+  top: 0;
+  left: 290px;
+  right: 0;
+  z-index: 100;
+  background: #ffffff;
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.recruiter-friend-scrollable-content {
+  flex: 1;
+  margin-top: 84px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.recruiter-friend-content {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.recruiter-friend-header h1 {
+  margin: 0;
+  font-size: 30px;
+  color: #0f283c;
+  line-height: 1.1;
+}
+
+.recruiter-friend-header p {
+  margin: 8px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.recruiter-friend-tabs {
+  display: flex;
+  gap: 10px;
+}
+
+.recruiter-friend-tab {
+  border: 1px solid #c8d7eb;
+  border-radius: 10px;
+  padding: 9px 14px;
+  background: #ffffff;
+  color: #40556f;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.recruiter-friend-tab.active {
+  border-color: #2481fb;
+  color: #1769e0;
+  background: #eef5ff;
+}
+
+.recruiter-friend-state {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 14px;
+  color: #5f6f88;
+}
+
+.recruiter-friend-state.error {
+  color: #c0392b;
+  background: #fff5f4;
+}
+
+.recruiter-friend-list {
+  display: grid;
+  gap: 14px;
+}
+
+.recruiter-friend-card {
+  background: #ffffff;
+  border: 1px solid #dcdcdc;
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.recruiter-friend-user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.recruiter-friend-user-clickable {
+  cursor: pointer;
+}
+
+.recruiter-friend-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #f0f4f8;
+  flex-shrink: 0;
+}
+
+.recruiter-friend-avatar.recruiter-logo {
+  width: 110px;
+  height: 54px;
+  border-radius: 0;
+  object-fit: contain;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+.recruiter-friend-info {
+  min-width: 0;
+}
+
+.recruiter-friend-info h3 {
+  margin: 0;
+  color: #0f283c;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.recruiter-friend-info p {
+  margin: 4px 0 0;
+  color: #4f627d;
+  font-size: 15px;
+}
+
+.recruiter-friend-info span {
+  display: block;
+  margin-top: 4px;
+  color: #1d63e0;
+  font-size: 14px;
+}
+
+.recruiter-friend-info small {
+  display: block;
+  margin-top: 4px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.recruiter-friend-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.recruiter-friend-btn {
+  min-width: 96px;
+  border-radius: 10px;
+  border: 1px solid #c4d0e5;
+  background: #ffffff;
+  color: #0f283c;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.recruiter-friend-btn.profile {
+  color: #1769e0;
+  border-color: #b8cdf5;
+}
+
+.recruiter-friend-btn.accept {
+  background: #2481fb;
+  border-color: #2481fb;
+  color: #ffffff;
+}
+
+.recruiter-friend-btn.delete {
+  border-color: #f2bec4;
+  color: #c62828;
+}
+
+.recruiter-friend-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 992px) {
+  .recruiter-friend-layout {
+    flex-direction: column;
+  }
+
+  .recruiter-friend-topbar-wrapper {
+    left: 0;
+    right: 0;
+  }
+
+  .recruiter-friend-content {
+    padding: 20px;
+  }
+
+  .recruiter-friend-header h1 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .recruiter-friend-scrollable-content {
+    margin-top: 70px;
+  }
+
+  .recruiter-friend-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .recruiter-friend-actions {
+    width: 100%;
+  }
+
+  .recruiter-friend-btn {
+    flex: 1;
+  }
+}
+
+/* Friend Requests UI Enhancement */
+.recruiter-friend-content {
+  padding: 32px;
+  gap: 16px;
+}
+
+.recruiter-friend-header {
+  background: linear-gradient(180deg, #f6fbff 0%, #ffffff 100%);
+  border: 1px solid #dce8f6;
+  border-radius: 16px;
+  padding: 18px 20px;
+}
+
+.recruiter-friend-header h1 {
+  font-size: clamp(28px, 3vw, 34px);
+  letter-spacing: -0.4px;
+  color: #0f2f53;
+}
+
+.recruiter-friend-header p {
+  margin-top: 8px;
+  color: #5f7694;
+}
+
+.recruiter-friend-tabs {
+  background: #ffffff;
+  border: 1px solid #dce8f6;
+  border-radius: 12px;
+  padding: 8px;
+  width: fit-content;
+}
+
+.recruiter-friend-tab {
+  border-radius: 8px;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.recruiter-friend-state {
+  border: 1px solid #dce8f6;
+  border-radius: 14px;
+  background: #f8fbff;
+}
+
+.recruiter-friend-state.error {
+  border-color: #f3c7c7;
+  background: #fff6f6;
+}
+
+.recruiter-friend-list {
+  gap: 12px;
+}
+
+.recruiter-friend-card {
+  border: 1px solid #dce8f6;
+  box-shadow: 0 10px 22px rgba(15, 40, 60, 0.08);
+  border-radius: 16px;
+  padding: 16px 18px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+
+.recruiter-friend-avatar {
+  width: 70px;
+  height: 70px;
+  border-color: #d5e5f5;
+}
+
+.recruiter-friend-info h3 {
+  font-size: 21px;
+  letter-spacing: -0.2px;
+}
+
+.recruiter-friend-info span {
+  color: #1a66d4;
+}
+
+.recruiter-friend-actions {
+  gap: 8px;
+}
+
+.recruiter-friend-btn {
+  min-width: 102px;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+
+.recruiter-friend-btn.accept {
+  background: #0068ce;
+  border-color: #0068ce;
+}
+
+.recruiter-friend-pagination {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 14px;
+  padding-top: 8px;
+}
+
+.recruiter-friend-page-info {
+  font-size: 13px;
+  color: #5f6f88;
+  margin-left: auto;
+  order: 2;
+}
+
+.recruiter-friend-page-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  order: 1;
+}
+
+.recruiter-friend-page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.recruiter-friend-page-num {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e2937;
+  background: #ffffff;
+  cursor: pointer;
+  border: 1px solid #dce8f6;
+}
+
+.recruiter-friend-page-num.active {
+  background: #e0d6fc;
+  color: #000000;
+  font-weight: 600;
+  border-color: transparent;
+}
+
+.recruiter-friend-page-nav {
+  border: none;
+  background: none;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.recruiter-friend-page-nav img {
+  width: 22px;
+  height: 22px;
+}
+
+.recruiter-friend-page-nav:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+
+@media (max-width: 992px) {
+  .recruiter-friend-content {
+    padding: 20px;
+  }
+
+  .recruiter-friend-header {
+    padding: 14px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .recruiter-friend-content {
+    padding: 15px;
+  }
+
+  .recruiter-friend-card {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .recruiter-friend-actions {
+    justify-content: flex-end;
+  }
+
+  .recruiter-friend-pagination {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,413 @@
+.candidate-friend-main-content {
+  flex-grow: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: visible;
+  background: #eff3f7;
+  min-height: 100vh;
+}
+
+.candidate-friend-content-card {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.candidate-friend-header h1 {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.1;
+  color: #0f283c;
+  font-weight: 700;
+}
+
+.candidate-friend-header p {
+  margin: 10px 0 0;
+  font-size: 16px;
+  color: #5f6f88;
+}
+
+.candidate-friend-tabs {
+  display: flex;
+  gap: 10px;
+}
+
+.candidate-friend-tab {
+  border: 1px solid #c8d7eb;
+  border-radius: 10px;
+  padding: 9px 14px;
+  background: #ffffff;
+  color: #40556f;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.candidate-friend-tab.active {
+  border-color: #2481fb;
+  color: #1769e0;
+  background: #eef5ff;
+}
+
+.candidate-friend-state {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 14px;
+  color: #5f6f88;
+}
+
+.candidate-friend-state.error {
+  color: #c0392b;
+  background: #fff5f4;
+}
+
+.candidate-friend-list {
+  display: grid;
+  gap: 14px;
+}
+
+.candidate-friend-card {
+  background: #ffffff;
+  border: 1px solid #dcdcdc;
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.candidate-friend-user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.candidate-friend-user-clickable {
+  cursor: pointer;
+}
+
+.candidate-friend-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid #f0f4f8;
+}
+
+.candidate-friend-avatar.recruiter-logo {
+  width: 110px;
+  height: 54px;
+  border-radius: 0;
+  object-fit: contain;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+.candidate-friend-info {
+  min-width: 0;
+}
+
+.candidate-friend-info h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #0f283c;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.candidate-friend-info p {
+  margin: 4px 0 0;
+  color: #4f627d;
+  font-size: 15px;
+}
+
+.candidate-friend-info span {
+  display: block;
+  margin-top: 4px;
+  color: #1d63e0;
+  font-size: 15px;
+}
+
+.candidate-friend-info small {
+  display: block;
+  margin-top: 4px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.candidate-friend-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.candidate-friend-btn {
+  min-width: 96px;
+  border-radius: 10px;
+  border: 1px solid #c4d0e5;
+  background: #ffffff;
+  color: #0f283c;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.candidate-friend-btn.profile {
+  color: #1769e0;
+  border-color: #b8cdf5;
+}
+
+.candidate-friend-btn.accept {
+  background: #2481fb;
+  border-color: #2481fb;
+  color: #ffffff;
+}
+
+.candidate-friend-btn.delete {
+  border-color: #f2bec4;
+  color: #c62828;
+}
+
+.candidate-friend-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1024px) {
+  .candidate-friend-main-content {
+    padding: 20px;
+  }
+
+  .candidate-friend-content-card {
+    padding: 20px;
+  }
+
+  .candidate-friend-header h1 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .candidate-friend-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .candidate-friend-actions {
+    width: 100%;
+  }
+
+  .candidate-friend-btn {
+    flex: 1;
+  }
+
+  .candidate-friend-info h3 {
+    font-size: 18px;
+  }
+}
+
+/* Friend Requests UI Enhancement */
+.candidate-friend-content-card {
+  background: transparent;
+  gap: 16px;
+}
+
+.candidate-friend-header {
+  background: linear-gradient(180deg, #f6fbff 0%, #ffffff 100%);
+  border: 1px solid #dce8f6;
+  border-radius: 16px;
+  padding: 18px 20px;
+}
+
+.candidate-friend-header h1 {
+  font-size: clamp(28px, 3vw, 34px);
+  letter-spacing: -0.4px;
+  color: #0f2f53;
+}
+
+.candidate-friend-header p {
+  margin-top: 8px;
+  color: #5f7694;
+}
+
+.candidate-friend-tabs {
+  background: #ffffff;
+  border: 1px solid #dce8f6;
+  border-radius: 12px;
+  padding: 8px;
+  width: fit-content;
+}
+
+.candidate-friend-tab {
+  border-radius: 8px;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.candidate-friend-state {
+  border: 1px solid #dce8f6;
+  border-radius: 14px;
+  background: #f8fbff;
+}
+
+.candidate-friend-state.error {
+  border-color: #f3c7c7;
+  background: #fff6f6;
+}
+
+.candidate-friend-list {
+  gap: 12px;
+}
+
+.candidate-friend-card {
+  border: 1px solid #dce8f6;
+  box-shadow: 0 10px 22px rgba(15, 40, 60, 0.08);
+  border-radius: 16px;
+  padding: 16px 18px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+
+.candidate-friend-avatar {
+  width: 70px;
+  height: 70px;
+  border-color: #d5e5f5;
+}
+
+.candidate-friend-info h3 {
+  font-size: 21px;
+  letter-spacing: -0.2px;
+}
+
+.candidate-friend-info span {
+  color: #1a66d4;
+}
+
+.candidate-friend-actions {
+  gap: 8px;
+}
+
+.candidate-friend-btn {
+  min-width: 102px;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+
+.candidate-friend-btn.accept {
+  background: #0068ce;
+  border-color: #0068ce;
+}
+
+.candidate-friend-pagination {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 14px;
+  padding-top: 8px;
+}
+
+.candidate-friend-page-info {
+  font-size: 13px;
+  color: #5f6f88;
+  margin-left: auto;
+  order: 2;
+}
+
+.candidate-friend-page-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  order: 1;
+}
+
+.candidate-friend-page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.candidate-friend-page-num {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e2937;
+  background: #ffffff;
+  cursor: pointer;
+  border: 1px solid #dce8f6;
+}
+
+.candidate-friend-page-num.active {
+  background: #e0d6fc;
+  color: #000000;
+  font-weight: 600;
+  border-color: transparent;
+}
+
+.candidate-friend-page-nav {
+  border: none;
+  background: none;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.candidate-friend-page-nav img {
+  width: 22px;
+  height: 22px;
+}
+
+.candidate-friend-page-nav:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+
+@media (max-width: 1024px) {
+  .candidate-friend-main-content {
+    padding: 20px;
+  }
+
+  .candidate-friend-header {
+    padding: 14px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .candidate-friend-main-content {
+    padding: 24px;
+  }
+
+  .candidate-friend-card {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .candidate-friend-actions {
+    justify-content: flex-end;
+  }
+
+  .candidate-friend-pagination {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

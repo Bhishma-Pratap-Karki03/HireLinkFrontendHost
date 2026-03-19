@@ -1,0 +1,2036 @@
+body {
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #eff3f7;
+  color: #0f283c;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Dashboard Container */
+.candidate-dashboard-container {
+  display: flex;
+  background-color: #eff3f7;
+  min-height: 100vh;
+}
+
+/* Main Content */
+.candidate-main-content {
+  flex-grow: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: visible;
+}
+
+.candidate-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.candidate-page-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0f283c;
+  margin: 0;
+}
+
+.candidate-notification-btn img {
+  width: 32px;
+  height: 32px;
+}
+
+.candidate-content-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Cards */
+.candidate-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.candidate-profile-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.candidate-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.candidate-card-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  color: #000000;
+}
+
+.candidate-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.candidate-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #0068ce;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.candidate-add-btn img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: block;
+}
+
+.candidate-add-btn:hover {
+  background-color: #f0f8ff;
+}
+
+.candidate-description-text {
+  color: #656565;
+  line-height: 1.5;
+  margin: 0;
+  font-size: 16px;
+}
+
+.candidate-description-text-project {
+  color: #656565;
+  line-height: 1.5;
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Profile Card Specifics */
+.candidate-profile-main {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.candidate-profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.candidate-profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.candidate-profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.candidate-profile-name-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.candidate-profile-name-row h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #0f283c;
+}
+
+.candidate-badge-public {
+  background-color: #f2f9ee;
+  color: #276b4f;
+  padding: 5px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.candidate-badge-private {
+  background-color: #fef2f2;
+  color: #991b1b;
+  padding: 5px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.candidate-profile-connections {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.candidate-blue-text {
+  color: #0068ce;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Info Grid */
+.candidate-info-grid {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.candidate-info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.candidate-icon-box {
+  width: 40px;
+  height: 40px;
+  background-color: #edecff;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.candidate-info-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.candidate-label {
+  color: #656565;
+  font-size: 12px;
+}
+
+.candidate-value {
+  color: #000000;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Tags */
+.candidate-tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.candidate-tag {
+  border: 1px solid #2481fb;
+  border-radius: 20px;
+  padding: 12px;
+  color: #0f283c;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Certifications */
+.candidate-cert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.candidate-cert-item h4 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  color: #000000;
+  font-weight: 600;
+}
+
+.candidate-sub-text {
+  color: #363636;
+  margin: 0 0 8px 0;
+  font-size: 12px;
+}
+
+.candidate-meta-text {
+  color: #8c8c8c;
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.candidate-show-credential-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #0068ce;
+  border-radius: 20px;
+  padding: 8px 12px;
+  color: #565656;
+  font-size: 12px;
+  margin-top: 10px;
+  width: fit-content;
+  transition: all 0.2s;
+}
+
+.candidate-show-credential-btn:hover {
+  background-color: #f0f8ff;
+  border-color: #0056b3;
+}
+
+/* Project */
+.candidate-project-item {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.candidate-project-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.candidate-project-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.candidate-project-details h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #000000;
+  font-weight: 600;
+}
+
+.candidate-date-range {
+  color: #565656;
+  font-size: 12px;
+  margin: 0;
+}
+
+/* Edit Button - Standardized */
+.candidate-edit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.candidate-edit-btn:hover {
+  background-color: #f0f8ff;
+}
+
+.candidate-edit-btn img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Eye Button for Quiz/Assessment - Standardized */
+.candidate-eye-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.candidate-eye-btn:hover {
+  background-color: #f0f8ff;
+}
+
+.candidate-eye-btn img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+/* Quiz/Assessment Styles */
+.candidate-quiz-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.candidate-quiz-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.candidate-quiz-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.candidate-quiz-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px;
+  width: 100%;
+}
+
+.candidate-quiz-header h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+  min-width: 0;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.candidate-quiz-score {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+  white-space: nowrap;
+  justify-self: end;
+  margin-top: 2px;
+}
+
+.candidate-score-passed {
+  color: #276b4f; /* Green color for passed */
+}
+
+.candidate-score-failed {
+  color: #dc2626; /* Red color for failed */
+}
+
+.candidate-quiz-status {
+  color: #8c8c8c;
+  font-size: 12px;
+  margin: 0;
+}
+
+.candidate-quiz-type-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #eaf4ff;
+  color: #0b5ebd;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  justify-self: end;
+  margin-top: 2px;
+}
+
+.candidate-quiz-view-btn {
+  margin-top: 8px;
+  width: fit-content;
+  padding: 8px 14px;
+  border: 1px solid #1f7ae0;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1f7ae0;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Languages Styles */
+.candidate-language-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.candidate-language-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.candidate-language-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.candidate-language-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000000;
+}
+
+.candidate-language-stars {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.candidate-star-icon {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+/* Dual Section Row - Updated to 20px gap */
+.candidate-dual-section-row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.candidate-half-card {
+  flex: 1;
+  width: 50%;
+}
+
+/* Responsive for dual sections */
+@media (max-width: 1024px) {
+  .candidate-dual-section-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .candidate-half-card {
+    width: 100%;
+  }
+
+  .candidate-card,
+  .candidate-profile-card {
+    padding: 30px;
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .candidate-dashboard-container {
+    flex-direction: column;
+  }
+
+  .candidate-main-content {
+    padding: 20px;
+  }
+
+  .candidate-card,
+  .candidate-profile-card {
+    padding: 20px;
+  }
+
+  .candidate-profile-card {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .candidate-profile-main {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .candidate-profile-avatar {
+    align-self: center;
+  }
+
+  .candidate-info-grid {
+    flex-direction: column;
+  }
+
+  .candidate-project-item {
+    flex-direction: column;
+  }
+
+  .candidate-project-img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .candidate-main-content {
+    padding: 15px;
+  }
+
+  .candidate-page-header h1 {
+    font-size: 24px;
+  }
+
+  .candidate-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .candidate-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .candidate-language-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .candidate-quiz-header {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .candidate-quiz-score,
+  .candidate-quiz-type-badge {
+    justify-self: start;
+  }
+
+  .candidate-dual-section-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .candidate-half-card {
+    width: 100%;
+  }
+
+  .candidate-card,
+  .candidate-profile-card {
+    padding: 20px;
+  }
+}
+
+.loading-container,
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.error-container {
+  color: #dc2626;
+}
+
+.retry-button {
+  margin-top: 16px;
+  padding: 8px 16px;
+  background-color: #0068ce;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.retry-button:hover {
+  background-color: #0056b3;
+}
+
+/* Formatting for display values */
+.candidate-value {
+  word-break: break-word;
+}
+
+/* Ensure proper modal z-index */
+.modal-overlay,
+.personal-info-modal-overlay {
+  z-index: 1000;
+}
+
+/* About section - Support HTML content from rich text editor */
+.candidate-description-text {
+  color: #656565;
+  line-height: 1.6;
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Style HTML content from rich text editor */
+.candidate-description-text h1,
+.candidate-description-text h2,
+.candidate-description-text h3 {
+  color: #0f283c;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.candidate-description-text h1 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.candidate-description-text h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.candidate-description-text h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.candidate-description-text p {
+  margin-bottom: 16px;
+}
+
+.candidate-description-text ul,
+.candidate-description-text ol {
+  margin-left: 20px;
+  margin-bottom: 16px;
+}
+
+.candidate-description-text li {
+  margin-bottom: 8px;
+}
+
+.candidate-description-text strong {
+  font-weight: 600;
+  color: #333;
+}
+
+.candidate-description-text em {
+  font-style: italic;
+}
+
+.candidate-description-text a {
+  color: #0068ce;
+  text-decoration: none;
+}
+
+.candidate-description-text a:hover {
+  text-decoration: underline;
+}
+
+.candidate-description-text blockquote {
+  border-left: 4px solid #0068ce;
+  padding-left: 16px;
+  margin-left: 0;
+  font-style: italic;
+  color: #555;
+}
+
+/* Ensure Quill alignment classes are respected in rendered profile HTML */
+.candidate-description-text .ql-align-center {
+  text-align: center;
+}
+
+.candidate-description-text .ql-align-right {
+  text-align: right;
+}
+
+.candidate-description-text .ql-align-justify {
+  text-align: justify;
+}
+/* Resume Display Styles */
+.resume-display-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resume-file-info-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e8e8e8;
+}
+
+.resume-file-name-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.resume-file-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.resume-file-name-text {
+  font-size: 16px;
+  color: #333333;
+  font-weight: 500;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resume-file-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.resume-file-size {
+  font-size: 14px;
+  color: #8c8c8c;
+}
+
+.resume-view-link {
+  color: #0068ce;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background-color: #f0f8ff;
+  transition: all 0.2s;
+}
+
+.resume-view-link:hover {
+  background-color: #e0f0ff;
+  text-decoration: none;
+}
+
+/* Responsive for resume display */
+@media (max-width: 768px) {
+  .resume-file-info-display {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .resume-file-meta {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .resume-file-name-text {
+    max-width: 150px;
+  }
+}
+/* Experience Section Styles */
+.candidate-experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.candidate-experience-item {
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.candidate-experience-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.candidate-experience-header {
+  margin-bottom: 12px;
+}
+
+.candidate-experience-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.candidate-experience-job-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+}
+
+.candidate-experience-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.candidate-delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #ff1e0d;
+  background-color: #ffebee;
+  transition: all 0.2s;
+}
+
+.candidate-delete-btn:hover {
+  background-color: #ffcdd2;
+}
+
+.candidate-experience-company {
+  font-size: 14px;
+  color: #363636;
+  margin: 0 0 4px 0;
+}
+
+.candidate-experience-dates {
+  font-size: 12px;
+  color: #8c8c8c;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.candidate-experience-duration {
+  color: #0068ce;
+  font-weight: 500;
+}
+
+.candidate-experience-description {
+  font-size: 14px;
+  color: #656565;
+  line-height: 1.6;
+  margin-top: 20px;
+}
+
+/* Remove conflicting styles that target all h1, h2, h3 inside candidate-experience-description */
+.candidate-experience-description h1,
+.candidate-experience-description h2,
+.candidate-experience-description h3 {
+  color: #656565;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.candidate-experience-description h1 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.candidate-experience-description h2 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.candidate-experience-description h3 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.candidate-experience-description p {
+  margin-bottom: 12px;
+}
+
+.candidate-experience-description ul,
+.candidate-experience-description ol {
+  margin-left: 20px;
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+.candidate-experience-description li {
+  margin-bottom: 6px;
+}
+
+/* Ensure saved rich-text bullets/numbers stay visible in profile view */
+.candidate-experience-description ul li {
+  list-style-type: disc;
+}
+
+.candidate-experience-description ol li {
+  list-style-type: decimal;
+}
+
+.candidate-experience-description li[data-list="bullet"] {
+  list-style-type: disc;
+}
+
+.candidate-experience-description li[data-list="ordered"] {
+  list-style-type: decimal;
+}
+
+.candidate-experience-description strong {
+  font-weight: 600;
+  color: #656565;
+}
+
+.candidate-experience-description a {
+  color: #0068ce;
+  text-decoration: none;
+}
+
+.candidate-experience-description a:hover {
+  text-decoration: underline;
+}
+
+/* Education Section Styles - Consistent with Experience */
+.candidate-education-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.candidate-education-item {
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.candidate-education-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.candidate-education-header {
+  margin-bottom: 12px;
+}
+
+.candidate-education-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.candidate-education-degree-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+}
+
+.candidate-education-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.candidate-education-institution {
+  font-size: 14px;
+  color: #363636;
+  margin: 0 0 4px 0;
+}
+
+.candidate-education-dates {
+  font-size: 12px;
+  color: #8c8c8c;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.candidate-education-duration {
+  color: #0068ce;
+  font-weight: 500;
+}
+
+.candidate-education-description {
+  font-size: 14px;
+  color: #656565;
+  line-height: 1.6;
+  margin-top: 20px;
+}
+
+/* Style HTML content in education description */
+.candidate-education-description h1,
+.candidate-education-description h2,
+.candidate-education-description h3 {
+  color: #656565;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.candidate-education-description h1 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.candidate-education-description h2 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.candidate-education-description h3 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.candidate-education-description p {
+  margin-bottom: 12px;
+}
+
+.candidate-education-description ul,
+.candidate-education-description ol {
+  margin-left: 20px;
+  margin-bottom: 12px;
+}
+
+.candidate-education-description li {
+  margin-bottom: 6px;
+}
+
+.candidate-education-description strong {
+  font-weight: 600;
+  color: #656565;
+}
+
+.candidate-education-description a {
+  color: #0068ce;
+  text-decoration: none;
+}
+
+.candidate-education-description a:hover {
+  text-decoration: underline;
+}
+
+/* Delete Button - Consistent styling */
+.candidate-delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #ff1e0d;
+  background-color: #ffebee;
+  transition: all 0.2s;
+  font-family: "Montserrat", sans-serif;
+}
+
+.candidate-delete-btn:hover {
+  background-color: #ffcdd2;
+}
+
+/* Responsive for education and experience sections */
+@media (max-width: 768px) {
+  .candidate-education-title-row,
+  .candidate-experience-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .candidate-education-actions,
+  .candidate-experience-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .candidate-education-dates,
+  .candidate-experience-dates {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+/* Skills Section Styles */
+.candidate-skills-list {
+  width: 100%;
+}
+
+.candidate-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.candidate-skill-item {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e8e8e8;
+  transition: all 0.2s;
+}
+
+.candidate-skill-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.candidate-skill-header {
+  margin-bottom: 12px;
+}
+
+.candidate-skill-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.candidate-skill-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+}
+
+.candidate-skill-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.candidate-edit-btn-small {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.candidate-edit-btn-small:hover {
+  background-color: #f0f8ff;
+}
+
+.candidate-edit-btn-small img {
+  width: 16px;
+  height: 16px;
+}
+
+.candidate-delete-btn-small {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #ff1e0d;
+  background-color: #ffebee;
+  transition: all 0.2s;
+  font-family: "Montserrat", sans-serif;
+}
+
+.candidate-delete-btn-small:hover {
+  background-color: #ffcdd2;
+}
+
+.candidate-skill-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.candidate-skill-level {
+  font-size: 12px;
+  color: #ffffff;
+  background-color: #0068ce;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.candidate-skill-experience {
+  font-size: 12px;
+  color: #565656;
+  background-color: #f0f0f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.candidate-skill-category {
+  font-size: 12px;
+  color: #276b4f;
+  background-color: #f2f9ee;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* Responsive for skills section */
+@media (max-width: 768px) {
+  .candidate-skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .candidate-skill-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .candidate-skill-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+/* Language Profile Section - Unique Styling */
+.candidate-languageprofile-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.candidate-languageprofile-item {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e8e8e8;
+}
+
+.candidate-languageprofile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.candidate-languageprofile-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+  flex: 1;
+}
+
+.candidate-languageprofile-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.candidate-languageprofile-rating-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.candidate-languageprofile-stars {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-right: 16px;
+}
+
+.candidate-languageprofile-rating-text {
+  font-size: 14px;
+  color: #8c8c8c;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Language Profile specific buttons */
+.candidate-languageprofile-delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #ff1e0d;
+  background-color: #ffebee;
+  transition: all 0.2s;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  min-width: 70px;
+  text-align: center;
+}
+
+.candidate-languageprofile-delete-btn:hover {
+  background-color: #ffcdd2;
+}
+
+.candidate-languageprofile-edit-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.candidate-languageprofile-edit-btn img {
+  width: 16px;
+  height: 16px;
+}
+
+.candidate-languageprofile-star-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* Responsive for language profile */
+@media (max-width: 768px) {
+  .candidate-languageprofile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .candidate-languageprofile-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .candidate-languageprofile-rating-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .candidate-languageprofile-stars {
+    margin-right: 0;
+  }
+}
+/* Add these styles to CandidateProfilePage.css */
+
+/* Certification Styles */
+.candidate-cert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.candidate-cert-item {
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.candidate-cert-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.candidate-cert-header {
+  margin-bottom: 8px;
+}
+
+.candidate-cert-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.candidate-cert-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+  flex: 1;
+}
+
+.candidate-cert-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.candidate-edit-btn-small {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.candidate-edit-btn-small:hover {
+  background-color: #f0f8ff;
+}
+
+.candidate-edit-btn-small img {
+  width: 16px;
+  height: 16px;
+}
+
+.candidate-delete-btn-small {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #ff1e0d;
+  background-color: #ffebee;
+  transition: all 0.2s;
+  font-family: "Montserrat", sans-serif;
+}
+
+.candidate-delete-btn-small:hover {
+  background-color: #ffcdd2;
+}
+
+.candidate-sub-text {
+  color: #363636;
+  margin: 0 0 8px 0;
+  font-size: 14px;
+}
+
+.candidate-meta-text {
+  color: #8c8c8c;
+  margin: 0 0 12px 0;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.candidate-show-credential-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #0068ce;
+  border-radius: 20px;
+  padding: 8px 12px;
+  color: #565656;
+  font-size: 12px;
+  margin-top: 10px;
+  width: fit-content;
+  transition: all 0.2s;
+  text-decoration: none;
+  background-color: transparent;
+  font-family: "Montserrat", sans-serif;
+}
+
+.candidate-show-credential-btn:hover {
+  background-color: #f0f8ff;
+  border-color: #0056b3;
+  text-decoration: none;
+}
+
+/* Responsive for certifications */
+@media (max-width: 768px) {
+  .candidate-cert-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .candidate-cert-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* Add these styles to CandidateProfilePage.css */
+
+/* Project List Styles */
+.candidate-project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.candidate-project-item {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.candidate-project-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.candidate-project-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 12px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.candidate-project-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.candidate-project-header {
+  margin-bottom: 8px;
+}
+
+.candidate-project-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.candidate-project-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+  flex: 1;
+}
+
+.candidate-project-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.candidate-project-date-range {
+  color: #565656;
+  font-size: 12px;
+  margin: 0;
+}
+
+/* Project Technologies */
+.candidate-project-technologies {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.candidate-project-tech-label {
+  font-size: 12px;
+  color: #8c8c8c;
+  font-weight: 500;
+}
+
+.candidate-tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.candidate-tech-tag {
+  background-color: #f0f8ff;
+  color: #0068ce;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* View Project Button */
+.candidate-show-project-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #0068ce;
+  border-radius: 20px;
+  padding: 8px 12px;
+  color: #565656;
+  font-size: 12px;
+  width: fit-content;
+  transition: all 0.2s;
+  text-decoration: none;
+  background-color: transparent;
+  font-family: "Montserrat", sans-serif;
+}
+
+.candidate-show-project-btn:hover {
+  background-color: #f0f8ff;
+  border-color: #0056b3;
+  text-decoration: none;
+}
+
+/* Responsive for projects */
+@media (max-width: 768px) {
+  .candidate-project-item {
+    flex-direction: column;
+  }
+
+  .candidate-project-img {
+    width: 100%;
+    height: 200px;
+  }
+
+  .candidate-project-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .candidate-project-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* Quiz results modal */
+.candidate-quiz-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 24, 36, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+}
+
+.candidate-quiz-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  width: min(720px, 92vw);
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 16px;
+  box-shadow: 0 18px 45px rgba(15, 24, 36, 0.2);
+}
+
+.candidate-quiz-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.candidate-quiz-modal-header h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #0f283c;
+}
+
+.candidate-quiz-modal-header p {
+  margin: 6px 0 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.candidate-quiz-modal-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+}
+
+.candidate-quiz-modal-close img {
+  width: 18px;
+  height: 18px;
+}
+
+.candidate-quiz-modal-list {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-right: 6px;
+}
+
+.candidate-quiz-modal-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+}
+
+.candidate-quiz-modal-item input {
+  margin-top: 4px;
+}
+
+.candidate-quiz-modal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #0f283c;
+  font-size: 14px;
+}
+
+.candidate-quiz-modal-meta {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.candidate-quiz-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.candidate-quiz-modal-primary {
+  background: #0068ce;
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.candidate-quiz-modal-secondary {
+  background: #f3f4f6;
+  color: #111827;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+/* Candidate Profile UI Refresh */
+.candidate-main-content {
+  padding: 40px;
+  gap: 24px;
+}
+
+.candidate-content-grid {
+  gap: 18px;
+}
+
+.candidate-card,
+.candidate-profile-card {
+  border: 1px solid #dfe8f4;
+  border-radius: 18px;
+  box-shadow: 0 10px 24px rgba(15, 40, 60, 0.07);
+  padding: 30px;
+  gap: 16px;
+}
+
+.candidate-card-header {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eaf0f7;
+}
+
+.candidate-card-header h3 {
+  font-size: 22px;
+  color: #0f283c;
+  letter-spacing: -0.2px;
+}
+
+.candidate-description-text,
+.candidate-description-text-project {
+  color: #54657d;
+  line-height: 1.65;
+}
+
+.candidate-add-btn,
+.candidate-edit-btn,
+.candidate-eye-btn {
+  border-radius: 10px;
+}
+
+.candidate-add-btn {
+  background: #f2f8ff;
+  border: 1px solid #d2e5fb;
+  padding: 8px 12px;
+}
+
+.candidate-add-btn:hover,
+.candidate-edit-btn:hover,
+.candidate-eye-btn:hover,
+.candidate-edit-btn-small:hover,
+.candidate-languageprofile-edit-btn:hover {
+  background-color: #eaf4ff;
+}
+
+.candidate-profile-card {
+  align-items: center;
+}
+
+.candidate-profile-main {
+  gap: 24px;
+  align-items: center;
+}
+
+.candidate-profile-avatar {
+  width: 128px;
+  height: 128px;
+  border: 3px solid #e4eef9;
+  box-shadow: 0 12px 20px rgba(15, 40, 60, 0.12);
+}
+
+.candidate-profile-name-row h2 {
+  font-size: 30px;
+  letter-spacing: -0.4px;
+}
+
+.candidate-badge-public,
+.candidate-badge-private {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.candidate-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px 20px;
+  width: 100%;
+}
+
+.candidate-info-item {
+  background: #f8fbff;
+  border: 1px solid #e3ecf7;
+  border-radius: 12px;
+  padding: 12px;
+  min-height: 72px;
+}
+
+.candidate-icon-box {
+  background: #e9f3ff;
+  border-radius: 10px;
+}
+
+.candidate-label {
+  color: #72839a;
+}
+
+.candidate-value {
+  color: #0f283c;
+  font-weight: 600;
+}
+
+.candidate-experience-item,
+.candidate-education-item,
+.candidate-cert-item,
+.candidate-project-item,
+.candidate-quiz-item {
+  border-bottom-color: #e7eef8;
+}
+
+.candidate-skill-item,
+.candidate-languageprofile-item {
+  background: #f8fbff;
+  border-color: #deebfa;
+  border-radius: 14px;
+}
+
+.candidate-tech-tag,
+.candidate-skill-level,
+.candidate-skill-category,
+.candidate-skill-experience {
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.candidate-show-project-btn,
+.candidate-show-credential-btn,
+.candidate-quiz-view-btn {
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.candidate-quiz-modal {
+  border: 1px solid #dce8f8;
+  border-radius: 18px;
+}
+
+.candidate-quiz-modal-item {
+  border-color: #dde8f6;
+  background: #f8fbff;
+}
+
+@media (max-width: 1200px) {
+  .candidate-info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .candidate-main-content {
+    padding: 20px;
+  }
+
+  .candidate-card,
+  .candidate-profile-card {
+    padding: 22px;
+    border-radius: 16px;
+  }
+
+  .candidate-profile-name-row h2 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .candidate-main-content {
+    padding: 14px;
+  }
+
+  .candidate-card,
+  .candidate-profile-card {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .candidate-profile-avatar {
+    width: 108px;
+    height: 108px;
+  }
+
+  .candidate-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Show full uploaded project cover image without cropping */
+.candidate-dashboard-container .candidate-project-img {
+  object-fit: contain;
+  background: #f4f8ff;
+  object-position: center;
+}
+
+@media (max-width: 768px) {
+  .candidate-dashboard-container .candidate-project-img {
+    height: auto;
+    max-height: 260px;
+  }
+}
+

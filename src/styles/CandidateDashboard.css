@@ -1,0 +1,377 @@
+.candidate-insight-main {
+  flex: 1;
+  min-width: 0;
+  min-height: 100vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: visible;
+  background: #eff3f7;
+}
+
+.candidate-insight-main > .candidate-top-bar {
+  width: 100% !important;
+  margin: 0 !important;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.candidate-insight-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 40px;
+}
+
+.candidate-insight-header-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.candidate-insight-header-copy h1 {
+  margin: 0;
+  font-size: 44px;
+  line-height: 1.05;
+  color: #0a2b49;
+}
+
+.candidate-insight-header-copy p {
+  margin: 6px 0 0;
+  color: #6a829d;
+  font-size: 15px;
+}
+
+.candidate-insight-inline-filters {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.candidate-insight-date-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.candidate-insight-date-field label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6a829d;
+  font-weight: 700;
+}
+
+.candidate-insight-date-field input {
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid #bcd0ea;
+  color: #0f283c;
+  font-weight: 600;
+  font-size: 13px;
+  background: #ffffff;
+}
+
+.candidate-insight-apply-filter {
+  height: 38px;
+  border: none;
+  border-radius: 10px;
+  background: #1067d8;
+  color: #ffffff;
+  padding: 0 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.candidate-insight-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.candidate-insight-stat-card {
+  border: 1px solid #cfe0f5;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #ffffff 0%, #f6fafe 100%);
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 132px;
+}
+
+.candidate-insight-stat-content h3 {
+  margin: 0;
+  font-size: 14px;
+  color: #5d7695;
+}
+
+.candidate-insight-stat-content p {
+  margin: 8px 0 4px;
+  font-size: 42px;
+  line-height: 1;
+  font-weight: 800;
+  color: #0a2b49;
+}
+
+.candidate-insight-stat-content small {
+  font-size: 13px;
+  color: #6a829d;
+}
+
+.candidate-insight-stat-icon {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  align-self: center;
+}
+
+.candidate-insight-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.candidate-insight-panel {
+  border: 1px solid #cfe0f5;
+  border-radius: 16px;
+  background: #ffffff;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.candidate-insight-panel h2 {
+  margin: 0;
+  font-size: 21px;
+  color: #0a2b49;
+}
+
+.candidate-insight-chart-wrap {
+  position: relative;
+  width: 100%;
+  min-height: 268px;
+}
+
+.candidate-insight-trend-chart-wrap {
+  min-height: 320px;
+}
+
+.candidate-insight-trend-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.candidate-insight-trend-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #bad2ef;
+  background: #f3f8ff;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: #3d5f86;
+  font-weight: 700;
+}
+
+.candidate-insight-trend-control.active {
+  background: #e4f0ff;
+}
+
+.candidate-insight-trend-control input {
+  margin: 0;
+}
+
+.candidate-insight-trend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.candidate-insight-empty-chart {
+  border: 1px dashed #c8d8eb;
+  background: #f7fafe;
+  border-radius: 12px;
+  padding: 28px;
+  text-align: center;
+  color: #6a829d;
+  font-weight: 600;
+}
+
+.candidate-insight-donut-panel {
+  min-height: 280px;
+  justify-content: center;
+}
+
+.candidate-insight-donut-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.candidate-insight-donut-chart-wrap {
+  max-width: 260px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.candidate-insight-donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.candidate-insight-donut-legend-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.candidate-insight-donut-legend-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.candidate-insight-donut-legend-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+
+.candidate-insight-donut-legend-label {
+  color: #345a84;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.candidate-insight-donut-legend-value {
+  color: #0a2b49;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.candidate-insight-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.candidate-insight-list-item {
+  border: 1px solid #d5e2f2;
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.candidate-insight-list-item h4 {
+  margin: 0;
+  color: #0f283c;
+  font-size: 15px;
+}
+
+.candidate-insight-list-item p {
+  margin: 4px 0 0;
+  color: #6a829d;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.candidate-insight-list-meta small {
+  color: #6a829d;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.candidate-insight-state {
+  border: 1px solid #d5e2f2;
+  border-radius: 12px;
+  padding: 14px;
+  color: #5f7695;
+  background: #ffffff;
+  font-weight: 600;
+}
+
+.candidate-insight-state.error {
+  background: #fff4f4;
+  border-color: #f2caca;
+  color: #c0392b;
+}
+
+@media (max-width: 1400px) {
+  .candidate-insight-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1100px) {
+  .candidate-dashboard-container {
+    flex-direction: column;
+  }
+
+  .candidate-insight-main {
+    min-height: auto;
+  }
+
+  .candidate-insight-content-wrapper {
+    padding: 20px;
+  }
+
+  .candidate-insight-header-copy h1 {
+    font-size: 34px;
+  }
+
+  .candidate-insight-chart-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .candidate-insight-content-wrapper {
+    padding: 15px;
+    gap: 12px;
+  }
+
+  .candidate-insight-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .candidate-insight-header-row {
+    align-items: flex-start;
+  }
+
+  .candidate-insight-inline-filters {
+    width: 100%;
+  }
+
+  .candidate-insight-date-field,
+  .candidate-insight-date-field input,
+  .candidate-insight-apply-filter {
+    width: 100%;
+  }
+
+  .candidate-insight-donut-layout {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .candidate-insight-list-item {
+    grid-template-columns: 1fr;
+  }
+}

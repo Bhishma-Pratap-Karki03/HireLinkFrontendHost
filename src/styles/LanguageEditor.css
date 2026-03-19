@@ -1,0 +1,432 @@
+/* Language Editor Modal Styles - Consistent with other editors */
+
+/* Overlay - Background dimming effect */
+.language-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: language-fadeIn 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+/* Fade in animation for overlay */
+@keyframes language-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Container */
+.language-modal-container {
+  background-color: #ffffff;
+  border-radius: 24px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: language-slideUp 0.3s ease;
+}
+
+/* Slide up animation for modal */
+@keyframes language-slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Close Button */
+.language-close-button {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s;
+}
+
+.language-close-button:hover {
+  background-color: #f0f0f0;
+}
+
+.language-close-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.language-close-button img {
+  width: 16px;
+  height: 16px;
+}
+
+/* Modal Content Area */
+.language-modal-content {
+  padding: 40px;
+  overflow-y: auto;
+  max-height: calc(90vh - 80px);
+}
+
+/* Modal Header */
+.language-modal-header {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.language-modal-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f283c;
+  margin: 0 0 8px 0;
+}
+
+.language-modal-subtitle {
+  font-size: 16px;
+  color: #656565;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Form Section */
+.language-form {
+  width: 100%;
+}
+
+.language-form-group {
+  margin-bottom: 32px;
+}
+
+.language-form-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333333;
+  font-family: "Montserrat", sans-serif;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.language-form-label::after {
+  content: attr(data-required);
+  color: #ff1e0d;
+  margin-left: 4px;
+}
+
+.language-form-select {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 12px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333333;
+  font-family: "Montserrat", sans-serif;
+  transition: all 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 12px;
+  padding-right: 40px;
+}
+
+.language-form-select:focus {
+  outline: none;
+  border-color: #0068ce;
+  box-shadow: 0 0 0 3px rgba(0, 104, 206, 0.1);
+}
+
+.language-form-select.error {
+  border-color: #ff1e0d;
+}
+
+.language-form-select:disabled {
+  background-color: #f8f9fa;
+  color: #8c8c8c;
+  cursor: not-allowed;
+}
+
+.language-form-input {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 12px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333333;
+  font-family: "Montserrat", sans-serif;
+  transition: all 0.2s;
+}
+
+.language-form-input:focus {
+  outline: none;
+  border-color: #0068ce;
+  box-shadow: 0 0 0 3px rgba(0, 104, 206, 0.1);
+}
+
+.language-form-input.error {
+  border-color: #ff1e0d;
+}
+
+.language-form-input:disabled {
+  background-color: #f8f9fa;
+  color: #8c8c8c;
+  cursor: not-allowed;
+}
+
+.language-form-input::placeholder {
+  color: #999999;
+}
+
+.language-form-error {
+  font-size: 14px;
+  color: #ff1e0d;
+  font-family: "Montserrat", sans-serif;
+  margin-top: 8px;
+}
+
+/* Rating Section */
+.language-rating-group {
+  margin-bottom: 32px;
+}
+
+.language-stars-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.language-star-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  transition: transform 0.2s;
+}
+
+.language-star-button:hover:not(:disabled) {
+  transform: scale(1.2);
+}
+
+.language-star-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.language-star-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.language-rating-description {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.language-rating-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0068ce;
+  font-family: "Montserrat", sans-serif;
+}
+
+.language-rating-help {
+  font-size: 14px;
+  color: #8c8c8c;
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.4;
+}
+
+/* Rating Guide */
+.language-rating-guide {
+  margin: 32px 0;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e8e8e8;
+}
+
+.language-guide-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333333;
+  margin: 0 0 16px 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.language-guide-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.language-guide-list li {
+  font-size: 14px;
+  color: #656565;
+  margin-bottom: 12px;
+  line-height: 1.5;
+  font-family: "Montserrat", sans-serif;
+}
+
+.language-guide-list li:last-child {
+  margin-bottom: 0;
+}
+
+.language-guide-list strong {
+  color: #333333;
+}
+
+/* Submit Error */
+.language-submit-error {
+  padding: 12px 16px;
+  background-color: #ffebee;
+  border: 1px solid #ffcdd2;
+  border-radius: 8px;
+  color: #ff1e0d;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* Action Buttons */
+.language-action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid #e8e8e8;
+}
+
+.language-btn {
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.language-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Cancel Button */
+.language-btn-cancel {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.language-btn-cancel:hover:not(:disabled) {
+  background-color: #e0e0e0;
+}
+
+/* Save Button */
+.language-btn-save {
+  background-color: #0068ce;
+  color: white;
+}
+
+.language-btn-save:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .language-modal-container {
+    width: 95%;
+    max-height: 95vh;
+    margin: 10px;
+  }
+
+  .language-modal-content {
+    padding: 24px;
+    max-height: calc(95vh - 48px);
+  }
+
+  .language-modal-title {
+    font-size: 24px;
+  }
+
+  .language-modal-subtitle {
+    font-size: 14px;
+  }
+
+  .language-action-buttons {
+    flex-direction: column;
+  }
+
+  .language-btn {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .language-star-icon {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Tablet Styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .language-modal-container {
+    width: 80%;
+  }
+}
+
+/* Ensure fonts match the system */
+.language-form-select,
+.language-form-input {
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, sans-serif;
+}
+
+/* Custom scrollbar for modal content */
+.language-modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.language-modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.language-modal-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.language-modal-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+

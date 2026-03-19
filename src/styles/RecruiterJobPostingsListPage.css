@@ -1,0 +1,357 @@
+.recruiter-joblist-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f2f6fb;
+  overflow-x: clip;
+}
+
+.recruiter-joblist-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f2f6fb;
+  min-width: 0;
+}
+
+.recruiter-joblist-topbar-wrapper {
+  position: fixed;
+  top: 0;
+  left: 290px;
+  right: 0;
+  z-index: 100;
+  background: #ffffff;
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.recruiter-joblist-scrollable-content {
+  flex: 1;
+  background: #f2f6fb;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+.recruiter-joblist-content {
+  padding: 32px;
+  padding-top: 124px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.recruiter-joblist-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.recruiter-joblist-header h1 {
+  margin: 0;
+  font-size: 26px;
+  color: #0f283c;
+}
+
+.recruiter-joblist-header p {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.recruiter-joblist-create-btn {
+  padding: 10px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.recruiter-joblist-state {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 14px;
+  color: #5f6f88;
+}
+
+.recruiter-joblist-state.error {
+  color: #c0392b;
+  background: #fff5f4;
+}
+
+.recruiter-joblist-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.recruiter-joblist-pagination {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-top: 1px solid #e7eef8;
+}
+
+.recruiter-joblist-page-info {
+  font-size: 13px;
+  color: #5f6f88;
+  margin-left: auto;
+  order: 2;
+}
+
+.recruiter-joblist-page-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  order: 1;
+}
+
+.recruiter-joblist-page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.recruiter-joblist-page-num {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e2937;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.recruiter-joblist-page-num.active {
+  background: #e0d6fc;
+  color: #000000;
+  font-weight: 600;
+}
+
+.recruiter-joblist-page-nav {
+  border: none;
+  background: none;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.recruiter-joblist-page-nav img {
+  width: 22px;
+  height: 22px;
+}
+
+.recruiter-joblist-page-nav:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.recruiter-joblist-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+}
+
+.recruiter-joblist-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.recruiter-joblist-card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #0f283c;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+  min-height: 48px;
+}
+
+.recruiter-joblist-status {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.recruiter-joblist-status.status-open {
+  background: #e7f8ee;
+  color: #1f7a4a;
+}
+
+.recruiter-joblist-status.status-closed {
+  background: #fdecec;
+  color: #c0392b;
+}
+
+.recruiter-joblist-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.recruiter-joblist-meta span {
+  background: #f3f6ff;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.recruiter-joblist-applicants {
+  font-size: 13px;
+  color: #475569;
+}
+
+.recruiter-joblist-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.recruiter-joblist-btn {
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.recruiter-joblist-btn.outline {
+  background: #ffffff;
+  color: #2563eb;
+  border: 1px solid #c7d6f8;
+}
+
+.recruiter-joblist-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.recruiter-joblist-toggle-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.recruiter-joblist-toggle-label.active {
+  color: #1f7a4a;
+}
+
+.recruiter-joblist-toggle-label.inactive {
+  color: #c0392b;
+}
+
+.recruiter-joblist-switch {
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  border: none;
+  background: #e5e7eb;
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.recruiter-joblist-switch.active {
+  background: #2ecc71;
+}
+
+.recruiter-joblist-switch.inactive {
+  background: #ef4444;
+}
+
+.recruiter-joblist-switch-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  transform: translateX(0);
+  transition: transform 0.2s ease;
+}
+
+.recruiter-joblist-switch.active .recruiter-joblist-switch-dot {
+  transform: translateX(20px);
+}
+
+@media (max-width: 1200px) {
+  .recruiter-joblist-content {
+    padding: 24px;
+    padding-top: 116px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .recruiter-joblist-layout {
+    flex-direction: column;
+  }
+
+  .recruiter-joblist-topbar-wrapper {
+    left: 0;
+    right: 0;
+  }
+
+  .recruiter-joblist-scrollable-content {
+    margin-top: 84px;
+  }
+
+  .recruiter-joblist-content {
+    padding: 20px;
+    padding-top: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .recruiter-joblist-content {
+    padding: 15px;
+    gap: 18px;
+  }
+
+  .recruiter-joblist-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .recruiter-joblist-pagination {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .recruiter-joblist-page-info {
+    margin-left: 0;
+  }
+
+  .recruiter-joblist-page-controls {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+
+  .recruiter-joblist-card-header {
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,357 @@
+/* Recruiter Personal Info Editor Modal Styles */
+
+/* Overlay - Background dimming effect */
+.recruiter-personal-info-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000; /* Higher than other modals */
+  animation: recruiter-personal-info-fadeIn 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+/* Fade in animation for overlay */
+@keyframes recruiter-personal-info-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Container */
+.recruiter-personal-info-modal-container {
+  background-color: #ffffff;
+  border-radius: 24px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: recruiter-personal-info-slideUp 0.3s ease;
+}
+
+/* Slide up animation for modal */
+@keyframes recruiter-personal-info-slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Close Button */
+.recruiter-personal-info-close-button {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s;
+}
+
+.recruiter-personal-info-close-button:hover {
+  background-color: #f0f0f0;
+}
+
+.recruiter-personal-info-close-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.recruiter-personal-info-close-button img {
+  width: 16px;
+  height: 16px;
+}
+
+/* Modal Content Area */
+.recruiter-personal-info-modal-content {
+  padding: 40px;
+  overflow-y: auto;
+  max-height: calc(90vh - 80px);
+}
+
+/* Modal Header */
+.recruiter-personal-info-modal-header {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.recruiter-personal-info-modal-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f283c;
+  margin: 0 0 8px 0;
+}
+
+.recruiter-personal-info-modal-subtitle {
+  font-size: 16px;
+  color: #656565;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Form Section */
+.recruiter-personal-info-form {
+  width: 100%;
+}
+
+.recruiter-personal-info-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+/* Fields */
+.recruiter-personal-info-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.recruiter-personal-info-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333333;
+  font-family: "Montserrat", sans-serif;
+}
+
+.recruiter-personal-info-readonly-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.recruiter-personal-info-input {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 12px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333333;
+  font-family: "Montserrat", sans-serif;
+  transition: all 0.2s;
+}
+
+.recruiter-personal-info-input:focus {
+  outline: none;
+  border-color: #0068ce;
+  box-shadow: 0 0 0 3px rgba(0, 104, 206, 0.1);
+}
+
+.recruiter-personal-info-input.error {
+  border-color: #ff1e0d;
+}
+
+.recruiter-personal-info-input:disabled {
+  background-color: #f8f9fa;
+  color: #8c8c8c;
+  cursor: not-allowed;
+}
+
+.recruiter-personal-info-readonly-badge {
+  position: absolute;
+  right: 12px;
+  background-color: #f0f8ff;
+  color: #0068ce;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
+  border: 1px solid #d0e6ff;
+}
+
+/* Textarea */
+.recruiter-personal-info-textarea {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 12px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333333;
+  font-family: "Montserrat", sans-serif;
+  resize: vertical;
+  min-height: 100px;
+  transition: all 0.2s;
+}
+
+.recruiter-personal-info-textarea:focus {
+  outline: none;
+  border-color: #0068ce;
+  box-shadow: 0 0 0 3px rgba(0, 104, 206, 0.1);
+}
+
+/* Help Text and Error */
+.recruiter-personal-info-field-help {
+  font-size: 14px;
+  color: #8c8c8c;
+  font-family: "Montserrat", sans-serif;
+  margin: 4px 0 0 0;
+  line-height: 1.4;
+}
+
+.recruiter-personal-info-error {
+  font-size: 14px;
+  color: #ff1e0d;
+  font-family: "Montserrat", sans-serif;
+  margin: 4px 0 0 0;
+}
+
+/* Action Buttons */
+.recruiter-personal-info-action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  padding-top: 32px;
+  border-top: 1px solid #e8e8e8;
+}
+
+.recruiter-personal-info-btn {
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.recruiter-personal-info-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Cancel Button */
+.recruiter-personal-info-btn-cancel {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.recruiter-personal-info-btn-cancel:hover:not(:disabled) {
+  background-color: #e0e0e0;
+}
+
+/* Save Button */
+.recruiter-personal-info-btn-save {
+  background-color: #0068ce;
+  color: white;
+}
+
+.recruiter-personal-info-btn-save:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+/* Saving Spinner */
+.recruiter-personal-info-saving-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: recruiter-personal-info-spin 0.6s linear infinite;
+}
+
+@keyframes recruiter-personal-info-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .recruiter-personal-info-modal-container {
+    width: 95%;
+    max-height: 95vh;
+    margin: 10px;
+  }
+
+  .recruiter-personal-info-modal-content {
+    padding: 24px;
+    max-height: calc(95vh - 48px);
+  }
+
+  .recruiter-personal-info-modal-title {
+    font-size: 24px;
+  }
+
+  .recruiter-personal-info-modal-subtitle {
+    font-size: 14px;
+  }
+
+  .recruiter-personal-info-action-buttons {
+    flex-direction: column;
+  }
+
+  .recruiter-personal-info-btn {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .recruiter-personal-info-input-group {
+    gap: 20px;
+  }
+}
+
+/* Tablet Styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .recruiter-personal-info-modal-container {
+    width: 80%;
+  }
+}
+
+/* Ensure fonts match the system */
+.recruiter-personal-info-input,
+.recruiter-personal-info-textarea {
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, sans-serif;
+}
+
+/* Custom scrollbar for modal content */
+.recruiter-personal-info-modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.recruiter-personal-info-modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.recruiter-personal-info-modal-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.recruiter-personal-info-modal-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+

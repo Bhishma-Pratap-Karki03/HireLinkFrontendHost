@@ -1,0 +1,274 @@
+/* Admin Personal Info Editor - Match Candidate/Recruiter style */
+.admin-personal-info-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: profile-modal-fadeIn 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+@keyframes profile-modal-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.admin-personal-info-modal {
+  background-color: #ffffff;
+  border-radius: 24px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: profile-modal-slideUp 0.3s ease;
+}
+
+@keyframes profile-modal-slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Close Button */
+.close-button {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s;
+}
+
+.close-button:hover {
+  background-color: #f0f0f0;
+}
+
+.close-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.close-button img {
+  width: 16px;
+  height: 16px;
+}
+
+/* Modal Content */
+.modal-content {
+  padding: 40px;
+  overflow-y: auto;
+  max-height: calc(90vh - 80px);
+}
+
+/* Header */
+.modal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.modal-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f283c;
+  margin: 0;
+  width: 100%;
+  text-align: left;
+}
+
+/* Form */
+.admin-personal-info-form {
+  width: 100%;
+}
+
+.form-fields-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+/* Input Stack */
+.input-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input-wrapper {
+  background-color: #ffffff;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.2s;
+  height: 48px;
+}
+
+.input-wrapper:focus-within {
+  border-color: #0068ce;
+  box-shadow: 0 0 0 3px rgba(0, 104, 206, 0.1);
+}
+
+.text-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #333333;
+  font-family: "Montserrat", sans-serif;
+}
+
+.text-input:disabled {
+  color: #8c8c8c;
+  cursor: not-allowed;
+}
+
+.text-input::placeholder {
+  color: #999999;
+}
+
+/* Field Note */
+.admin-field-note {
+  font-size: 12px;
+  color: #8c8c8c;
+  text-align: center;
+  margin-top: 8px;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  padding-top: 32px;
+  border-top: 1px solid #e8e8e8;
+}
+
+.btn {
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Cancel Button */
+.btn-cancel {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.btn-cancel:hover:not(:disabled) {
+  background-color: #e0e0e0;
+}
+
+/* Save Button */
+.btn-save {
+  background-color: #0068ce;
+  color: white;
+}
+
+.btn-save:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .admin-personal-info-modal {
+    width: 95%;
+    max-height: 95vh;
+    margin: 10px;
+  }
+
+  .modal-content {
+    padding: 24px;
+    max-height: calc(95vh - 48px);
+  }
+
+  .modal-title {
+    font-size: 24px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .form-fields-wrapper {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .admin-personal-info-modal {
+    width: 80%;
+  }
+}
+
+/* Custom scrollbar */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
