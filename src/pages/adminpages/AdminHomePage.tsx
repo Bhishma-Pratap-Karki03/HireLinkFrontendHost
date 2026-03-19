@@ -44,8 +44,8 @@ const AdminHomePage = () => {
     localStorage.removeItem("profilePictureBase64");
     localStorage.removeItem("profilePictureFileName");
 
-    // Redirect to public home page
-    navigate("/home", { replace: true });
+    // Redirect to login page
+    navigate("/login", { replace: true });
   };
 
   return (

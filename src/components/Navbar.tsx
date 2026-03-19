@@ -912,8 +912,8 @@ const Navbar = (_props: NavbarProps) => {
     console.log("Logging out...");
     closeMobileMenu();
 
-    // Redirect to public home page
-    navigate("/home", { replace: true });
+    // Redirect to login page
+    navigate("/login", { replace: true });
   };
 
   const handleDashboardClick = () => {

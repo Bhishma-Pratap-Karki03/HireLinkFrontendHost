@@ -18,7 +18,7 @@ const SettingsContent = ({ title, subtitle }: SettingsContentProps) => {
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userData");
-    navigate("/home", { replace: true });
+    navigate("/login", { replace: true });
   };
 
   const handleChangePassword = async (event: FormEvent) => {
