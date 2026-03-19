@@ -621,6 +621,7 @@ const CandidateProfilePage = () => {
     if (!coverImage || coverImage.trim() === "") {
       return projectImage; // default project image
     }
+    if (coverImage.startsWith("http")) return coverImage;
     return `${import.meta.env.VITE_BACKEND_URL}${coverImage}`;
   };
 
@@ -1704,7 +1705,11 @@ const CandidateProfilePage = () => {
                       {formatFileSize(resumeData.fileSize)}
                     </span>
                     <a
-                      href={`${import.meta.env.VITE_BACKEND_URL}${resumeData.url}`}
+                      href={
+                        resumeData.url?.startsWith("http")
+                          ? resumeData.url
+                          : `${import.meta.env.VITE_BACKEND_URL}${resumeData.url}`
+                      }
                       target="_blank"
                       rel="noopener noreferrer"
                       className="resume-view-link"

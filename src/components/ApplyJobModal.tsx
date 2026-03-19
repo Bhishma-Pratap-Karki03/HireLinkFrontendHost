@@ -50,6 +50,12 @@ const quillFormats = [
   "link",
 ];
 
+const resolveAssetUrl = (value: string) => {
+  if (!value) return "";
+  if (/^https?:\/\//i.test(value)) return value;
+  return `${import.meta.env.VITE_BACKEND_URL}${value}`;
+};
+
 const ApplyJobModal = ({
   isOpen,
   loading,
@@ -97,7 +103,7 @@ const ApplyJobModal = ({
               <h5>Resume</h5>
               {profileResume ? (
                 <a
-                  href={`${import.meta.env.VITE_BACKEND_URL}${profileResume}`}
+                  href={resolveAssetUrl(profileResume)}
                   target="_blank"
                   rel="noreferrer"
                   className="apply-modal-link"

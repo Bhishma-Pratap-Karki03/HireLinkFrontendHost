@@ -289,6 +289,10 @@ const RecruiterWorkspaceGalleryEditor: React.FC<
     }
 
     // For existing images from database
+    if (typeof image.imageUrl === "string" && image.imageUrl.startsWith("http")) {
+      return `${image.imageUrl}?t=${Date.now()}`;
+    }
+
     const imageUrl = image.imageUrl.startsWith("/")
       ? image.imageUrl
       : `/uploads/workspaceimages/${image.imageUrl}`;

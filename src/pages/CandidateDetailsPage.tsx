@@ -827,7 +827,11 @@ const CandidateDetailsPage = () => {
                       </span>
                     ) : null}
                     <a
-                      href={`${import.meta.env.VITE_BACKEND_URL}${profile.resume}`}
+                      href={
+                        profile.resume.startsWith("http")
+                          ? profile.resume
+                          : `${import.meta.env.VITE_BACKEND_URL}${profile.resume}`
+                      }
                       target="_blank"
                       rel="noopener noreferrer"
                       className="candidate-details-resume-view"

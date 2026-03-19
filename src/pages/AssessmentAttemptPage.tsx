@@ -42,6 +42,12 @@ type Attempt = {
   };
 };
 
+const resolveAssetUrl = (value: string) => {
+  if (!value) return "";
+  if (/^https?:\/\//i.test(value)) return value;
+  return `${import.meta.env.VITE_BACKEND_URL}${value}`;
+};
+
 const AssessmentAttemptPage = () => {
   const { assessmentId, attemptId, candidateId } = useParams<{
     assessmentId: string;
@@ -673,7 +679,7 @@ const AssessmentAttemptPage = () => {
                                 Current upload:
                                 <a
                                   className="assessment-link-output"
-                                  href={`${import.meta.env.VITE_BACKEND_URL}${codeFileUrl}`}
+                                  href={resolveAssetUrl(codeFileUrl)}
                                   target="_blank"
                                   rel="noreferrer"
                                 >
@@ -706,7 +712,7 @@ const AssessmentAttemptPage = () => {
                             {codeFileUrl ? (
                               <a
                                 className="assessment-link-output"
-                                href={`${import.meta.env.VITE_BACKEND_URL}${codeFileUrl}`}
+                                href={resolveAssetUrl(codeFileUrl)}
                                 target="_blank"
                                 rel="noreferrer"
                               >

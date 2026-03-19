@@ -682,9 +682,14 @@ const RecruiterProfilePage: React.FC = () => {
       return "";
     }
 
+    if (imageUrl.startsWith("http")) {
+      const separator = imageUrl.includes("?") ? "&" : "?";
+      return `${imageUrl}${separator}t=${Date.now()}`;
+    }
+
     let finalUrl = imageUrl;
 
-    if (!imageUrl.startsWith("/uploads") && !imageUrl.startsWith("http")) {
+    if (!imageUrl.startsWith("/uploads")) {
       finalUrl = `/uploads/workspaceimages/${imageUrl}`;
     }
 

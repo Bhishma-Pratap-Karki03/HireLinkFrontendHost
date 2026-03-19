@@ -77,6 +77,12 @@ const hasAssessmentSubmission = (assessment?: AssessmentSummary) =>
         !!assessment.codeLink),
   );
 
+const resolveAssetUrl = (value: string) => {
+  if (!value) return "";
+  if (/^https?:\/\//i.test(value)) return value;
+  return `${import.meta.env.VITE_BACKEND_URL}${value}`;
+};
+
 const RecruiterAtsDetailsOverlay = ({
   open,
   report,
@@ -171,7 +177,7 @@ const RecruiterAtsDetailsOverlay = ({
               <span className="recruiter-ats-overlay-label">Resume</span>
               {application?.resumeUrl ? (
                 <a
-                  href={`${import.meta.env.VITE_BACKEND_URL}${application.resumeUrl}`}
+                  href={resolveAssetUrl(application.resumeUrl)}
                   target="_blank"
                   rel="noreferrer"
                   className="recruiter-ats-link-btn"

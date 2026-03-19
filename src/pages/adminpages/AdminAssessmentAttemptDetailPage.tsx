@@ -64,6 +64,12 @@ const formatDuration = (start?: string | null, end?: string | null) => {
   return `${minutes}m ${seconds}s`;
 };
 
+const resolveAssetUrl = (value: string) => {
+  if (!value) return "";
+  if (/^https?:\/\//i.test(value)) return value;
+  return `${import.meta.env.VITE_BACKEND_URL}${value}`;
+};
+
 const AdminAssessmentAttemptDetailPage = () => {
   const navigate = useNavigate();
   const { attemptId } = useParams();
@@ -298,7 +304,7 @@ const AdminAssessmentAttemptDetailPage = () => {
                       <div className="recruiter-assessment-page-block">
                         <span>Uploaded File</span>
                         <a
-                          href={`${import.meta.env.VITE_BACKEND_URL}${assessment.codeFileUrl}`}
+                          href={resolveAssetUrl(assessment.codeFileUrl)}
                           target="_blank"
                           rel="noreferrer"
                         >
