@@ -77,6 +77,12 @@ const SavedJobsPage = () => {
     return `${import.meta.env.VITE_BACKEND_URL}${logo.startsWith("/") ? "" : "/"}${logo}`;
   };
 
+  const resolveAssetUrl = (value?: string) => {
+    if (!value) return "";
+    if (value.startsWith("http")) return value;
+    return `${import.meta.env.VITE_BACKEND_URL}${value}`;
+  };
+
   const formatWorkMode = (mode?: string) => {
     if (!mode) return "Remote";
     const normalized = mode.toLowerCase();
@@ -465,7 +471,7 @@ const SavedJobsPage = () => {
                   <h5>Resume</h5>
                   {applyProfileResume ? (
                     <a
-                      href={`${import.meta.env.VITE_BACKEND_URL}${applyProfileResume}`}
+                      href={resolveAssetUrl(applyProfileResume)}
                       target="_blank"
                       rel="noreferrer"
                       className="apply-modal-link"
