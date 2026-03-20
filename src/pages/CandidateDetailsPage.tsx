@@ -17,6 +17,7 @@ import connectIcon from "../images/Employers Page Images/connect-icon.png";
 import pendingIcon from "../images/Employers Page Images/pending-icon.png";
 import friendIcon from "../images/Employers Page Images/friend-icon.png";
 import messageIcon from "../images/Employers Page Images/message-icon.png";
+import { resolveAssetUrl } from "../utils/assetUrl";
 
 type Skill = {
   skillName: string;
@@ -827,11 +828,7 @@ const CandidateDetailsPage = () => {
                       </span>
                     ) : null}
                     <a
-                      href={
-                        profile.resume.startsWith("http")
-                          ? profile.resume
-                          : `${import.meta.env.VITE_BACKEND_URL}${profile.resume}`
-                      }
+                      href={resolveAssetUrl(profile.resume)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="candidate-details-resume-view"

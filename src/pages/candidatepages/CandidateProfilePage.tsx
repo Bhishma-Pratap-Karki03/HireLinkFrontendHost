@@ -17,6 +17,7 @@ import CertificationEditor, {
   Certification as CertificationType,
 } from "../../components/candidatecomponents/CertificationEditor.tsx";
 import "../../styles/CandidateProfilePage.css";
+import { resolveAssetUrl } from "../../utils/assetUrl";
 import fileIcon from "../../images/Candidate Profile Page Images/Resume-icon.png";
 
 // Import images
@@ -1705,11 +1706,7 @@ const CandidateProfilePage = () => {
                       {formatFileSize(resumeData.fileSize)}
                     </span>
                     <a
-                      href={
-                        resumeData.url?.startsWith("http")
-                          ? resumeData.url
-                          : `${import.meta.env.VITE_BACKEND_URL}${resumeData.url}`
-                      }
+                      href={resolveAssetUrl(resumeData.url)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="resume-view-link"
