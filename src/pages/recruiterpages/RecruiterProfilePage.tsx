@@ -931,7 +931,7 @@ const RecruiterProfilePage: React.FC = () => {
                   <p>
                     This logo will be displayed on your company profile, job
                     posts and search results. Use a high-quality square image
-                    (400Ã—400px recommended)
+                    (400×400px recommended)
                   </p>
                   <div className="recruiter-profile-logo-actions">
                     <button
@@ -962,7 +962,7 @@ const RecruiterProfilePage: React.FC = () => {
                   </div>
                   <div className="recruiter-profile-logo-hint">
                     <img src={infoIcon} alt="Info" />
-                    <span>Recommended: 400Ã—400px (JPG, PNG). Max Size 2MB</span>
+                    <span>Recommended: 400×400px (JPG, PNG). Max Size 2MB</span>
                   </div>
                 </div>
               </div>
@@ -1478,6 +1478,7 @@ const RecruiterProfilePage: React.FC = () => {
 };
 
 export default RecruiterProfilePage;
+
 
 
 

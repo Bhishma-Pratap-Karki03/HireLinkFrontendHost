@@ -1781,15 +1781,15 @@ const CandidateProfilePage = () => {
                         </div>
                         <p className="candidate-experience-company">
                           {experience.organization}
-                          {experience.location && ` â€¢ ${experience.location}`}
-                          {experience.jobType && ` â€¢ ${experience.jobType}`}
+                          {experience.location && ` • ${experience.location}`}
+                          {experience.jobType && ` • ${experience.jobType}`}
                         </p>
                         <p className="candidate-experience-dates">
                           {formatDate(experience.startDate)} -{" "}
                           {formatDate(experience.endDate)}
-                          {experience.isCurrent && " â€¢ Present"}
+                          {experience.isCurrent && " • Present"}
                           <span className="candidate-experience-duration">
-                            â€¢{" "}
+                            •{" "}
                             {calculateDuration(
                               experience.startDate,
                               experience.endDate
@@ -1863,15 +1863,15 @@ const CandidateProfilePage = () => {
                         </div>
                         <p className="candidate-education-institution">
                           {education.institution}
-                          {education.location && ` â€¢ ${education.location}`}
-                          {education.degreeType && ` â€¢ ${education.degreeType}`}
+                          {education.location && ` • ${education.location}`}
+                          {education.degreeType && ` • ${education.degreeType}`}
                         </p>
                         <p className="candidate-education-dates">
                           {formatDate(education.startDate)} -{" "}
                           {formatDate(education.endDate)}
-                          {education.isCurrent && " â€¢ Present"}
+                          {education.isCurrent && " • Present"}
                           <span className="candidate-education-duration">
-                            â€¢{" "}
+                            •{" "}
                             {calculateDuration(
                               education.startDate,
                               education.endDate
@@ -2122,7 +2122,7 @@ const CandidateProfilePage = () => {
                               : quiz.type === "task"
                                 ? "Task-Based"
                                 : "Writing"}{" "}
-                            â€¢ Completed {formatQuizDate(quiz.completedAt)}
+                            • Completed {formatQuizDate(quiz.completedAt)}
                           </span>
                         </div>
                       </label>
@@ -2200,7 +2200,7 @@ const CandidateProfilePage = () => {
                       <p className="candidate-sub-text">
                         {certification.issuingOrganization}
                         {certification.credentialId &&
-                          ` â€¢ ID: ${certification.credentialId}`}
+                          ` • ID: ${certification.credentialId}`}
                       </p>
                     </div>
                     <p className="candidate-meta-text">
@@ -2209,13 +2209,13 @@ const CandidateProfilePage = () => {
                         certification.expirationDate && (
                           <>
                             {" "}
-                            â€¢ Expires{" "}
+                            • Expires{" "}
                             {formatCertificationDate(
                               certification.expirationDate
                             )}
                           </>
                         )}
-                      {certification.doesNotExpire && " â€¢ No expiration"}
+                      {certification.doesNotExpire && " • No expiration"}
                     </p>
 
                     {certification.credentialUrl && (
@@ -2424,6 +2424,7 @@ const CandidateProfilePage = () => {
 };
 
 export default CandidateProfilePage;
+
 
 
 

@@ -392,7 +392,7 @@ const RecruiterJobPostPage: React.FC = () => {
     { code: "NPR", label: "NPR (Rs.)" },
     { code: "INR", label: "INR (â‚¹)" },
     { code: "USD", label: "USD ($)" },
-    { code: "GBP", label: "GBP (Â£)" },
+    { code: "GBP", label: "GBP (£)" },
   ];
 
   const selectedCurrencyLabel =
@@ -967,7 +967,7 @@ const RecruiterJobPostPage: React.FC = () => {
                     onClick={() => setSubmitToast("")}
                     aria-label="Close"
                   >
-                    Ã—
+                    ×
                   </button>
                   <p className="recruiter-jobpost-toast-message">{submitToast}</p>
                 </div>
@@ -2363,6 +2363,7 @@ const RecruiterJobPostPage: React.FC = () => {
 };
 
 export default RecruiterJobPostPage;
+
 
 
 
