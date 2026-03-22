@@ -1,4 +1,4 @@
-import PortalFooter from "../../components/PortalFooter";
+﻿import PortalFooter from "../../components/PortalFooter";
 import { useEffect, useMemo, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -396,7 +396,7 @@ const SavedJobsPage = () => {
                   View Details
                 </button>
                 <button
-                  className="joblist-btn-primary"
+                  className={`joblist-btn-primary${appliedJobs[job.jobId] ? " joblist-btn-applied" : ""}`}
                   onClick={() => openApplyModal(job.jobId)}
                   disabled={appliedJobs[job.jobId]}
                 >
@@ -596,6 +596,7 @@ const SavedJobsPage = () => {
 };
 
 export default SavedJobsPage;
+
 
 
 
