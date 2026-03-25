@@ -35,6 +35,11 @@ const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showVerificationLink, setShowVerificationLink] = useState(false);
   const [existingUserEmail, setExistingUserEmail] = useState<string>("");
+  const [platformStats, setPlatformStats] = useState({
+    activeJobs: 0,
+    candidates: 0,
+    companies: 0,
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,6 +56,51 @@ const Register = () => {
       }
     }
   }, [navigate]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadPlatformStats = async () => {
+      try {
+        const [jobsRes, candidatesRes, companiesRes] = await Promise.all([
+          fetch(`${import.meta.env.VITE_API_BASE_URL}/jobs?page=1&limit=1`),
+          fetch(`${import.meta.env.VITE_API_BASE_URL}/users/candidates`),
+          fetch(`${import.meta.env.VITE_API_BASE_URL}/employers`),
+        ]);
+
+        const [jobsData, candidatesData, companiesData] = await Promise.all([
+          jobsRes.json(),
+          candidatesRes.json(),
+          companiesRes.json(),
+        ]);
+
+        if (!isMounted) return;
+
+        setPlatformStats({
+          activeJobs: Number(jobsData?.total || 0),
+          candidates: Number(
+            candidatesData?.total || candidatesData?.candidates?.length || 0,
+          ),
+          companies: Number(
+            companiesData?.total || companiesData?.recruiters?.length || 0,
+          ),
+        });
+      } catch (_error) {
+        if (!isMounted) return;
+        setPlatformStats({
+          activeJobs: 0,
+          candidates: 0,
+          companies: 0,
+        });
+      }
+    };
+
+    loadPlatformStats();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -264,19 +314,19 @@ const Register = () => {
             <div className="register-stat-row">
               <div className="register-stat-item">
                 <span className="register-stat-num">
-                  65<em>k+</em>
+                  {platformStats.activeJobs.toLocaleString()}
                 </span>
                 <span className="register-stat-lbl">Active Jobs</span>
               </div>
               <div className="register-stat-item">
                 <span className="register-stat-num">
-                  18<em>k+</em>
+                  {platformStats.candidates.toLocaleString()}
                 </span>
                 <span className="register-stat-lbl">Candidates</span>
               </div>
               <div className="register-stat-item">
                 <span className="register-stat-num">
-                  30<em>k+</em>
+                  {platformStats.companies.toLocaleString()}
                 </span>
                 <span className="register-stat-lbl">Companies</span>
               </div>
