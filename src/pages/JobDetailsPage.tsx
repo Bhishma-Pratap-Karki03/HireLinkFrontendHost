@@ -137,6 +137,7 @@ const JobDetailsPage = () => {
   const [applyLoading, setApplyLoading] = useState(false);
   const [applyMessage, setApplyMessage] = useState("");
   const [applyError, setApplyError] = useState("");
+  const [dismissedApplyToastKey, setDismissedApplyToastKey] = useState("");
   const [useCustomResume, setUseCustomResume] = useState(false);
   const [customResumeFile, setCustomResumeFile] = useState<File | null>(null);
   const [applyNote, setApplyNote] = useState("");
@@ -400,6 +401,23 @@ const JobDetailsPage = () => {
     return hasHtmlTag ? content : content.replace(/\n/g, "<br />");
   };
 
+  const applyFeedbackMessage = applyError || applyMessage;
+  const applyFeedbackType = applyError ? "error" : "success";
+  const applyFeedbackKey = `${applyFeedbackType}:${applyFeedbackMessage}`;
+
+  useEffect(() => {
+    setDismissedApplyToastKey("");
+  }, [applyFeedbackKey]);
+
+  useEffect(() => {
+    if (!applyFeedbackMessage) return;
+    const timer = window.setTimeout(() => {
+      setApplyError("");
+      setApplyMessage("");
+    }, 6000);
+    return () => window.clearTimeout(timer);
+  }, [applyFeedbackMessage]);
+
   const openApplyModal = async () => {
     if (!job || !isCandidate) return;
     if (!canApply) {
@@ -510,9 +528,7 @@ const JobDetailsPage = () => {
 
       setApplyMessage("Application submitted. Recruiter will be notified.");
       setIsApplied(true);
-      setTimeout(() => {
-        setApplyModalOpen(false);
-      }, 1200);
+      setApplyModalOpen(false);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Failed to apply";
       setApplyError(message);
@@ -532,6 +548,26 @@ const JobDetailsPage = () => {
   return (
     <div className="job-details-page">
       <Navbar />
+      {applyFeedbackMessage && dismissedApplyToastKey !== applyFeedbackKey && (
+        <div className={`apply-feedback-toast ${applyFeedbackType}`}>
+          <div className="apply-feedback-toast-head">
+            {applyFeedbackType === "success" ? "Success" : "Error"}
+          </div>
+          <p className="apply-feedback-toast-message">{applyFeedbackMessage}</p>
+          <button
+            type="button"
+            className="apply-feedback-toast-close"
+            aria-label="Close toast"
+            onClick={() => {
+              setDismissedApplyToastKey(applyFeedbackKey);
+              setApplyError("");
+              setApplyMessage("");
+            }}
+          >
+            ×
+          </button>
+        </div>
+      )}
 
       <section className="job-details-hero">
         <div className="job-details-hero-wrapper">
@@ -973,8 +1009,6 @@ const JobDetailsPage = () => {
         applyNote={applyNote}
         confirmRequirements={confirmRequirements}
         confirmResume={confirmResume}
-        applyError={applyError}
-        applyMessage={applyMessage}
         onClose={closeApplyModal}
         onConfirm={handleConfirmApply}
         onUseCustomResumeChange={setUseCustomResume}

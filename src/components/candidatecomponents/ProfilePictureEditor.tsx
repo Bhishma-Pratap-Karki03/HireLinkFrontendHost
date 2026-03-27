@@ -260,24 +260,6 @@ const ProfilePictureEditor: React.FC<ProfilePictureEditorProps> = ({
                 alt=""
                 style={{ opacity: 0 }}
               />
-              {/* Camera Icon */}
-              <svg
-                className="avatar-badge-icon"
-                width="18"
-                height="16"
-                viewBox="0 0 18 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12 3.5C12 4.32843 12.6716 5 13.5 5C14.3284 5 15 4.32843 15 3.5C15 2.67157 14.3284 2 13.5 2C12.6716 2 12 2.67157 12 3.5Z"
-                  fill="white"
-                />
-                <path
-                  d="M16 1H13.83L12.59 0.15C12.22 -0.06 11.78 -0.05 11.41 0.15L10.17 1H8C6.9 1 6 1.9 6 3V13C6 14.1 6.9 15 8 15H16C17.1 15 18 14.1 18 13V3C18 1.9 17.1 1 16 1ZM9 8C9 9.66 10.34 11 12 11C13.66 11 15 9.66 15 8C15 6.34 13.66 5 12 5C10.34 5 9 6.34 9 8Z"
-                  fill="white"
-                />
-              </svg>
             </div>
             <h2 className="modal-title">Basic Information</h2>
           </header>

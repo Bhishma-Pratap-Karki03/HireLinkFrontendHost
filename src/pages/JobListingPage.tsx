@@ -70,6 +70,8 @@ type AppliedFilters = {
 };
 
 const JobListingPage = () => {
+  const API_BASE_URL =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [sortBy, setSortBy] = useState("newest");
@@ -147,6 +149,7 @@ const JobListingPage = () => {
   const [applyLoading, setApplyLoading] = useState(false);
   const [applyMessage, setApplyMessage] = useState("");
   const [applyError, setApplyError] = useState("");
+  const [dismissedApplyToastKey, setDismissedApplyToastKey] = useState("");
   const [useCustomResume, setUseCustomResume] = useState(false);
   const [customResumeFile, setCustomResumeFile] = useState<File | null>(null);
   const [applyNote, setApplyNote] = useState("");
@@ -449,7 +452,7 @@ const JobListingPage = () => {
       const entries = await Promise.all(
         jobIds.map(async (jobId) => {
           const res = await fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/applications/status/${jobId}`,
+            `${API_BASE_URL}/applications/status/${jobId}`,
             { headers: { Authorization: `Bearer ${token}` } },
           );
           const data = await res.json();
@@ -470,7 +473,7 @@ const JobListingPage = () => {
       const entries = await Promise.all(
         jobIds.map(async (jobId) => {
           const res = await fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/saved-jobs/status/${jobId}`,
+            `${API_BASE_URL}/saved-jobs/status/${jobId}`,
             { headers: { Authorization: `Bearer ${token}` } },
           );
           const data = await res.json();
@@ -559,7 +562,7 @@ const JobListingPage = () => {
         setLoading(true);
         setError("");
         const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/jobs?${buildQueryParams()}`,
+          `${API_BASE_URL}/jobs?${buildQueryParams()}`,
         );
         const data = await response.json();
         if (!response.ok) {
@@ -584,7 +587,7 @@ const JobListingPage = () => {
 
         // Work mode counts should reflect current filters except work mode itself.
         const countResponse = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/jobs?${buildWorkModeCountQuery()}`,
+          `${API_BASE_URL}/jobs?${buildWorkModeCountQuery()}`,
         );
         const countData = await countResponse.json();
         if (countResponse.ok) {
@@ -598,7 +601,7 @@ const JobListingPage = () => {
 
         // Job type counts should reflect current filters except job type itself.
         const jobTypeCountResponse = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/jobs?${buildJobTypeCountQuery()}`,
+          `${API_BASE_URL}/jobs?${buildJobTypeCountQuery()}`,
         );
         const jobTypeCountData = await jobTypeCountResponse.json();
         if (jobTypeCountResponse.ok) {
@@ -617,7 +620,7 @@ const JobListingPage = () => {
 
         // Job level counts should reflect current filters except job level itself.
         const jobLevelCountResponse = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/jobs?${buildJobLevelCountQuery()}`,
+          `${API_BASE_URL}/jobs?${buildJobLevelCountQuery()}`,
         );
         const jobLevelCountData = await jobLevelCountResponse.json();
         if (jobLevelCountResponse.ok) {
@@ -700,6 +703,23 @@ const JobListingPage = () => {
     }));
   };
 
+  const applyFeedbackMessage = applyError || applyMessage;
+  const applyFeedbackType = applyError ? "error" : "success";
+  const applyFeedbackKey = `${applyFeedbackType}:${applyFeedbackMessage}`;
+
+  useEffect(() => {
+    setDismissedApplyToastKey("");
+  }, [applyFeedbackKey]);
+
+  useEffect(() => {
+    if (!applyFeedbackMessage) return;
+    const timer = window.setTimeout(() => {
+      setApplyError("");
+      setApplyMessage("");
+    }, 6000);
+    return () => window.clearTimeout(timer);
+  }, [applyFeedbackMessage]);
+
   const openApplyModal = async (jobId: string) => {
     if (userRole !== "candidate") return;
     setApplyMessage("");
@@ -721,8 +741,8 @@ const JobListingPage = () => {
     try {
       setApplyLoading(true);
       const [jobRes, profileRes] = await Promise.all([
-        fetch(`${import.meta.env.VITE_API_BASE_URL}/jobs/${jobId}`),
-        fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
+        fetch(`${API_BASE_URL}/jobs/${jobId}`),
+        fetch(`${API_BASE_URL}/profile/me`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -749,7 +769,7 @@ const JobListingPage = () => {
     const token = localStorage.getItem("authToken");
     if (!token) return;
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/saved-jobs/toggle`, {
+      const res = await fetch(`${API_BASE_URL}/saved-jobs/toggle`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -794,7 +814,7 @@ const JobListingPage = () => {
       }
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/applications/apply`,
+        `${API_BASE_URL}/applications/apply`,
         {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
@@ -808,9 +828,7 @@ const JobListingPage = () => {
 
       setApplyMessage("Application submitted. Recruiter will be notified.");
       setAppliedJobs((prev) => ({ ...prev, [applyJobId as string]: true }));
-      setTimeout(() => {
-        setApplyModalOpen(false);
-      }, 1200);
+      setApplyModalOpen(false);
     } catch (err: any) {
       setApplyError(err?.message || "Failed to apply");
     } finally {
@@ -855,7 +873,7 @@ const JobListingPage = () => {
 
     try {
       setIsShareLoading(true);
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/friends`, {
+      const res = await fetch(`${API_BASE_URL}/connections/friends`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -898,7 +916,7 @@ const JobListingPage = () => {
       setIsSendingShare(true);
       setShareError("");
       const content = `Check out this job: ${shareJob.jobTitle} at ${shareJob.companyName}\n${shareLink}`;
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/messages/send`, {
+      const res = await fetch(`${API_BASE_URL}/messages/send`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -924,6 +942,26 @@ const JobListingPage = () => {
   return (
     <div className="joblist-page">
       <Navbar />
+      {applyFeedbackMessage && dismissedApplyToastKey !== applyFeedbackKey && (
+        <div className={`apply-feedback-toast ${applyFeedbackType}`}>
+          <div className="apply-feedback-toast-head">
+            {applyFeedbackType === "success" ? "Success" : "Error"}
+          </div>
+          <p className="apply-feedback-toast-message">{applyFeedbackMessage}</p>
+          <button
+            type="button"
+            className="apply-feedback-toast-close"
+            aria-label="Close toast"
+            onClick={() => {
+              setDismissedApplyToastKey(applyFeedbackKey);
+              setApplyError("");
+              setApplyMessage("");
+            }}
+          >
+            ×
+          </button>
+        </div>
+      )}
 
       <section className="joblist-hero">
         <div className="joblist-hero-inner">
@@ -1629,7 +1667,7 @@ const JobListingPage = () => {
                   <div className="joblist-card-buttons">
                     <button
                       className="joblist-btn-outline"
-                      onClick={() => navigate(`/jobs/${job.id}`)}
+                      onClick={() => navigate(`${API_BASE_URL}/jobs/${job.id}`)}
                     >
                       View Details
                     </button>
@@ -1650,7 +1688,7 @@ const JobListingPage = () => {
                             job.assessmentRequired &&
                             !appliedJobs[job.id]
                           ) {
-                            navigate(`/jobs/${job.id}`);
+                            navigate(`${API_BASE_URL}/jobs/${job.id}`);
                             return;
                           }
                           openApplyModal(job.id);
@@ -1721,8 +1759,6 @@ const JobListingPage = () => {
         applyNote={applyNote}
         confirmRequirements={confirmRequirements}
         confirmResume={confirmResume}
-        applyError={applyError}
-        applyMessage={applyMessage}
         onClose={closeApplyModal}
         onConfirm={handleConfirmApply}
         onUseCustomResumeChange={setUseCustomResume}
@@ -1839,6 +1875,10 @@ const JobListingPage = () => {
 };
 
 export default JobListingPage;
+
+
+
+
 
 
 

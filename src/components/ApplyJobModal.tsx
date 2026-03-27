@@ -19,8 +19,6 @@ type ApplyJobModalProps = {
   applyNote: string;
   confirmRequirements: boolean;
   confirmResume: boolean;
-  applyError: string;
-  applyMessage: string;
   onClose: () => void;
   onConfirm: () => void;
   onUseCustomResumeChange: (checked: boolean) => void;
@@ -66,8 +64,6 @@ const ApplyJobModal = ({
   applyNote,
   confirmRequirements,
   confirmResume,
-  applyError,
-  applyMessage,
   onClose,
   onConfirm,
   onUseCustomResumeChange,
@@ -205,9 +201,6 @@ const ApplyJobModal = ({
           </div>
         )}
 
-        {applyError && <div className="apply-modal-error">{applyError}</div>}
-        {applyMessage && <div className="apply-modal-success">{applyMessage}</div>}
-
         <div className="apply-modal-actions">
           <button className="apply-modal-secondary" onClick={onClose}>
             Cancel
@@ -222,5 +215,3 @@ const ApplyJobModal = ({
 };
 
 export default ApplyJobModal;
-
-
