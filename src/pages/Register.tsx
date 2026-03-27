@@ -14,6 +14,21 @@ import registerAvatar3 from "../images/Login Page Images/avatar-3.png";
 import registerAvatar4 from "../images/Login Page Images/avatar-4.png";
 import searchIcon from "../images/Job List Page Images/search.svg";
 
+const getApiBaseUrl = () => {
+  const apiBase = String(import.meta.env.VITE_API_BASE_URL || "").trim();
+  if (apiBase) return apiBase.replace(/\/+$/, "");
+
+  const backendBase = String(import.meta.env.VITE_BACKEND_URL || "").trim();
+  if (backendBase) return `${backendBase.replace(/\/+$/, "")}/api`;
+
+  const host = window.location.hostname;
+  const isLocalHost =
+    host === "localhost" || host === "127.0.0.1" || host === "::1";
+
+  if (isLocalHost) return "http://localhost:5000/api";
+  return "https://hirelinkbackendhost.onrender.com/api";
+};
+
 const Register = () => {
   const [userType, setUserType] = useState<"candidate" | "recruiter">(
     "candidate",
@@ -41,6 +56,7 @@ const Register = () => {
     companies: 0,
   });
   const navigate = useNavigate();
+  const apiBaseUrl = getApiBaseUrl();
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -63,9 +79,9 @@ const Register = () => {
     const loadPlatformStats = async () => {
       try {
         const [jobsRes, candidatesRes, companiesRes] = await Promise.all([
-          fetch(`${import.meta.env.VITE_API_BASE_URL}/jobs?page=1&limit=1`),
-          fetch(`${import.meta.env.VITE_API_BASE_URL}/users/candidates`),
-          fetch(`${import.meta.env.VITE_API_BASE_URL}/employers`),
+          fetch(`${apiBaseUrl}/jobs?page=1&limit=1`),
+          fetch(`${apiBaseUrl}/users/candidates`),
+          fetch(`${apiBaseUrl}/employers`),
         ]);
 
         const [jobsData, candidatesData, companiesData] = await Promise.all([
@@ -101,6 +117,18 @@ const Register = () => {
       isMounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (!statusMessage || showVerificationLink) return;
+    const timer = window.setTimeout(() => {
+      setStatusMessage(null);
+      setStatusType(null);
+    }, 4000);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [statusMessage, showVerificationLink]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -171,7 +199,7 @@ const Register = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/register`, {
+      const response = await fetch(`${apiBaseUrl}/users/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -183,6 +211,22 @@ const Register = () => {
       });
 
       const data = await response.json();
+
+      // Existing account but not verified: continue verification flow.
+      if (data.requiresVerification && data.emailExists) {
+        const message = data.hasActiveCode
+          ? data.message ||
+            "Email already registered but not verified. Continue with your current verification code."
+          : data.message ||
+            "Email already registered but not verified. Previous code expired, please resend verification code.";
+
+        setStatusMessage(message);
+        setStatusType("error");
+        setShowVerificationLink(true);
+        setExistingUserEmail(data.email || formData.email);
+
+        return;
+      }
 
       if (!response.ok) {
         if (data.isVerified) {
@@ -544,38 +588,47 @@ const Register = () => {
               <button type="submit" className="register-submit-btn" disabled={isLoading}>
                 {isLoading ? "Registering..." : "Register Now"}
               </button>
+
+              {showVerificationLink && existingUserEmail && (
+                <button
+                  type="button"
+                  className="register-verification-inline-btn"
+                  onClick={handleGoToVerification}
+                >
+                  Go to Verification Page
+                </button>
+              )}
             </form>
 
             <div className="register-login-prompt-wrapper">
               <p className="register-login-prompt">
                 Already have an account? <Link to="/login">Login</Link>
               </p>
-
-              {statusMessage && (
-                <div className="register-status-wrap">
-                  <p
-                    className={`status-message ${
-                      statusType === "success" ? "status-success" : "status-error"
-                    }`}
-                  >
-                    {statusMessage}
-                  </p>
-
-                  {showVerificationLink && existingUserEmail && (
-                    <button
-                      className="register-verify-link-btn"
-                      onClick={handleGoToVerification}
-                      type="button"
-                    >
-                      Go to Verification Page
-                    </button>
-                  )}
-                </div>
-              )}
             </div>
           </div>
         </section>
       </main>
+      {statusMessage && (
+        <div className={`register-toast ${statusType === "success" ? "success" : "error"}`}>
+          <div className="register-toast-head">
+            {statusType === "success" ? "Success" : "Error"}
+          </div>
+          <p className="register-toast-message">{statusMessage}</p>
+
+          <button
+            type="button"
+            className="register-toast-close"
+            aria-label="Close toast"
+            onClick={() => {
+              setStatusMessage(null);
+              setStatusType(null);
+              setShowVerificationLink(false);
+            }}
+          >
+            ×
+          </button>
+        </div>
+      )}
       <Footer />
     </>
   );

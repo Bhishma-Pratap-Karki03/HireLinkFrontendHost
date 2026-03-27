@@ -379,6 +379,7 @@
   align-items: center;
   gap: 12px;
   margin-top: 16px;
+  width: 100%;
 }
 
 .verification-link-action {
@@ -402,6 +403,32 @@
   color: #999999;
   cursor: not-allowed;
   text-decoration: none;
+}
+
+.verification-inline-btn {
+  width: 100%;
+  border: 1px solid #c8d7ec;
+  background: #f5f9ff;
+  color: #0068ce;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+
+.verification-inline-btn:hover:not(:disabled) {
+  background: #edf5ff;
+  border-color: #aec9ea;
+}
+
+.verification-inline-btn.disabled,
+.verification-inline-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .verification-trust-row {
@@ -428,6 +455,68 @@
   stroke: #0abf94;
   fill: none;
   stroke-width: 2.5;
+}
+
+.verification-toast {
+  position: fixed;
+  top: 92px;
+  right: 24px;
+  z-index: 1200;
+  min-width: 300px;
+  max-width: 420px;
+  padding: 14px 44px 14px 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  box-shadow: 0 10px 30px rgba(2, 16, 34, 0.12);
+}
+
+.verification-toast.success {
+  background: #ecfdf3;
+  border-color: #9fe3b8;
+}
+
+.verification-toast.error {
+  background: #fff1f2;
+  border-color: #f7b4bf;
+}
+
+.verification-toast-head {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.verification-toast.success .verification-toast-head {
+  color: #0f6f3f;
+}
+
+.verification-toast.error .verification-toast-head {
+  color: #a5152d;
+}
+
+.verification-toast-message {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #24405f;
+}
+
+.verification-toast-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: #4b6178;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.verification-toast-close:hover {
+  color: #0d1b2a;
 }
 
 @media (max-width: 1100px) {
@@ -462,5 +551,13 @@
   .verification-trust-row {
     flex-wrap: wrap;
     row-gap: 8px;
+  }
+
+  .verification-toast {
+    right: 12px;
+    left: 12px;
+    top: 76px;
+    min-width: 0;
+    max-width: none;
   }
 }

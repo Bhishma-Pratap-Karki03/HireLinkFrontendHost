@@ -30,6 +30,38 @@ interface StatusResponse {
   isExpired?: boolean;
 }
 
+const getApiBaseUrl = () => {
+  const apiBase = String(import.meta.env.VITE_API_BASE_URL || "").trim();
+  if (apiBase) return apiBase.replace(/\/+$/, "");
+
+  const backendBase = String(import.meta.env.VITE_BACKEND_URL || "").trim();
+  if (backendBase) return `${backendBase.replace(/\/+$/, "")}/api`;
+
+  const host = window.location.hostname;
+  const isLocalHost =
+    host === "localhost" || host === "127.0.0.1" || host === "::1";
+
+  if (isLocalHost) return "http://localhost:5000/api";
+
+  return "https://hirelinkbackendhost.onrender.com/api";
+};
+
+const parseJsonResponse = async <T,>(response: Response): Promise<T> => {
+  const raw = await response.text();
+  if (!raw) return {} as T;
+
+  try {
+    return JSON.parse(raw) as T;
+  } catch {
+    const htmlResponse = raw.trim().startsWith("<!DOCTYPE");
+    throw new Error(
+      htmlResponse
+        ? "API returned HTML instead of JSON. Check frontend API base URL configuration."
+        : "Server returned invalid JSON response."
+    );
+  }
+};
+
 const VerificationPage = () => {
   const [verificationCode, setVerificationCode] = useState<string[]>([
     "",
@@ -56,6 +88,7 @@ const VerificationPage = () => {
   const initialMessage = location.state?.message || "";
   const fromLogin = location.state?.fromLogin || false;
   const isPasswordReset = location.state?.isPasswordReset || false;
+  const apiBaseUrl = getApiBaseUrl();
 
   // Check if this is for email verification or password reset
   const isVerificationType = !isPasswordReset;
@@ -66,11 +99,11 @@ const VerificationPage = () => {
     setIsCheckingStatus(true);
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/verify/check-status?email=${encodeURIComponent(
+        `${apiBaseUrl}/verify/check-status?email=${encodeURIComponent(
           userEmail
         )}`
       );
-      const data: StatusResponse = await response.json();
+      const data = await parseJsonResponse<StatusResponse>(response);
 
       if (response.ok) {
         if (data.isVerified) {
@@ -93,6 +126,10 @@ const VerificationPage = () => {
       }
     } catch (error) {
       console.error("Error checking verification status:", error);
+      setStatusMessage(
+        "Unable to check verification status. Please check API URL and try again."
+      );
+      setStatusType("error");
     } finally {
       setIsCheckingStatus(false);
     }
@@ -134,7 +171,7 @@ const VerificationPage = () => {
           }
           return prevTimer - 1;
         });
-      }, 500);
+      }, 1000);
     }
 
     // Sync with server every 30 seconds to ensure accuracy (only for verification, not password reset)
@@ -149,6 +186,16 @@ const VerificationPage = () => {
       if (syncInterval) clearInterval(syncInterval);
     };
   }, [timer, canResend, userEmail, isPasswordReset, isCheckingStatus]);
+
+  useEffect(() => {
+    if (!statusMessage) return;
+
+    const timerId = setTimeout(() => {
+      setStatusMessage("");
+    }, 4000);
+
+    return () => clearTimeout(timerId);
+  }, [statusMessage]);
 
   const handleInputChange = (index: number, value: string) => {
     if (!/^\d*$/.test(value)) return;
@@ -220,7 +267,7 @@ const VerificationPage = () => {
       if (isVerificationType) {
         // Email verification flow
         response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/verify/verify-email`,
+          `${apiBaseUrl}/verify/verify-email`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -231,7 +278,7 @@ const VerificationPage = () => {
           }
         );
 
-        data = await response.json();
+        data = await parseJsonResponse<VerificationResponse>(response);
 
         if (!response.ok) {
           if (data.codeExpired) {
@@ -271,7 +318,7 @@ const VerificationPage = () => {
       } else {
         // Password reset verification flow
         response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/password/verify-code`,
+          `${apiBaseUrl}/password/verify-code`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -282,7 +329,7 @@ const VerificationPage = () => {
           }
         );
 
-        data = await response.json();
+        data = await parseJsonResponse<VerificationResponse>(response);
 
         if (!response.ok) {
           if (data.codeExpired) {
@@ -315,7 +362,11 @@ const VerificationPage = () => {
         }, 500);
       }
     } catch (error) {
-      setStatusMessage("An error occurred. Please try again.");
+      const message =
+        error instanceof Error
+          ? error.message
+          : "An error occurred. Please try again.";
+      setStatusMessage(message);
       setStatusType("error");
       console.error("Verification error:", error);
     } finally {
@@ -336,7 +387,7 @@ const VerificationPage = () => {
       if (isVerificationType) {
         // Resend verification code
         response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/verify/resend-verification`,
+          `${apiBaseUrl}/verify/resend-verification`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -346,7 +397,7 @@ const VerificationPage = () => {
       } else {
         // Resend password reset code
         response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/password/resend-code`,
+          `${apiBaseUrl}/password/resend-code`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -355,7 +406,7 @@ const VerificationPage = () => {
         );
       }
 
-      data = await response.json();
+      data = await parseJsonResponse<VerificationResponse>(response);
 
       if (!response.ok) {
         setStatusMessage(data.message || "Failed to resend code");
@@ -387,7 +438,11 @@ const VerificationPage = () => {
         inputRefs.current[0].focus();
       }
     } catch (error) {
-      setStatusMessage("Failed to resend code. Please try again.");
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Failed to resend code. Please try again.";
+      setStatusMessage(message);
       setStatusType("error");
       console.error("Resend error:", error);
     } finally {
@@ -523,16 +578,6 @@ const VerificationPage = () => {
               ))}
             </div>
 
-            {statusMessage && (
-              <p
-                className={`status-message ${
-                  statusType === "success" ? "status-success" : "status-error"
-                }`}
-              >
-                {statusMessage}
-              </p>
-            )}
-
             <button
               className="verification-verify-button"
               onClick={handleVerify}
@@ -557,7 +602,7 @@ const VerificationPage = () => {
             <div className="verification-footer-links">
               {canResend && (
                 <button
-                  className={`verification-link-action ${
+                  className={`verification-inline-btn ${
                     isResending ? "disabled" : ""
                   }`}
                   onClick={handleResendCode}
@@ -573,15 +618,15 @@ const VerificationPage = () => {
 
               {isVerificationType ? (
                 <>
-                  <Link to="/register" className="verification-link-action">
+                  <Link to="/register" className="verification-inline-btn">
                     Back to Register Page
                   </Link>
-                  <Link to="/login" className="verification-link-action">
+                  <Link to="/login" className="verification-inline-btn">
                     Back to Login Page
                   </Link>
                 </>
               ) : (
-                <Link to="/forgot-password" className="verification-link-action">
+                <Link to="/forgot-password" className="verification-inline-btn">
                   Back to Forgot Password
                 </Link>
               )}
@@ -611,6 +656,27 @@ const VerificationPage = () => {
           </div>
         </section>
       </main>
+
+      {statusMessage && (
+        <div
+          className={`verification-toast ${
+            statusType === "success" ? "success" : "error"
+          }`}
+        >
+          <div className="verification-toast-head">
+            {statusType === "success" ? "Success" : "Error"}
+          </div>
+          <p className="verification-toast-message">{statusMessage}</p>
+          <button
+            type="button"
+            className="verification-toast-close"
+            aria-label="Close toast"
+            onClick={() => setStatusMessage("")}
+          >
+            x
+          </button>
+        </div>
+      )}
 
       <Footer />
     </>

@@ -224,6 +224,69 @@
   color: #be2a3f;
 }
 
+.contact-toast {
+  position: fixed;
+  top: 92px;
+  right: 16px;
+  bottom: auto;
+  width: min(360px, calc(100% - 32px));
+  padding: 14px 44px 14px 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  box-shadow: 0 10px 26px rgba(15, 40, 60, 0.16);
+  z-index: 1200;
+}
+
+.contact-toast.success {
+  background: #edf9f1;
+  border-color: #b7e3c4;
+}
+
+.contact-toast.error {
+  background: #fff1f3;
+  border-color: #f6bec8;
+}
+
+.contact-toast-head {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.contact-toast.success .contact-toast-head {
+  color: #147a3b;
+}
+
+.contact-toast.error .contact-toast-head {
+  color: #be2a3f;
+}
+
+.contact-toast-message {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #2f4256;
+}
+
+.contact-toast-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #5b6f84;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.contact-toast-close:hover {
+  background: rgba(9, 30, 66, 0.08);
+}
+
 .contact-info-col {
   width: 484px;
   flex-shrink: 0;
@@ -308,5 +371,13 @@
 
   .contact-section-header h2 {
     font-size: 23px;
+  }
+
+  .contact-toast {
+    right: 14px;
+    left: 14px;
+    width: auto;
+    top: 84px;
+    bottom: auto;
   }
 }

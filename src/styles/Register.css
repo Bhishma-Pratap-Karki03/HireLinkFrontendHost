@@ -657,6 +657,25 @@ a {
   cursor: not-allowed;
 }
 
+.register-verification-inline-btn {
+  width: 100%;
+  margin-top: 10px;
+  border: 1px solid #c8d7ec;
+  background: #f5f9ff;
+  color: #0068ce;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+  cursor: pointer;
+}
+
+.register-verification-inline-btn:hover {
+  background: #edf5ff;
+  border-color: #aec9ea;
+}
+
 .register-login-prompt-wrapper {
   margin-top: 10px;
 }
@@ -711,6 +730,80 @@ a {
   font-family: "Montserrat", sans-serif;
 }
 
+.register-toast {
+  position: fixed;
+  top: 92px;
+  right: 16px;
+  width: min(380px, calc(100% - 32px));
+  padding: 14px 44px 14px 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  box-shadow: 0 10px 26px rgba(15, 40, 60, 0.16);
+  z-index: 1200;
+}
+
+.register-toast.success {
+  background: #edf9f1;
+  border-color: #b7e3c4;
+}
+
+.register-toast.error {
+  background: #fff1f3;
+  border-color: #f6bec8;
+}
+
+.register-toast-head {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.register-toast.success .register-toast-head {
+  color: #147a3b;
+}
+
+.register-toast.error .register-toast-head {
+  color: #be2a3f;
+}
+
+.register-toast-message {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #2f4256;
+}
+
+.register-toast-action {
+  margin-top: 10px;
+  background: none;
+  border: none;
+  color: #0068ce;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.register-toast-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #5b6f84;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.register-toast-close:hover {
+  background: rgba(9, 30, 66, 0.08);
+}
+
 @media (max-width: 1100px) {
   .register-page-wrap {
     grid-template-columns: 1fr;
@@ -746,5 +839,12 @@ a {
   .container {
     padding-left: 20px;
     padding-right: 20px;
+  }
+
+  .register-toast {
+    top: 84px;
+    right: 14px;
+    left: 14px;
+    width: auto;
   }
 }

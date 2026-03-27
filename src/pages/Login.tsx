@@ -9,6 +9,21 @@ import loginAvatar3 from "../images/Login Page Images/avatar-3.png";
 import loginAvatar4 from "../images/Login Page Images/avatar-4.png";
 import searchIcon from "../images/Job List Page Images/search.svg";
 
+const getApiBaseUrl = () => {
+  const apiBase = String(import.meta.env.VITE_API_BASE_URL || "").trim();
+  if (apiBase) return apiBase.replace(/\/+$/, "");
+
+  const backendBase = String(import.meta.env.VITE_BACKEND_URL || "").trim();
+  if (backendBase) return `${backendBase.replace(/\/+$/, "")}/api`;
+
+  const host = window.location.hostname;
+  const isLocalHost =
+    host === "localhost" || host === "127.0.0.1" || host === "::1";
+
+  if (isLocalHost) return "http://localhost:5000/api";
+  return "https://hirelinkbackendhost.onrender.com/api";
+};
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -30,6 +45,7 @@ const Login = () => {
   });
   const navigate = useNavigate();
   const location = useLocation();
+  const apiBaseUrl = getApiBaseUrl();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -57,6 +73,15 @@ const Login = () => {
       window.history.replaceState({}, document.title);
     }
   }, [location.state]);
+  useEffect(() => {
+    if (!statusMessage || showVerificationLink) return;
+    const timerId = window.setTimeout(() => {
+      setStatusMessage(null);
+      setStatusType(null);
+    }, 4000);
+
+    return () => window.clearTimeout(timerId);
+  }, [statusMessage, showVerificationLink]);
 
   useEffect(() => {
     let isMounted = true;
@@ -64,9 +89,9 @@ const Login = () => {
     const loadPlatformStats = async () => {
       try {
         const [jobsRes, candidatesRes, companiesRes] = await Promise.all([
-          fetch(`${import.meta.env.VITE_API_BASE_URL}/jobs?page=1&limit=1`),
-          fetch(`${import.meta.env.VITE_API_BASE_URL}/users/candidates`),
-          fetch(`${import.meta.env.VITE_API_BASE_URL}/employers`),
+          fetch(`${apiBaseUrl}/jobs?page=1&limit=1`),
+          fetch(`${apiBaseUrl}/users/candidates`),
+          fetch(`${apiBaseUrl}/employers`),
         ]);
 
         const [jobsData, candidatesData, companiesData] = await Promise.all([
@@ -149,7 +174,7 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/login`, {
+      const response = await fetch(`${apiBaseUrl}/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -377,6 +402,16 @@ const Login = () => {
                 {isSubmitting ? "Logging in..." : "Login Now"}
               </button>
 
+              {showVerificationLink && verificationEmail && (
+                <button
+                  type="button"
+                  className="login-verification-inline-btn"
+                  onClick={handleGoToVerification}
+                >
+                  Go to Verification Page
+                </button>
+              )}
+
               <p className="login-reg-link">
                 Don&apos;t have an account? <Link to="/register">Register for free</Link>
               </p>
@@ -403,30 +438,32 @@ const Login = () => {
                 </div>
               </div>
 
-              {statusMessage && (
-                <div className="login-status-wrap">
-                  <p
-                    className={`status-message ${
-                      statusType === "success" ? "status-success" : "status-error"
-                    }`}
-                  >
-                    {statusMessage}
-                  </p>
-                  {showVerificationLink && verificationEmail && (
-                    <button
-                      type="button"
-                      className="login-verify-link-btn"
-                      onClick={handleGoToVerification}
-                    >
-                      Go to Verification Page
-                    </button>
-                  )}
-                </div>
-              )}
+
             </form>
           </div>
         </section>
       </main>
+
+      {statusMessage && (
+        <div className={`login-toast ${statusType === "success" ? "success" : "error"}`}>
+          <div className="login-toast-head">
+            {statusType === "success" ? "Success" : "Error"}
+          </div>
+          <p className="login-toast-message">{statusMessage}</p>
+          <button
+            type="button"
+            className="login-toast-close"
+            aria-label="Close toast"
+            onClick={() => {
+              setStatusMessage(null);
+              setStatusType(null);
+              setShowVerificationLink(false);
+            }}
+          >
+            x
+          </button>
+        </div>
+      )}
 
       <Footer />
     </>

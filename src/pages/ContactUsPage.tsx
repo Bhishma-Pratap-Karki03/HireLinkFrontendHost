@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../styles/ContactUsPage.css";
@@ -21,6 +21,18 @@ const ContactUsPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
   const [statusType, setStatusType] = useState<"success" | "error" | "">("");
+
+  useEffect(() => {
+    if (!statusMessage) return;
+    const timer = window.setTimeout(() => {
+      setStatusMessage("");
+      setStatusType("");
+    }, 4000);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [statusMessage]);
 
   const onInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -183,16 +195,6 @@ const ContactUsPage = () => {
                     <img src={sendArrow} alt="" />
                   </span>
                 </button>
-
-                {statusMessage && (
-                  <p
-                    className={`contact-status ${
-                      statusType === "success" ? "success" : "error"
-                    }`}
-                  >
-                    {statusMessage}
-                  </p>
-                )}
               </form>
             </div>
 
@@ -255,6 +257,25 @@ const ContactUsPage = () => {
           </div>
         </section>
       </main>
+      {statusMessage && (
+        <div className={`contact-toast ${statusType === "success" ? "success" : "error"}`}>
+          <div className="contact-toast-head">
+            {statusType === "success" ? "Success" : "Error"}
+          </div>
+          <p className="contact-toast-message">{statusMessage}</p>
+          <button
+            type="button"
+            className="contact-toast-close"
+            aria-label="Close toast"
+            onClick={() => {
+              setStatusMessage("");
+              setStatusType("");
+            }}
+          >
+            ×
+          </button>
+        </div>
+      )}
       <Footer />
     </>
   );
