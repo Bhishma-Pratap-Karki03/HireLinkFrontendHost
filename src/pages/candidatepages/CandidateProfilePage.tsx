@@ -153,11 +153,11 @@ interface UserProfile {
   education: Education[];
   languages: Language[];
   certifications: Certification[];
-    projects: Project[];
-    skills: Skill[];
-    createdAt: string;
-    updatedAt: string;
-  }
+  projects: Project[];
+  skills: Skill[];
+  createdAt: string;
+  updatedAt: string;
+}
 
 /**
  * CandidateProfilePage Component
@@ -191,11 +191,11 @@ const CandidateProfilePage = () => {
   const [isResumeEditorOpen, setIsResumeEditorOpen] = useState(false);
   const [isExperienceEditorOpen, setIsExperienceEditorOpen] = useState(false);
   const [editingExperience, setEditingExperience] = useState<Experience | null>(
-    null
+    null,
   );
   const [isEducationEditorOpen, setIsEducationEditorOpen] = useState(false);
   const [editingEducation, setEditingEducation] = useState<Education | null>(
-    null
+    null,
   );
   const [isSkillEditorOpen, setIsSkillEditorOpen] = useState(false);
   const [editingSkill, setEditingSkill] = useState<Skill | null>(null);
@@ -231,13 +231,16 @@ const CandidateProfilePage = () => {
         return;
       }
 
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/profile/me`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       // Handle unauthorized access (token expired/invalid)
       if (response.status === 401) {
@@ -277,7 +280,7 @@ const CandidateProfilePage = () => {
     } catch (error) {
       console.error("Error fetching profile:", error);
       setError(
-        error instanceof Error ? error.message : "Failed to load profile data"
+        error instanceof Error ? error.message : "Failed to load profile data",
       );
     } finally {
       setIsLoading(false);
@@ -292,11 +295,14 @@ const CandidateProfilePage = () => {
     try {
       setQuizLoading(true);
       const [historyResponse, showcaseResponse] = await Promise.all([
-        fetch(`${import.meta.env.VITE_API_BASE_URL}/assessments/my-submissions`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/assessments/my-submissions`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-        }),
+        ),
         fetch(`${import.meta.env.VITE_API_BASE_URL}/assessments/my-showcase`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -369,7 +375,6 @@ const CandidateProfilePage = () => {
   const handleEditPersonalInfo = () => {
     setIsPersonalInfoEditorOpen(true);
   };
-
 
   /**
    * Open about us editor modal
@@ -527,7 +532,7 @@ const CandidateProfilePage = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (!response.ok) {
@@ -583,14 +588,17 @@ const CandidateProfilePage = () => {
     if (!token) return;
     const nextIds = visibleQuizIds.slice(0, 5);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/assessments/my-showcase`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/assessments/my-showcase`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ attemptIds: nextIds }),
         },
-        body: JSON.stringify({ attemptIds: nextIds }),
-      });
+      );
       if (!response.ok) return;
       setQuizResults(
         allQuizResults.filter((r) => nextIds.includes(r.id)).slice(0, 5),
@@ -605,7 +613,7 @@ const CandidateProfilePage = () => {
   const formatProjectDateRange = (
     startDate: string,
     endDate: string | null,
-    isOngoing: boolean
+    isOngoing: boolean,
   ): string => {
     const start = formatProjectDate(startDate);
     if (isOngoing) {
@@ -692,7 +700,7 @@ const CandidateProfilePage = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (!response.ok) {
@@ -731,21 +739,26 @@ const CandidateProfilePage = () => {
       setIsLoading(true);
 
       // Persist profile basics managed by this modal
-      const updateResponse = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const updateResponse = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/profile/me`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            currentJobTitle: data.currentJobTitle ?? "",
+            profileVisibility: data.profileVisibility,
+          }),
         },
-        body: JSON.stringify({
-          currentJobTitle: data.currentJobTitle ?? "",
-          profileVisibility: data.profileVisibility,
-        }),
-      });
+      );
 
       if (!updateResponse.ok) {
         const errorData = await updateResponse.json();
-        throw new Error(errorData.message || "Failed to update profile settings");
+        throw new Error(
+          errorData.message || "Failed to update profile settings",
+        );
       }
 
       // Then handle the profile picture if needed
@@ -759,7 +772,7 @@ const CandidateProfilePage = () => {
             "Uploading profile picture:",
             data.imageFile.name,
             data.imageFile.type,
-            data.imageFile.size
+            data.imageFile.size,
           );
 
           const response = await fetch(
@@ -770,7 +783,7 @@ const CandidateProfilePage = () => {
                 Authorization: `Bearer ${token}`,
               },
               body: formData,
-            }
+            },
           );
 
           const responseData = await response.json();
@@ -778,7 +791,7 @@ const CandidateProfilePage = () => {
 
           if (!response.ok) {
             throw new Error(
-              responseData.message || "Failed to upload profile picture"
+              responseData.message || "Failed to upload profile picture",
             );
           }
         } else {
@@ -791,13 +804,13 @@ const CandidateProfilePage = () => {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
-            }
+            },
           );
 
           if (!response.ok) {
             const errorData = await response.json();
             throw new Error(
-              errorData.message || "Failed to remove profile picture"
+              errorData.message || "Failed to remove profile picture",
             );
           }
         }
@@ -822,7 +835,7 @@ const CandidateProfilePage = () => {
 
   // Add function to save certification
   const handleSaveCertification = async (
-    certificationData: CertificationType
+    certificationData: CertificationType,
   ) => {
     const token = localStorage.getItem("authToken");
 
@@ -884,7 +897,7 @@ const CandidateProfilePage = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (!response.ok) {
@@ -932,22 +945,25 @@ const CandidateProfilePage = () => {
     try {
       setIsLoading(true);
 
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/profile/me`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            phone: data.phone || "",
+            address: data.address || "",
+          }),
         },
-        body: JSON.stringify({
-          phone: data.phone || "",
-          address: data.address || "",
-        }),
-      });
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(
-          errorData.message || "Failed to update personal information"
+          errorData.message || "Failed to update personal information",
         );
       }
 
@@ -965,7 +981,6 @@ const CandidateProfilePage = () => {
     }
   };
 
-
   /**
    * Save about information
    * This function updates the about section text in the backend
@@ -981,21 +996,24 @@ const CandidateProfilePage = () => {
     try {
       setIsLoading(true);
 
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/profile/me`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            about: aboutText,
+          }),
         },
-        body: JSON.stringify({
-          about: aboutText,
-        }),
-      });
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(
-          errorData.message || "Failed to update about information"
+          errorData.message || "Failed to update about information",
         );
       }
 
@@ -1044,7 +1062,7 @@ const CandidateProfilePage = () => {
               Authorization: `Bearer ${token}`,
             },
             body: formData,
-          }
+          },
         );
 
         const responseData = await response.json();
@@ -1070,7 +1088,7 @@ const CandidateProfilePage = () => {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
             },
-          }
+          },
         );
 
         if (!response.ok) {
@@ -1163,7 +1181,7 @@ const CandidateProfilePage = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (!response.ok) {
@@ -1260,7 +1278,7 @@ const CandidateProfilePage = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (!response.ok) {
@@ -1296,7 +1314,7 @@ const CandidateProfilePage = () => {
       return defaultAvatar;
     }
 
-    // If it's already a full URL (shouldn't happen with our setup, but just in case)
+    // If it's already a full URL
     if (userProfile.profilePicture.startsWith("http")) {
       // Add cache-busting timestamp
       const separator = userProfile.profilePicture.includes("?") ? "&" : "?";
@@ -1420,7 +1438,7 @@ const CandidateProfilePage = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (!response.ok) {
@@ -1453,7 +1471,7 @@ const CandidateProfilePage = () => {
           src={i <= rating ? starIcon : emptyStarIcon}
           alt={i <= rating ? "Filled Star" : "Empty Star"}
           className="candidate-star-icon"
-        />
+        />,
       );
     }
     return stars;
@@ -1464,7 +1482,7 @@ const CandidateProfilePage = () => {
    */
   const calculateDuration = (
     startDate: string,
-    endDate: string | null
+    endDate: string | null,
   ): string => {
     const start = new Date(startDate);
     const end = endDate ? new Date(endDate) : new Date();
@@ -1792,7 +1810,7 @@ const CandidateProfilePage = () => {
                             •{" "}
                             {calculateDuration(
                               experience.startDate,
-                              experience.endDate
+                              experience.endDate,
                             )}
                           </span>
                         </p>
@@ -1874,7 +1892,7 @@ const CandidateProfilePage = () => {
                             •{" "}
                             {calculateDuration(
                               education.startDate,
-                              education.endDate
+                              education.endDate,
                             )}
                           </span>
                         </p>
@@ -2108,7 +2126,10 @@ const CandidateProfilePage = () => {
                     </p>
                   ) : (
                     allQuizResults.map((quiz) => (
-                      <label key={quiz.id} className="candidate-quiz-modal-item">
+                      <label
+                        key={quiz.id}
+                        className="candidate-quiz-modal-item"
+                      >
                         <input
                           type="checkbox"
                           checked={visibleQuizIds.includes(quiz.id)}
@@ -2211,7 +2232,7 @@ const CandidateProfilePage = () => {
                             {" "}
                             • Expires{" "}
                             {formatCertificationDate(
-                              certification.expirationDate
+                              certification.expirationDate,
                             )}
                           </>
                         )}
@@ -2292,7 +2313,7 @@ const CandidateProfilePage = () => {
                           {formatProjectDateRange(
                             project.startDate,
                             project.endDate,
-                            project.isOngoing
+                            project.isOngoing,
                           )}
                         </p>
                       </div>
@@ -2340,8 +2361,8 @@ const CandidateProfilePage = () => {
             )}
           </article>
         </div>
-              <PortalFooter />
-</main>
+        <PortalFooter />
+      </main>
       {/* Profile Picture Editor Modal */}
       <ProfilePictureEditor
         currentImage={getProfileImageUrl()}
@@ -2353,16 +2374,16 @@ const CandidateProfilePage = () => {
         onSave={handleSaveProfilePicture}
       />
       {/* Personal Information Editor Modal */}
-        <PersonalInfoEditor
-          userData={{
-            email: userProfile.email,
-            phone: userProfile.phone || "",
-            address: userProfile.address || "",
-          }}
-          isOpen={isPersonalInfoEditorOpen}
-          onClose={() => setIsPersonalInfoEditorOpen(false)}
-          onSave={handleSavePersonalInfo}
-        />
+      <PersonalInfoEditor
+        userData={{
+          email: userProfile.email,
+          phone: userProfile.phone || "",
+          address: userProfile.address || "",
+        }}
+        isOpen={isPersonalInfoEditorOpen}
+        onClose={() => setIsPersonalInfoEditorOpen(false)}
+        onSave={handleSavePersonalInfo}
+      />
       {/* About Us Editor Modal */}
       <AboutUsEditor
         currentAbout={userProfile.about || ""}
@@ -2424,9 +2445,3 @@ const CandidateProfilePage = () => {
 };
 
 export default CandidateProfilePage;
-
-
-
-
-
-
