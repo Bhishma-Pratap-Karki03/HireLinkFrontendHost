@@ -3,8 +3,6 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../styles/VerificationPage.css";
-import loginAvatar1 from "../images/Login Page Images/avatar-1.jpg";
-import testimonialStar from "../images/Public Page/I1_1436_1_3469.svg";
 
 // Define TypeScript interfaces for API responses
 interface VerificationResponse {
@@ -23,8 +21,9 @@ interface VerificationResponse {
 }
 
 interface StatusResponse {
-  isVerified: boolean;
+  isVerified?: boolean;
   hasPendingVerification?: boolean;
+  hasPendingReset?: boolean;
   expiresAt?: string;
   timeLeft?: number;
   isExpired?: boolean;
@@ -94,19 +93,21 @@ const VerificationPage = () => {
   const isVerificationType = !isPasswordReset;
 
   const checkVerificationStatus = async () => {
-    if (!userEmail || isPasswordReset) return;
+    if (!userEmail) return;
 
     setIsCheckingStatus(true);
     try {
+      const statusEndpoint = isPasswordReset
+        ? `${apiBaseUrl}/password/check-status?email=${encodeURIComponent(userEmail)}`
+        : `${apiBaseUrl}/verify/check-status?email=${encodeURIComponent(userEmail)}`;
+
       const response = await fetch(
-        `${apiBaseUrl}/verify/check-status?email=${encodeURIComponent(
-          userEmail
-        )}`
+        statusEndpoint
       );
       const data = await parseJsonResponse<StatusResponse>(response);
 
       if (response.ok) {
-        if (data.isVerified) {
+        if (!isPasswordReset && data.isVerified) {
           // User already verified, redirect to login
           navigate("/login", {
             state: { message: "Email already verified. Please login." },
@@ -121,7 +122,10 @@ const VerificationPage = () => {
         } else {
           // Code expired or no code
           setTimer(0);
-          setCanResend(data.hasPendingVerification || data.isExpired || false);
+          const canResendValue = isPasswordReset
+            ? data.hasPendingReset || data.isExpired || false
+            : data.hasPendingVerification || data.isExpired || false;
+          setCanResend(canResendValue);
         }
       }
     } catch (error) {
@@ -137,11 +141,11 @@ const VerificationPage = () => {
 
   // Initialize timer and check verification status
   useEffect(() => {
-    if (userEmail && !isPasswordReset) {
+    if (userEmail) {
       checkVerificationStatus();
     } else {
-      // For password reset or no email, set default timer
-      setTimer(900);
+      // No email in state, keep defaults
+      setTimer(0);
       setCanResend(false);
       setIsCheckingStatus(false);
     }
@@ -174,8 +178,8 @@ const VerificationPage = () => {
       }, 1000);
     }
 
-    // Sync with server every 30 seconds to ensure accuracy (only for verification, not password reset)
-    if (userEmail && !isPasswordReset && !isCheckingStatus) {
+    // Sync with server every 30 seconds to keep timer/status accurate.
+    if (userEmail && !isCheckingStatus) {
       syncInterval = setInterval(() => {
         checkVerificationStatus();
       }, 30000);
@@ -513,25 +517,6 @@ const VerificationPage = () => {
             </div>
           </div>
 
-          <div className="verification-left-bottom">
-            <div className="verification-lb-photo">
-              <img src={loginAvatar1} alt="User" />
-            </div>
-            <div className="verification-lb-text">
-              <div className="verification-lb-stars">
-                <img src={testimonialStar} alt="star" />
-                <img src={testimonialStar} alt="star" />
-                <img src={testimonialStar} alt="star" />
-                <img src={testimonialStar} alt="star" />
-                <img src={testimonialStar} alt="star" />
-              </div>
-              <p>
-                &quot;The verification step is quick and secure. I got the code
-                instantly.&quot;
-              </p>
-              <strong>HireLink User</strong>
-            </div>
-          </div>
         </section>
 
         <section className="verification-right-panel">

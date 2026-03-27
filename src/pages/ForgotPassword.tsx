@@ -1,8 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../styles/ForgotPassword.css";
+
+const getApiBaseUrl = () => {
+  const apiBase = String(import.meta.env.VITE_API_BASE_URL || "").trim();
+  if (apiBase) return apiBase.replace(/\/+$/, "");
+
+  const backendBase = String(import.meta.env.VITE_BACKEND_URL || "").trim();
+  if (backendBase) return `${backendBase.replace(/\/+$/, "")}/api`;
+
+  const host = window.location.hostname;
+  const isLocalHost =
+    host === "localhost" || host === "127.0.0.1" || host === "::1";
+
+  if (isLocalHost) return "http://localhost:5000/api";
+  return "https://hirelinkbackendhost.onrender.com/api";
+};
+
+const parseJsonResponse = async <T,>(response: Response): Promise<T> => {
+  const raw = await response.text();
+  if (!raw) return {} as T;
+
+  try {
+    return JSON.parse(raw) as T;
+  } catch {
+    throw new Error("Server returned invalid response. Please try again.");
+  }
+};
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -10,6 +36,16 @@ const ForgotPassword = () => {
   const [statusMessage, setStatusMessage] = useState("");
   const [statusType, setStatusType] = useState<"success" | "error">("success");
   const navigate = useNavigate();
+  const apiBaseUrl = getApiBaseUrl();
+
+  useEffect(() => {
+    if (!statusMessage || isLoading) return;
+    const timerId = window.setTimeout(() => {
+      setStatusMessage("");
+    }, 4000);
+
+    return () => window.clearTimeout(timerId);
+  }, [statusMessage, isLoading]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +68,7 @@ const ForgotPassword = () => {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/password/request-reset`,
+        `${apiBaseUrl}/password/request-reset`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -40,7 +76,12 @@ const ForgotPassword = () => {
         }
       );
 
-      const data = await response.json();
+      const data = await parseJsonResponse<{
+        message?: string;
+        requiresVerification?: boolean;
+        hasActiveCode?: boolean;
+        codeExpired?: boolean;
+      }>(response);
 
       if (!response.ok) {
         if (data.requiresVerification) {
@@ -58,8 +99,24 @@ const ForgotPassword = () => {
         return;
       }
 
-      setStatusMessage("Password reset code sent! Redirecting to verification...");
-      setStatusType("success");
+      if (data.codeExpired) {
+        setStatusMessage(
+          data.message ||
+            "Previous reset code expired. Please resend from verification page."
+        );
+        setStatusType("error");
+      } else if (data.hasActiveCode) {
+        setStatusMessage(
+          data.message ||
+            "Reset code already sent. Continue with your existing code."
+        );
+        setStatusType("success");
+      } else {
+        setStatusMessage(
+          data.message || "Password reset code sent! Redirecting to verification..."
+        );
+        setStatusType("success");
+      }
 
       setTimeout(() => {
         navigate("/verify-email", {
@@ -148,16 +205,6 @@ const ForgotPassword = () => {
               </p>
             </div>
 
-            {statusMessage && (
-              <p
-                className={`status-message ${
-                  statusType === "success" ? "status-success" : "status-error"
-                }`}
-              >
-                {statusMessage}
-              </p>
-            )}
-
             <form className="forgot-password-form" onSubmit={handleSubmit}>
               <div className="forgot-password-field">
                 <label htmlFor="forgot-password-email">
@@ -244,6 +291,27 @@ const ForgotPassword = () => {
           </div>
         </section>
       </main>
+
+      {statusMessage && (
+        <div
+          className={`forgot-password-toast ${
+            statusType === "success" ? "success" : "error"
+          }`}
+        >
+          <div className="forgot-password-toast-head">
+            {statusType === "success" ? "Success" : "Error"}
+          </div>
+          <p className="forgot-password-toast-message">{statusMessage}</p>
+          <button
+            type="button"
+            className="forgot-password-toast-close"
+            aria-label="Close toast"
+            onClick={() => setStatusMessage("")}
+          >
+            x
+          </button>
+        </div>
+      )}
 
       <Footer />
     </>

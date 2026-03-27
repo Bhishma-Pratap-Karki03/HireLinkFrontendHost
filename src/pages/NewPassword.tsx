@@ -1,10 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../styles/NewPassword.css";
-import loginAvatar1 from "../images/Login Page Images/avatar-1.jpg";
-import testimonialStar from "../images/Public Page/I1_1436_1_3469.svg";
+
+const getApiBaseUrl = () => {
+  const apiBase = String(import.meta.env.VITE_API_BASE_URL || "").trim();
+  if (apiBase) return apiBase.replace(/\/+$/, "");
+
+  const backendBase = String(import.meta.env.VITE_BACKEND_URL || "").trim();
+  if (backendBase) return `${backendBase.replace(/\/+$/, "")}/api`;
+
+  const host = window.location.hostname;
+  const isLocalHost =
+    host === "localhost" || host === "127.0.0.1" || host === "::1";
+
+  if (isLocalHost) return "http://localhost:5000/api";
+  return "https://hirelinkbackendhost.onrender.com/api";
+};
+
+const parseJsonResponse = async <T,>(response: Response): Promise<T> => {
+  const raw = await response.text();
+  if (!raw) return {} as T;
+
+  try {
+    return JSON.parse(raw) as T;
+  } catch {
+    throw new Error("Server returned invalid response. Please try again.");
+  }
+};
 
 const NewPassword = () => {
   const [formData, setFormData] = useState({
@@ -12,14 +36,26 @@ const NewPassword = () => {
     confirmPassword: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [statusMessage, setStatusMessage] = useState("");
-  const [statusType, setStatusType] = useState<"success" | "error">("success");
   const navigate = useNavigate();
   const location = useLocation();
+  const apiBaseUrl = getApiBaseUrl();
 
   const email = location.state?.email || "";
   const resetToken = location.state?.token || "";
   const initialMessage = location.state?.message || "";
+  const [statusMessage, setStatusMessage] = useState(initialMessage);
+  const [statusType, setStatusType] = useState<"success" | "error">(
+    initialMessage ? "success" : "error"
+  );
+
+  useEffect(() => {
+    if (!statusMessage || isLoading) return;
+    const timerId = window.setTimeout(() => {
+      setStatusMessage("");
+    }, 4000);
+
+    return () => window.clearTimeout(timerId);
+  }, [statusMessage, isLoading]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -78,7 +114,7 @@ const NewPassword = () => {
     setStatusMessage("");
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/password/reset`, {
+      const response = await fetch(`${apiBaseUrl}/password/reset`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -87,7 +123,7 @@ const NewPassword = () => {
         }),
       });
 
-      const data = await response.json();
+      const data = await parseJsonResponse<{ message?: string }>(response);
 
       if (!response.ok) {
         setStatusMessage(data.message || "Failed to reset password");
@@ -175,25 +211,6 @@ const NewPassword = () => {
             </div>
           </div>
 
-          <div className="new-password-left-bottom">
-            <div className="new-password-lb-photo">
-              <img src={loginAvatar1} alt="User" />
-            </div>
-            <div className="new-password-lb-text">
-              <div className="new-password-lb-stars">
-                <img src={testimonialStar} alt="star" />
-                <img src={testimonialStar} alt="star" />
-                <img src={testimonialStar} alt="star" />
-                <img src={testimonialStar} alt="star" />
-                <img src={testimonialStar} alt="star" />
-              </div>
-              <p>
-                &quot;Resetting password was easy and fast. The flow is clear and
-                secure.&quot;
-              </p>
-              <strong>HireLink User</strong>
-            </div>
-          </div>
         </section>
 
         <section className="new-password-right-panel">
@@ -212,20 +229,6 @@ const NewPassword = () => {
                 {email ? `Set a new password for ${email}` : "Set your new password."}
               </p>
             </div>
-
-            {initialMessage && !statusMessage && (
-              <p className="status-message status-success">{initialMessage}</p>
-            )}
-
-            {statusMessage && (
-              <p
-                className={`status-message ${
-                  statusType === "success" ? "status-success" : "status-error"
-                }`}
-              >
-                {statusMessage}
-              </p>
-            )}
 
             <form className="new-password-form" onSubmit={handleSubmit}>
               <div className="new-password-field">
@@ -321,6 +324,27 @@ const NewPassword = () => {
           </div>
         </section>
       </main>
+
+      {statusMessage && (
+        <div
+          className={`new-password-toast ${
+            statusType === "success" ? "success" : "error"
+          }`}
+        >
+          <div className="new-password-toast-head">
+            {statusType === "success" ? "Success" : "Error"}
+          </div>
+          <p className="new-password-toast-message">{statusMessage}</p>
+          <button
+            type="button"
+            className="new-password-toast-close"
+            aria-label="Close toast"
+            onClick={() => setStatusMessage("")}
+          >
+            x
+          </button>
+        </div>
+      )}
 
       <Footer />
     </>
