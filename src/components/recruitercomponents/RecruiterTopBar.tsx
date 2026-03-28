@@ -54,6 +54,7 @@ interface MessageConversationItem {
   unreadCount?: number;
 }
 const NOTIFICATION_DROPDOWN_LIMIT = 20;
+const TOAST_DISMISSED_STORAGE_PREFIX = "notificationToastDismissed:";
 
 const API_BASE_URL =
   String(import.meta.env.VITE_API_BASE_URL || "").trim() ||
@@ -108,6 +109,7 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
   const navigate = useNavigate();
   const notificationRef = useRef<HTMLDivElement | null>(null);
   const toastTimersRef = useRef<Record<string, number>>({});
+  const dismissedToastIdsRef = useRef<Set<string>>(new Set());
   const parsedUser =
     typeof window !== "undefined"
       ? (() => {
@@ -121,6 +123,7 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
       : null;
   const userRole = parsedUser?.role || "";
   const userId = parsedUser?.id || "";
+  const dismissedToastStorageKey = `${TOAST_DISMISSED_STORAGE_PREFIX}${userId || "guest"}`;
 
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [notificationLoading, setNotificationLoading] = useState(false);
@@ -164,6 +167,13 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
   };
 
   const dismissToast = (notificationId: string) => {
+    dismissedToastIdsRef.current.add(notificationId);
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        dismissedToastStorageKey,
+        JSON.stringify(Array.from(dismissedToastIdsRef.current)),
+      );
+    }
     setDismissingToastIds((prev) =>
       prev.includes(notificationId) ? prev : [...prev, notificationId],
     );
@@ -396,6 +406,21 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
   }, [notificationToasts]);
 
   useEffect(() => {
+    if (!userId || typeof window === "undefined") return;
+    try {
+      const raw = localStorage.getItem(dismissedToastStorageKey);
+      if (!raw) return;
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return;
+      dismissedToastIdsRef.current = new Set(
+        parsed.filter((id) => typeof id === "string"),
+      );
+    } catch {
+      dismissedToastIdsRef.current = new Set();
+    }
+  }, [userId, dismissedToastStorageKey]);
+
+  useEffect(() => {
     return () => {
       Object.keys(toastTimersRef.current).forEach((toastId) => {
         window.clearTimeout(toastTimersRef.current[toastId]);
@@ -417,6 +442,7 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
     }) => {
       const incoming = payload?.notification;
       if (!incoming) return;
+      if (dismissedToastIdsRef.current.has(incoming.id)) return;
       setConnectionNotificationItems((prev) => {
         const merged = [incoming, ...prev.filter((item) => item.id !== incoming.id)];
         return merged.slice(0, NOTIFICATION_DROPDOWN_LIMIT);
