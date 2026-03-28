@@ -245,7 +245,6 @@ const AdminAssessmentEditPage: React.FC = () => {
       if (hasNoCorrect) missing.push("Correct Answer");
     }
     if (form.type === "writing") {
-      if (!stripHtml(form.writingTask)) missing.push("Writing Task");
       if (!stripHtml(form.writingInstructions))
         missing.push("Submission Instructions");
       if (!form.writingFormat) missing.push("Submission Format");
@@ -576,7 +575,7 @@ const AdminAssessmentEditPage: React.FC = () => {
                     onClick={() => setSubmitSuccess("")}
                     aria-label="Close"
                   >
-                    ×
+                    Ã—
                   </button>
                   <p className="admin-assessment-toast-message">{submitSuccess}</p>
                 </div>
@@ -900,19 +899,6 @@ const AdminAssessmentEditPage: React.FC = () => {
                     {form.type === "writing" && (
                       <div className="admin-assessment-type-section">
                         <h3>Writing Assignment</h3>
-                        <div className="admin-assessment-form-group">
-                          <label>Task Description *</label>
-                          <ReactQuill
-                            theme="snow"
-                            value={form.writingTask}
-                            onChange={(value) =>
-                              updateForm("writingTask", value)
-                            }
-                            modules={quillModules}
-                            formats={quillFormats}
-                            placeholder="Describe the writing task"
-                          />
-                        </div>
                         <div className="admin-assessment-form-group">
                           <label>Submission Instructions *</label>
                           <ReactQuill

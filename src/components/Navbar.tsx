@@ -281,13 +281,11 @@ const Navbar = (_props: NavbarProps) => {
           setUserName("User");
         }
 
-        // Set profile picture from database
+        // Set profile picture from database (supports cloud URLs and local uploads with fallback base URL)
         if (data.user.profilePicture && data.user.profilePicture !== "") {
-          if (data.user.profilePicture.startsWith("http")) {
-            setProfileImage(data.user.profilePicture);
-          } else {
-            setProfileImage(`${import.meta.env.VITE_BACKEND_URL}${data.user.profilePicture}`);
-          }
+          const resolved = resolveAvatar(data.user.profilePicture);
+          const separator = resolved.includes("?") ? "&" : "?";
+          setProfileImage(`${resolved}${separator}t=${Date.now()}`);
         } else {
           // Use default avatar for users without profile picture
           setProfileImage(defaultAvatar);

@@ -1,6 +1,6 @@
 import PortalFooter from "../../components/PortalFooter";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import RecruiterSidebar from "../../components/recruitercomponents/RecruiterSidebar";
 import RecruiterTopBar from "../../components/recruitercomponents/RecruiterTopBar";
 import addIcon from "../../images/Recruiter Profile Page Images/plus icon.svg";
@@ -19,6 +19,28 @@ type RecruiterJobItem = {
   isActive: boolean;
 };
 
+const resolveApiBaseUrl = () => {
+  const envUrl = (import.meta.env.VITE_API_BASE_URL || "").trim();
+  if (envUrl) return envUrl.replace(/\/+$/, "");
+  if (typeof window !== "undefined") {
+    const isLocalHost =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1";
+    if (isLocalHost) return "http://localhost:5000/api";
+  }
+  return "/api";
+};
+
+const parseJsonResponse = async (response: Response) => {
+  const contentType = response.headers.get("content-type") || "";
+  const text = await response.text();
+  if (!text) return {};
+  if (!contentType.includes("application/json")) {
+    throw new Error("API returned non-JSON response. Check API base URL.");
+  }
+  return JSON.parse(text);
+};
+
 const formatDate = (value?: string) => {
   if (!value) return "Not set";
   const date = new Date(value);
@@ -27,11 +49,15 @@ const formatDate = (value?: string) => {
 };
 
 const RecruiterJobPostingsListPage = () => {
+  const apiBaseUrl = resolveApiBaseUrl();
   const navigate = useNavigate();
+  const location = useLocation();
   const [jobs, setJobs] = useState<RecruiterJobItem[]>([]);
   const [titleSearch, setTitleSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [pageToast, setPageToast] = useState("");
+  const [pageToastType, setPageToastType] = useState<"success" | "error">("success");
   const [togglingId, setTogglingId] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 20;
@@ -57,6 +83,22 @@ const RecruiterJobPostingsListPage = () => {
     }
   }, [currentPage, totalPages]);
 
+  useEffect(() => {
+    const state = location.state as
+      | { toastMessage?: string; toastType?: "success" | "error" }
+      | null;
+    if (!state?.toastMessage) return;
+    setPageToast(state.toastMessage);
+    setPageToastType(state.toastType || "success");
+    navigate(location.pathname, { replace: true, state: null });
+  }, [location.pathname, location.state, navigate]);
+
+  useEffect(() => {
+    if (!pageToast) return;
+    const timer = window.setTimeout(() => setPageToast(""), 4000);
+    return () => window.clearTimeout(timer);
+  }, [pageToast]);
+
   const toggleActive = async (jobId: string, nextValue: boolean) => {
     const token = localStorage.getItem("authToken");
     if (!token) {
@@ -65,7 +107,7 @@ const RecruiterJobPostingsListPage = () => {
     }
     try {
       setTogglingId(jobId);
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/jobs/${jobId}`, {
+      const res = await fetch(`${apiBaseUrl}/jobs/${jobId}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -73,7 +115,7 @@ const RecruiterJobPostingsListPage = () => {
         },
         body: JSON.stringify({ isActive: nextValue }),
       });
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (!res.ok) {
         throw new Error(data?.message || "Failed to update status");
       }
@@ -100,12 +142,12 @@ const RecruiterJobPostingsListPage = () => {
         setLoading(true);
         setError("");
         const res = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/jobs/recruiter/list`,
+          `${apiBaseUrl}/jobs/recruiter/list`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
         );
-        const data = await res.json();
+        const data = await parseJsonResponse(res);
         if (!res.ok) {
           throw new Error(data?.message || "Failed to load job postings");
         }
@@ -133,6 +175,22 @@ const RecruiterJobPostingsListPage = () => {
         </div>
         <div className="recruiter-joblist-scrollable-content">
           <div className="recruiter-joblist-content">
+            {pageToast && (
+              <div className={`recruiter-joblist-toast ${pageToastType === "error" ? "error" : "success"}`}>
+                <button
+                  type="button"
+                  className="recruiter-joblist-toast-close"
+                  onClick={() => setPageToast("")}
+                  aria-label="Close"
+                >
+                  {"\u00D7"}
+                </button>
+                <div className="recruiter-joblist-toast-head">
+                  {pageToastType === "success" ? "Success" : "Error"}
+                </div>
+                <p className="recruiter-joblist-toast-message">{pageToast}</p>
+              </div>
+            )}
             <div className="recruiter-joblist-header">
               <div>
                 <h1>Job Postings</h1>

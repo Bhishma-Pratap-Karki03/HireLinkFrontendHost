@@ -883,12 +883,35 @@
   top: 92px;
   right: 16px;
   z-index: 140;
-  width: min(360px, calc(100vw - 24px));
-  background: #ffffff;
-  border: 1px solid #dfe7f1;
+  width: min(380px, calc(100% - 32px));
+  border: 1px solid transparent;
   border-radius: 12px;
-  box-shadow: 0 14px 30px rgba(16, 24, 40, 0.2);
-  padding: 12px 14px 14px;
+  box-shadow: 0 10px 26px rgba(15, 40, 60, 0.16);
+  padding: 14px 44px 14px 14px;
+}
+
+.recruiter-jobpost-toast--success {
+  background: #f3fcf6;
+  border-color: #b7ebc5;
+}
+
+.recruiter-jobpost-toast--error {
+  background: #fff5f5;
+  border-color: #f4c5cb;
+}
+
+.recruiter-jobpost-toast-head {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.recruiter-jobpost-toast--success .recruiter-jobpost-toast-head {
+  color: #147a3b;
+}
+
+.recruiter-jobpost-toast--error .recruiter-jobpost-toast-head {
+  color: #be2a3f;
 }
 
 .recruiter-jobpost-toast-close {
@@ -912,10 +935,9 @@
 
 .recruiter-jobpost-toast-message {
   margin: 0;
-  padding-right: 22px;
   font-size: 13px;
   line-height: 1.45;
-  color: #0f283c;
+  color: #40526a;
   font-weight: 500;
   font-family: "Montserrat", sans-serif;
 }

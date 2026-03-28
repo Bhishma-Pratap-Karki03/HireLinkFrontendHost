@@ -74,6 +74,28 @@ type ReportItem = {
   updatedAt?: string;
 };
 
+const resolveApiBaseUrl = () => {
+  const envUrl = (import.meta.env.VITE_API_BASE_URL || "").trim();
+  if (envUrl) return envUrl.replace(/\/+$/, "");
+  if (typeof window !== "undefined") {
+    const isLocalHost =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1";
+    if (isLocalHost) return "http://localhost:5000/api";
+  }
+  return "/api";
+};
+
+const parseJsonResponse = async (response: Response) => {
+  const contentType = response.headers.get("content-type") || "";
+  const text = await response.text();
+  if (!text) return {};
+  if (!contentType.includes("application/json")) {
+    throw new Error("API returned HTML instead of JSON. Check API base URL.");
+  }
+  return JSON.parse(text);
+};
+
 const resolveAvatar = (profilePicture?: string) => {
   if (!profilePicture) return defaultAvatar;
   if (profilePicture.startsWith("http")) return profilePicture;
@@ -87,19 +109,13 @@ const formatDate = (value?: string) => {
   return date.toLocaleDateString();
 };
 
-const isRecentlyApplied = (appliedAt?: string, recentHours = 48) => {
-  if (!appliedAt) return false;
-  const appliedTime = new Date(appliedAt).getTime();
-  if (Number.isNaN(appliedTime)) return false;
-  const recentWindowMs = recentHours * 60 * 60 * 1000;
-  return Date.now() - appliedTime <= recentWindowMs;
-};
-
 const getApplicationId = (report: ReportItem) => {
   if (!report.application) return "";
-  return typeof report.application === "string"
-    ? report.application
-    : report.application._id;
+  if (typeof report.application === "string") return report.application;
+  const raw = report.application as any;
+  if (raw?._id) return String(raw._id);
+  if (typeof raw?.toString === "function") return String(raw.toString());
+  return "";
 };
 
 const getCandidateId = (candidate?: CandidateInfo | string | null) => {
@@ -118,6 +134,7 @@ const STATUS_OPTIONS = [
 ];
 
 const RecruiterJobApplicantsPage = () => {
+  const apiBaseUrl = resolveApiBaseUrl();
   const { id } = useParams();
   const navigate = useNavigate();
   const [job, setJob] = useState<JobInfo | null>(null);
@@ -161,16 +178,16 @@ const RecruiterJobApplicantsPage = () => {
       setError("");
 
       const [applicationsRes, atsRes] = await Promise.all([
-        fetch(`${import.meta.env.VITE_API_BASE_URL}/applications/job/${id}`, {
+        fetch(`${apiBaseUrl}/applications/job/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch(`${import.meta.env.VITE_API_BASE_URL}/ats/results/${id}`, {
+        fetch(`${apiBaseUrl}/ats/results/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
 
-      const applicationsData = await applicationsRes.json();
-      const atsData = await atsRes.json();
+      const applicationsData = await parseJsonResponse(applicationsRes);
+      const atsData = await parseJsonResponse(atsRes);
 
       if (!applicationsRes.ok) {
         throw new Error(
@@ -219,7 +236,7 @@ const RecruiterJobApplicantsPage = () => {
       setRunError("");
       setScanMessage("");
 
-      const scanRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/ats/scan/${id}`, {
+      const scanRes = await fetch(`${apiBaseUrl}/ats/scan/${id}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -227,11 +244,10 @@ const RecruiterJobApplicantsPage = () => {
         },
         body: JSON.stringify({ mode }),
       });
-      const scanData = await scanRes.json();
+      const scanData = await parseJsonResponse(scanRes);
       if (!scanRes.ok) {
         throw new Error(scanData?.message || "Failed to run ATS scan");
       }
-
       setScanMessage(scanData?.message || "ATS scan completed.");
       await loadApplicantsAndAts();
     } catch (err: any) {
@@ -253,7 +269,7 @@ const RecruiterJobApplicantsPage = () => {
     try {
       setStatusUpdating(applicationId);
       const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/applications/${applicationId}/status`,
+        `${apiBaseUrl}/applications/${applicationId}/status`,
         {
           method: "PATCH",
           headers: {
@@ -263,7 +279,7 @@ const RecruiterJobApplicantsPage = () => {
           body: JSON.stringify({ status: nextStatus }),
         },
       );
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (!res.ok) {
         throw new Error(data?.message || "Failed to update status");
       }
@@ -300,16 +316,21 @@ const RecruiterJobApplicantsPage = () => {
     })
     .map((application, index) => {
       const isUnscoredApplicant =
-        !reportsByApplicationId[application.id] &&
-        (application.atsScore === null ||
-          typeof application.atsScore === "undefined");
-      const isNewApplicant =
-        isUnscoredApplicant || isRecentlyApplied(application.appliedAt);
+        application.atsScore === null ||
+        typeof application.atsScore === "undefined";
+      const scoreValue =
+        typeof reportsByApplicationId[application.id]?.score === "number"
+          ? reportsByApplicationId[application.id].score
+          : typeof application.atsScore === "number"
+            ? application.atsScore
+            : null;
 
       return {
         application,
         rank: index + 1,
-        isNewApplicant,
+        isNewApplicant: isUnscoredApplicant,
+        isUnscoredApplicant,
+        scoreValue,
         report:
           reportsByApplicationId[application.id] ||
           ({
@@ -356,8 +377,7 @@ const RecruiterJobApplicantsPage = () => {
 
   const unscoredOrNewApplicants = applications.filter(
     (item) =>
-      !reportsByApplicationId[item.id] &&
-      (item.atsScore === null || typeof item.atsScore === "undefined"),
+      item.atsScore === null || typeof item.atsScore === "undefined",
   ).length;
 
   return (
@@ -467,7 +487,14 @@ const RecruiterJobApplicantsPage = () => {
 
             <div className="recruiter-applicants-list">
               {filteredRankedApplications.map(
-                ({ application, report, rank, isNewApplicant }) => {
+                ({
+                  application,
+                  report,
+                  rank,
+                  isNewApplicant,
+                  isUnscoredApplicant,
+                  scoreValue,
+                }) => {
                   const candidateId =
                     getCandidateId(report.candidate) ||
                     getCandidateId(application.candidate);
@@ -577,7 +604,7 @@ const RecruiterJobApplicantsPage = () => {
                         </div>
                         <div className="recruiter-applicant-score recruiter-ats-score">
                           <span>Score</span>
-                          <strong>{report.score || 0}</strong>
+                          <strong>{isUnscoredApplicant ? "-" : scoreValue ?? "-"}</strong>
                         </div>
                         <div className="recruiter-applicant-top-actions">
                           <button

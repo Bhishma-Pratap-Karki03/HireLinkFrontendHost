@@ -43,6 +43,9 @@ const AdminManageUsersPage = () => {
   const [blockConfirmUser, setBlockConfirmUser] = useState<AdminUserItem | null>(
     null,
   );
+  const [unblockConfirmUser, setUnblockConfirmUser] = useState<AdminUserItem | null>(
+    null,
+  );
   const [roleChangeConfirm, setRoleChangeConfirm] =
     useState<RoleChangeConfirmState | null>(null);
   const [openRoleUserId, setOpenRoleUserId] = useState<string | null>(null);
@@ -167,7 +170,7 @@ const AdminManageUsersPage = () => {
     const sendEmail =
       typeof sendEmailOverride === "boolean"
         ? sendEmailOverride
-        : action === "unblock";
+        : false;
 
     try {
       setActingUserId(userId);
@@ -261,6 +264,22 @@ const AdminManageUsersPage = () => {
     const targetUserId = blockConfirmUser._id;
     setBlockConfirmUser(null);
     await updateStatus(targetUserId, "block", sendEmail);
+  };
+
+  const openUnblockConfirm = (userId: string) => {
+    const selectedUser = users.find((item) => item._id === userId) || null;
+    setUnblockConfirmUser(selectedUser);
+  };
+
+  const closeUnblockConfirm = () => {
+    setUnblockConfirmUser(null);
+  };
+
+  const onUnblockConfirm = async (sendEmail: boolean) => {
+    if (!unblockConfirmUser) return;
+    const targetUserId = unblockConfirmUser._id;
+    setUnblockConfirmUser(null);
+    await updateStatus(targetUserId, "unblock", sendEmail);
   };
 
   const openRoleChangeConfirm = (
@@ -577,7 +596,7 @@ const AdminManageUsersPage = () => {
                         <button
                           type="button"
                           className="action-unblock"
-                          onClick={() => updateStatus(user._id, "unblock")}
+                          onClick={() => openUnblockConfirm(user._id)}
                           disabled={actingUserId === user._id}
                         >
                           Unblock
@@ -742,6 +761,50 @@ const AdminManageUsersPage = () => {
                 onClick={onRoleChangeConfirm}
               >
                 Confirm + Send Email
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {unblockConfirmUser && (
+        <div
+          className="admin-manage-modal-backdrop"
+          onClick={closeUnblockConfirm}
+          role="presentation"
+        >
+          <div
+            className="admin-manage-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="admin-unblock-confirm-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <h3 id="admin-unblock-confirm-title">Unblock User</h3>
+            <p>
+              Do you also want to send an unblock notification email to{" "}
+              <strong>{unblockConfirmUser.email}</strong>?
+            </p>
+            <div className="admin-manage-modal-actions">
+              <button
+                type="button"
+                className="admin-manage-modal-btn cancel"
+                onClick={closeUnblockConfirm}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="admin-manage-modal-btn neutral"
+                onClick={() => onUnblockConfirm(false)}
+              >
+                Unblock Only
+              </button>
+              <button
+                type="button"
+                className="admin-manage-modal-btn primary"
+                onClick={() => onUnblockConfirm(true)}
+              >
+                Unblock + Send Email
               </button>
             </div>
           </div>

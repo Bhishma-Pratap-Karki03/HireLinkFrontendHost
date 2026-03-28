@@ -38,6 +38,72 @@
   gap: 24px;
 }
 
+.recruiter-joblist-toast {
+  position: fixed;
+  top: 92px;
+  right: 16px;
+  z-index: 140;
+  width: min(360px, calc(100vw - 24px));
+  padding: 12px 14px 14px;
+  border-radius: 12px;
+  border: 1px solid #dfe7f1;
+  background: #ffffff;
+  box-shadow: 0 14px 30px rgba(16, 24, 40, 0.2);
+}
+
+.recruiter-joblist-toast.success {
+  border-color: #b7ebc5;
+  background: #f3fcf6;
+}
+
+.recruiter-joblist-toast.error {
+  border-color: #f4c5cb;
+  background: #fff5f5;
+}
+
+.recruiter-joblist-toast-head {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.recruiter-joblist-toast.success .recruiter-joblist-toast-head {
+  color: #147a3b;
+}
+
+.recruiter-joblist-toast.error .recruiter-joblist-toast-head {
+  color: #be2a3f;
+}
+
+.recruiter-joblist-toast-message {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #40526a;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
+  padding-right: 22px;
+}
+
+.recruiter-joblist-toast-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #334155;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.recruiter-joblist-toast-close:hover {
+  background: #e2e8f0;
+}
+
 .recruiter-joblist-header {
   display: flex;
   align-items: center;
