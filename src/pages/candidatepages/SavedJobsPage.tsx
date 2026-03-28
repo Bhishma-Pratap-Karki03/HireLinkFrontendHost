@@ -29,6 +29,19 @@ type SavedJobItem = {
   companyLogo?: string;
 };
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
+const parseJsonResponse = async (response: Response) => {
+  const contentType = response.headers.get("content-type") || "";
+  if (!contentType.includes("application/json")) {
+    throw new Error(
+      "API returned HTML instead of JSON. Check frontend API base URL configuration."
+    );
+  }
+  return response.json();
+};
+
 const SavedJobsPage = () => {
   const ITEMS_PER_PAGE = 20;
   const navigate = useNavigate();
@@ -100,10 +113,10 @@ const SavedJobsPage = () => {
       const entries = await Promise.all(
         jobIds.map(async (jobId) => {
           const res = await fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/applications/status/${jobId}`,
+            `${API_BASE_URL}/applications/status/${jobId}`,
             { headers: { Authorization: `Bearer ${token}` } }
           );
-          const data = await res.json();
+          const data = await parseJsonResponse(res);
           return [jobId, Boolean(data.applied)];
         })
       );
@@ -122,7 +135,7 @@ const SavedJobsPage = () => {
     }
     try {
       setSavingJobId(jobId);
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/saved-jobs/toggle`, {
+      const res = await fetch(`${API_BASE_URL}/saved-jobs/toggle`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -130,7 +143,7 @@ const SavedJobsPage = () => {
         },
         body: JSON.stringify({ jobId }),
       });
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (!res.ok) {
         throw new Error(data?.message || "Failed to update saved jobs");
       }
@@ -165,13 +178,13 @@ const SavedJobsPage = () => {
     try {
       setApplyLoading(true);
       const [jobRes, profileRes] = await Promise.all([
-        fetch(`${import.meta.env.VITE_API_BASE_URL}/jobs/${jobId}`),
-        fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
+        fetch(`${API_BASE_URL}/jobs/${jobId}`),
+        fetch(`${API_BASE_URL}/profile/me`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
-      const jobData = await jobRes.json();
-      const profileData = await profileRes.json();
+      const jobData = await parseJsonResponse(jobRes);
+      const profileData = await parseJsonResponse(profileRes);
       if (jobRes.ok) {
         setApplyJobDetails(jobData.job);
       }
@@ -216,12 +229,12 @@ const SavedJobsPage = () => {
         formData.append("resumeUrl", applyProfileResume);
       }
 
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/applications/apply`, {
+      const response = await fetch(`${API_BASE_URL}/applications/apply`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
       });
-      const data = await response.json();
+      const data = await parseJsonResponse(response);
       if (!response.ok) {
         throw new Error(data?.message || "Failed to apply");
       }
@@ -246,10 +259,10 @@ const SavedJobsPage = () => {
       try {
         setLoading(true);
         setError("");
-        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/saved-jobs/mine`, {
+        const res = await fetch(`${API_BASE_URL}/saved-jobs/mine`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const data = await res.json();
+        const data = await parseJsonResponse(res);
         if (!res.ok) {
           throw new Error(data?.message || "Failed to load saved jobs");
         }
@@ -360,7 +373,7 @@ const SavedJobsPage = () => {
                   setApplyMessage("");
                 }}
               >
-                ×
+                x
               </button>
             </div>
           )}
@@ -369,7 +382,7 @@ const SavedJobsPage = () => {
           onSearch={setSearchQuery}
           searchPlaceholder="Search saved jobs by role, company, city, location..."
         />
-
+        <div className="savedjobs-content-wrapper">
         <div className="savedjobs-header">
           <h1>Saved Jobs</h1>
           <p>Jobs you bookmarked for later review.</p>
@@ -483,6 +496,8 @@ const SavedJobsPage = () => {
             </div>
           </div>
         )}
+        <PortalFooter />
+        </div>
       {applyModalOpen && (
         <div className="apply-modal-overlay">
           <div className="apply-modal">
@@ -622,14 +637,14 @@ const SavedJobsPage = () => {
           </div>
         </div>
       )}
-
-              <PortalFooter />
 </main>
     </div>
   );
 };
 
 export default SavedJobsPage;
+
+
 
 
 

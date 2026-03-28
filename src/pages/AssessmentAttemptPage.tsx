@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+﻿import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -29,6 +29,7 @@ type Attempt = {
   startTime: string;
   endTime: string;
   submittedAt?: string;
+  score?: number | null;
   answers?: {
     quizAnswers?: number[];
     writingResponse?: string;
@@ -49,6 +50,8 @@ const resolveAssetUrl = (value: string) => {
 };
 
 const AssessmentAttemptPage = () => {
+  const API_BASE_URL =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
   const { assessmentId, attemptId, candidateId } = useParams<{
     assessmentId: string;
     attemptId: string;
@@ -71,6 +74,9 @@ const AssessmentAttemptPage = () => {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [submitToast, setSubmitToast] = useState("");
+  const [submitToastType, setSubmitToastType] = useState<"success" | "error">(
+    "success",
+  );
   const [attemptSource, setAttemptSource] = useState<"admin" | "recruiter">(
     "admin",
   );
@@ -88,6 +94,16 @@ const AssessmentAttemptPage = () => {
   const submitGuard = useRef(false);
   const autosaveTimer = useRef<number | null>(null);
 
+  const parseJsonResponse = async (response: Response) => {
+    const contentType = response.headers.get("content-type") || "";
+    if (!contentType.includes("application/json")) {
+      throw new Error(
+        "API returned non-JSON response. Check API base URL configuration.",
+      );
+    }
+    return response.json();
+  };
+
   const fetchAttempt = async () => {
     const token = localStorage.getItem("authToken");
     if (!token) {
@@ -100,15 +116,15 @@ const AssessmentAttemptPage = () => {
       setError("");
       const response = await fetch(
         candidateId
-          ? `${import.meta.env.VITE_API_BASE_URL}/assessments/candidate/${candidateId}/attempts/${attemptId}`
-          : `${import.meta.env.VITE_API_BASE_URL}/assessments/attempts/${attemptId}`,
+          ? `${API_BASE_URL}/assessments/candidate/${candidateId}/attempts/${attemptId}`
+          : `${API_BASE_URL}/assessments/attempts/${attemptId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         },
       );
-      const data = await response.json();
+      const data = await parseJsonResponse(response);
       if (!response.ok) {
         throw new Error(data?.message || "Failed to load attempt");
       }
@@ -141,6 +157,7 @@ const AssessmentAttemptPage = () => {
         startTime: attemptData.startTime,
         endTime: attemptData.endTime,
         submittedAt: attemptData.submittedAt,
+        score: typeof attemptData.score === "number" ? attemptData.score : null,
         answers: attemptData.answers || {},
       });
       setAttemptSource(attemptData.assessmentSource || "admin");
@@ -157,8 +174,8 @@ const AssessmentAttemptPage = () => {
 
       const endTime = new Date(attemptData.endTime).getTime();
       setRemainingMs(Math.max(endTime - Date.now(), 0));
-    } catch {
-      setError("No data found currently.");
+    } catch (err: any) {
+      setError(err?.message || "No data found currently.");
     } finally {
       setLoading(false);
     }
@@ -218,8 +235,8 @@ const AssessmentAttemptPage = () => {
       setSaving(true);
       const base =
         attemptSource === "recruiter"
-          ? `${import.meta.env.VITE_API_BASE_URL}/recruiter-assessments`
-          : `${import.meta.env.VITE_API_BASE_URL}/assessments`;
+          ? `${API_BASE_URL}/recruiter-assessments`
+          : `${API_BASE_URL}/assessments`;
       await fetch(`${base}/${assessmentId}/attempts/${attemptId}/answers`, {
           method: "POST",
           headers: {
@@ -257,16 +274,18 @@ const AssessmentAttemptPage = () => {
         !codeFileUrl &&
         !codeLink.trim()
       ) {
-        setMessage(
+        setSubmitToastType("error");
+        setSubmitToast(
           "Please upload a PDF, DOC, DOCX, or ZIP file, or provide a task link before submitting.",
         );
+        setMessage("");
         submitGuard.current = false;
         return;
       }
       const base =
         attemptSource === "recruiter"
-          ? `${import.meta.env.VITE_API_BASE_URL}/recruiter-assessments`
-          : `${import.meta.env.VITE_API_BASE_URL}/assessments`;
+          ? `${API_BASE_URL}/recruiter-assessments`
+          : `${API_BASE_URL}/assessments`;
       const endpoint = `${base}/${assessmentId}/attempts/${attemptId}/submit`;
       let response: Response;
       if (
@@ -306,7 +325,7 @@ const AssessmentAttemptPage = () => {
           }),
         });
       }
-      const data = await response.json();
+      const data = await parseJsonResponse(response);
       if (!response.ok) {
         throw new Error(data?.message || "Failed to submit");
       }
@@ -324,12 +343,15 @@ const AssessmentAttemptPage = () => {
           : prev,
       );
       setMessage("");
+      setSubmitToastType("success");
       setSubmitToast("Assessment submitted successfully.");
       setTimeout(() => {
         navigate(backTarget);
       }, 1200);
     } catch (err: any) {
-      setMessage(err?.message || "Failed to submit assessment.");
+      setSubmitToastType("error");
+      setSubmitToast(err?.message || "Failed to submit assessment.");
+      setMessage("");
       submitGuard.current = false;
     }
   };
@@ -353,7 +375,7 @@ const AssessmentAttemptPage = () => {
     if (!submitToast) return;
     const timer = window.setTimeout(() => {
       setSubmitToast("");
-    }, 1800);
+    }, 5000);
     return () => window.clearTimeout(timer);
   }, [submitToast]);
 
@@ -435,7 +457,10 @@ const AssessmentAttemptPage = () => {
       <section className="assessment-attempt-content">
         <div className="assessment-attempt-container">
           {submitToast && (
-            <div className="assessment-submit-toast">
+            <div className={`assessment-submit-toast ${submitToastType}`}>
+              <div className="assessment-submit-toast-head">
+                {submitToastType === "success" ? "Success" : "Error"}
+              </div>
               <button
                 type="button"
                 className="assessment-submit-toast-close"
@@ -461,25 +486,43 @@ const AssessmentAttemptPage = () => {
                 isSubmitted ? "assessment-attempt-card-submitted" : ""
               }`}
             >
-                <div className="assessment-attempt-header">
-                <div>
-                  <h1>{assessment.title}</h1>
-                  <div
-                    className="assessment-richtext"
-                    dangerouslySetInnerHTML={{
-                      __html: assessment.description || "",
-                    }}
-                  />
-                </div>
-                <div className="assessment-attempt-timer">
+                <div
+                  className={`assessment-attempt-header ${
+                    isSubmitted ? "assessment-attempt-header-submitted" : ""
+                  }`}
+                >
+                  <div>
+                    <h1>{assessment.title}</h1>
+                    <div
+                      className="assessment-richtext"
+                      dangerouslySetInnerHTML={{
+                        __html: assessment.description || "",
+                      }}
+                    />
+                  </div>
+
                   {isSubmitted ? (
-                    <>
-                      <span>Completed in</span>
-                      <strong>{completedDuration() || "00:00"}</strong>
-                      <p>Submitted</p>
-                    </>
+                    <div className="assessment-attempt-summary-grid">
+                      <div className="assessment-attempt-timer">
+                        <span>Completed in</span>
+                        <strong>{completedDuration() || "00:00"}</strong>
+                        <p>Submitted</p>
+                      </div>
+                      {assessment.type === "quiz" && (
+                        <div className="assessment-attempt-timer assessment-attempt-score-timer">
+                          <span>Score</span>
+                          <strong>
+                            {attempt.score ?? 0}/
+                            {Array.isArray(assessment.quizQuestions)
+                              ? assessment.quizQuestions.length
+                              : 0}
+                          </strong>
+                          <p>Quiz result</p>
+                        </div>
+                      )}
+                    </div>
                   ) : (
-                    <>
+                    <div className="assessment-attempt-timer">
                       <span>Time left</span>
                       <strong>{formatTime(remainingMs)}</strong>
                       <p>
@@ -491,10 +534,9 @@ const AssessmentAttemptPage = () => {
                             ? "Saving..."
                             : "Autosaved"}
                       </p>
-                    </>
+                    </div>
                   )}
                 </div>
-              </div>
 
               {assessment.type === "quiz" && (
                 <div className="assessment-attempt-section">
@@ -773,5 +815,9 @@ const AssessmentAttemptPage = () => {
 };
 
 export default AssessmentAttemptPage;
+
+
+
+
 
 

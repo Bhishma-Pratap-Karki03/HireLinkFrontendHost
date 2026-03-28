@@ -1,12 +1,27 @@
 .candidate-friend-main-content {
   flex-grow: 1;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-y: visible;
+  background: #eff3f7;
+  min-height: 100vh;
+}
+
+.candidate-friend-main-content > .candidate-top-bar {
+  width: 100% !important;
+  margin: 0 !important;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.candidate-friend-content-wrapper {
   padding: 40px;
   display: flex;
   flex-direction: column;
   gap: 24px;
-  overflow-y: visible;
-  background: #eff3f7;
-  min-height: 100vh;
 }
 
 .candidate-friend-content-card {
@@ -186,7 +201,7 @@
 }
 
 @media (max-width: 1024px) {
-  .candidate-friend-main-content {
+  .candidate-friend-content-wrapper {
     padding: 20px;
   }
 
@@ -383,7 +398,7 @@
 
 
 @media (max-width: 1024px) {
-  .candidate-friend-main-content {
+  .candidate-friend-content-wrapper {
     padding: 20px;
   }
 
@@ -393,7 +408,7 @@
 }
 
 @media (max-width: 768px) {
-  .candidate-friend-main-content {
+  .candidate-friend-content-wrapper {
     padding: 24px;
   }
 

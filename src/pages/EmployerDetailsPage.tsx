@@ -47,6 +47,9 @@ import reviewIllustration from "../images/Employers Page Images/3af141ed60825886
 // Default logo
 import defaultLogo from "../images/Register Page Images/Default Profile.webp";
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
 // Define interface for Company details
 interface CompanyDetails {
   id: string;
@@ -126,7 +129,6 @@ const EmployerDetailsPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [existingReview, setExistingReview] = useState<Review | null>(null);
   const [isCheckingReview, setIsCheckingReview] = useState(false);
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [connectionStatus, setConnectionStatus] =
     useState<ConnectionState>("none");
   const [sendingConnection, setSendingConnection] = useState(false);
@@ -170,7 +172,7 @@ const EmployerDetailsPage = () => {
       const token = localStorage.getItem("authToken");
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/employers/${id}`,
+        `${API_BASE_URL}/employers/${id}`,
         {
           method: "GET",
           headers: token
@@ -200,7 +202,7 @@ const EmployerDetailsPage = () => {
             Boolean(currentUserId) && String(currentUserId) === String(id);
 
           if (isSelfRequest && token) {
-            const meRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
+            const meRes = await fetch(`${API_BASE_URL}/profile/me`, {
               headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -252,7 +254,7 @@ const EmployerDetailsPage = () => {
 
           // Keep hero card visible by loading basic employer listing data.
           const listResponse = await fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/employers`,
+            `${API_BASE_URL}/employers`,
           );
           const listData = await listResponse.json();
 
@@ -298,7 +300,7 @@ const EmployerDetailsPage = () => {
       setJobsLoading(true);
       setJobsError(null);
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/jobs?recruiterId=${id}&sort=newest&limit=6`,
+        `${API_BASE_URL}/jobs?recruiterId=${id}&sort=newest&limit=6`,
       );
       const data = await response.json();
       if (!response.ok) {
@@ -333,7 +335,7 @@ const EmployerDetailsPage = () => {
     try {
       const token = localStorage.getItem("authToken");
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/reviews/company/${id}/my-review`,
+        `${API_BASE_URL}/reviews/company/${id}/my-review`,
         {
           method: "GET",
           headers: {
@@ -374,7 +376,7 @@ const EmployerDetailsPage = () => {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/reviews/company/${id}`,
+        `${API_BASE_URL}/reviews/company/${id}`,
         {
           method: "GET",
           headers: {
@@ -454,7 +456,7 @@ const EmployerDetailsPage = () => {
 
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/connections/statuses?targetIds=${company.id}`,
+          `${API_BASE_URL}/connections/statuses?targetIds=${company.id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -491,7 +493,7 @@ const EmployerDetailsPage = () => {
 
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/connections/mutual/${company.id}`,
+          `${API_BASE_URL}/connections/mutual/${company.id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -535,7 +537,7 @@ const EmployerDetailsPage = () => {
       const entries = await Promise.all(
         jobIds.map(async (jobId) => {
           const res = await fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/applications/status/${jobId}`,
+            `${API_BASE_URL}/applications/status/${jobId}`,
             { headers: { Authorization: `Bearer ${token}` } },
           );
           const data = await res.json();
@@ -559,7 +561,7 @@ const EmployerDetailsPage = () => {
       const entries = await Promise.all(
         jobIds.map(async (jobId) => {
           const res = await fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/saved-jobs/status/${jobId}`,
+            `${API_BASE_URL}/saved-jobs/status/${jobId}`,
             { headers: { Authorization: `Bearer ${token}` } },
           );
           const data = await res.json();
@@ -580,7 +582,7 @@ const EmployerDetailsPage = () => {
     }
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/saved-jobs/toggle`, {
+      const res = await fetch(`${API_BASE_URL}/saved-jobs/toggle`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -638,7 +640,7 @@ const EmployerDetailsPage = () => {
 
     try {
       setSendingConnection(true);
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/request`, {
+      const res = await fetch(`${API_BASE_URL}/connections/request`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -731,7 +733,7 @@ const EmployerDetailsPage = () => {
       }
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/reviews/company/${id}`,
+        `${API_BASE_URL}/reviews/company/${id}`,
         {
           method: "POST",
           headers: {
@@ -815,7 +817,7 @@ const EmployerDetailsPage = () => {
     try {
       const token = localStorage.getItem("authToken");
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/reviews/${existingReview.id}`,
+        `${API_BASE_URL}/reviews/${existingReview.id}`,
         {
           method: "PUT",
           headers: {
@@ -872,12 +874,11 @@ const EmployerDetailsPage = () => {
 
     setSubmittingReview(true);
     setReviewError(null);
-    setShowDeleteConfirm(false);
 
     try {
       const token = localStorage.getItem("authToken");
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/reviews/${existingReview.id}`,
+        `${API_BASE_URL}/reviews/${existingReview.id}`,
         {
           method: "DELETE",
           headers: {
@@ -1651,39 +1652,13 @@ const EmployerDetailsPage = () => {
                                     : "Submit Review"}
                               </button>
                               {existingReview && (
-                                <>
-                                  {!showDeleteConfirm ? (
-                                    <button
-                                      className="employer-details-delete-review-btn"
-                                      onClick={() => setShowDeleteConfirm(true)}
-                                      disabled={submittingReview}
-                                    >
-                                      Delete Review
-                                    </button>
-                                  ) : (
-                                    <div className="employer-details-inline-confirm">
-                                      <span>Delete your review?</span>
-                                      <button
-                                        className="employer-details-confirm-btn"
-                                        onClick={handleDeleteReview}
-                                        disabled={submittingReview}
-                                      >
-                                        {submittingReview
-                                          ? "Deleting..."
-                                          : "Yes"}
-                                      </button>
-                                      <button
-                                        className="employer-details-cancel-confirm-btn"
-                                        onClick={() =>
-                                          setShowDeleteConfirm(false)
-                                        }
-                                        disabled={submittingReview}
-                                      >
-                                        No
-                                      </button>
-                                    </div>
-                                  )}
-                                </>
+                                <button
+                                  className="employer-details-delete-review-btn"
+                                  onClick={handleDeleteReview}
+                                  disabled={submittingReview}
+                                >
+                                  {submittingReview ? "Deleting..." : "Delete Review"}
+                                </button>
                               )}
                               <button
                                 className="employer-details-cancel-review-btn"
@@ -1875,5 +1850,6 @@ const EmployerDetailsPage = () => {
 };
 
 export default EmployerDetailsPage;
+
 
 

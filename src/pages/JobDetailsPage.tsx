@@ -109,6 +109,18 @@ type AssessmentMeta = {
   quizTotal?: number | null;
 };
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
+const parseJsonResponse = async (response: Response) => {
+  const contentType = response.headers.get("content-type") || "";
+  if (!contentType.includes("application/json")) {
+    throw new Error(
+      "API returned HTML instead of JSON. Check frontend API base URL configuration."
+    );
+  }
+  return response.json();
+};
 const JobDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
   const [job, setJob] = useState<JobDetails | null>(null);
@@ -151,8 +163,8 @@ const JobDetailsPage = () => {
     try {
       setLoading(true);
       setError("");
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/jobs/${id}`);
-      const data = await response.json();
+      const response = await fetch(`${API_BASE_URL}/jobs/${id}`);
+      const data = await parseJsonResponse(response);
       if (!response.ok) {
         throw new Error(data?.message || "Failed to load job details");
       }
@@ -176,12 +188,12 @@ const JobDetailsPage = () => {
     try {
       const jobId = job.id || job._id;
       const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/saved-jobs/status/${jobId}`,
+        `${API_BASE_URL}/saved-jobs/status/${jobId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (res.ok) {
         setIsSaved(Boolean(data.saved));
       }
@@ -202,12 +214,12 @@ const JobDetailsPage = () => {
     try {
       const jobId = job.id || job._id;
       const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/applications/status/${jobId}`,
+        `${API_BASE_URL}/applications/status/${jobId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (res.ok) {
         setIsApplied(Boolean(data.applied));
       }
@@ -232,10 +244,10 @@ const JobDetailsPage = () => {
         setAssessmentError("");
         const endpoint =
           job.assessmentSource === "admin"
-            ? `${import.meta.env.VITE_API_BASE_URL}/assessments/${job.assessmentId}`
-            : `${import.meta.env.VITE_API_BASE_URL}/recruiter-assessments/${job.assessmentId}`;
+            ? `${API_BASE_URL}/assessments/${job.assessmentId}`
+            : `${API_BASE_URL}/recruiter-assessments/${job.assessmentId}`;
         const response = await fetch(endpoint);
-        const data = await response.json();
+        const data = await parseJsonResponse(response);
         if (!response.ok) {
           throw new Error(data?.message || "Failed to load assessment");
         }
@@ -284,14 +296,14 @@ const JobDetailsPage = () => {
 
         if (source === "recruiter") {
           const response = await fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/recruiter-assessments/${job.assessmentId}/meta`,
+            `${API_BASE_URL}/recruiter-assessments/${job.assessmentId}/meta`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
             },
           );
-          const data = await response.json();
+          const data = await parseJsonResponse(response);
           if (!response.ok) return;
           const meta = data.meta;
           if (meta) {
@@ -310,14 +322,14 @@ const JobDetailsPage = () => {
         }
 
         const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/assessments/available`,
+          `${API_BASE_URL}/assessments/available`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           },
         );
-        const data = await response.json();
+        const data = await parseJsonResponse(response);
         if (!response.ok) {
           return;
         }
@@ -440,10 +452,10 @@ const JobDetailsPage = () => {
     }
     try {
       setApplyLoading(true);
-      const profileRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
+      const profileRes = await fetch(`${API_BASE_URL}/profile/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      const profileData = await profileRes.json();
+      const profileData = await parseJsonResponse(profileRes);
       if (profileRes.ok) {
         setApplyProfileResume(profileData.user?.resume || "");
       }
@@ -463,7 +475,7 @@ const JobDetailsPage = () => {
     if (!token || !job) return;
     const jobId = job.id || job._id;
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/saved-jobs/toggle`, {
+      const res = await fetch(`${API_BASE_URL}/saved-jobs/toggle`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -471,7 +483,7 @@ const JobDetailsPage = () => {
         },
         body: JSON.stringify({ jobId }),
       });
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (res.ok) {
         setIsSaved(Boolean(data.saved));
       }
@@ -514,14 +526,14 @@ const JobDetailsPage = () => {
       }
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/applications/apply`,
+        `${API_BASE_URL}/applications/apply`,
         {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
           body: formData,
         },
       );
-      const data = await response.json();
+      const data = await parseJsonResponse(response);
       if (!response.ok) {
         throw new Error(data?.message || "Failed to apply");
       }
@@ -564,7 +576,7 @@ const JobDetailsPage = () => {
               setApplyMessage("");
             }}
           >
-            ×
+            x
           </button>
         </div>
       )}
@@ -834,32 +846,27 @@ const JobDetailsPage = () => {
                                   }
                                   const base =
                                     job.assessmentSource === "admin"
-                                      ? `${import.meta.env.VITE_API_BASE_URL}/assessments`
-                                      : `${import.meta.env.VITE_API_BASE_URL}/recruiter-assessments`;
-                                  fetch(
-                                    `${base}/${job.assessmentId}/attempts/start`,
-                                    {
-                                      method: "POST",
-                                      headers: {
-                                        Authorization: `Bearer ${token}`,
-                                        "Content-Type": "application/json",
-                                      },
-                                    },
-                                  )
-                                    .then((res) =>
-                                      res
-                                        .json()
-                                        .then((data) => ({ res, data })),
-                                    )
-                                    .then(({ res, data }) => {
+                                      ? `${API_BASE_URL}/assessments`
+                                      : `${API_BASE_URL}/recruiter-assessments`;
+                                  (async () => {
+                                    try {
+                                      const res = await fetch(`${base}/${job.assessmentId}/attempts/start`, {
+                                        method: "POST",
+                                        headers: {
+                                          Authorization: `Bearer ${token}`,
+                                          "Content-Type": "application/json",
+                                        },
+                                      });
+                                      const data = await parseJsonResponse(res);
                                       if (!res.ok) return;
-                                      const newAttempt =
-                                        data.attempt?._id || data.attempt?.id;
+                                      const newAttempt = data.attempt?._id || data.attempt?.id;
                                       if (newAttempt) {
                                         window.location.href = `/assessments/${job.assessmentId}/attempts/${newAttempt}?fromJob=${job.id}`;
                                       }
-                                    })
-                                    .catch(() => {});
+                                    } catch {
+                                      // ignore
+                                    }
+                                  })();
                                 }}
                               >
                                 {assessmentMeta.status === "in_progress"
@@ -1023,6 +1030,11 @@ const JobDetailsPage = () => {
 };
 
 export default JobDetailsPage;
+
+
+
+
+
 
 
 

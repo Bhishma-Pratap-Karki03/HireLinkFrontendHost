@@ -185,24 +185,27 @@
 
 .recruiter-top-notification-dropdown {
   position: absolute;
-  top: calc(100% + 12px);
+  top: calc(100% + 10px);
   right: 0;
-  width: 420px;
-  max-width: min(420px, calc(100vw - 40px));
+  width: 360px;
+  max-width: min(92vw, 360px);
+  max-height: 380px;
+  overflow-y: auto;
   background: #ffffff;
-  border: 1px solid #d9e6f5;
-  border-radius: 16px;
-  box-shadow: 0 20px 44px rgba(15, 40, 60, 0.18);
-  z-index: 90;
-  overflow: hidden;
+  border: 1px solid #dfe7f1;
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(16, 24, 40, 0.18);
+  z-index: 120;
 }
 
 .recruiter-top-notification-header {
   padding: 14px 16px;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
   color: #0f283c;
-  border-bottom: 1px solid #e5edf7;
+  border-bottom: 1px solid #eef2f7;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 0.1px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -228,8 +231,9 @@
 
 .recruiter-top-notification-state {
   padding: 16px;
-  font-size: 14px;
-  color: #5f6f88;
+  font-size: 13px;
+  color: #5c6a7a;
+  font-family: "Montserrat", sans-serif;
 }
 
 .recruiter-top-notification-state.error {
@@ -240,13 +244,11 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  max-height: 360px;
-  overflow-y: auto;
 }
 
 .recruiter-top-notification-footer {
   padding: 10px 14px 14px;
-  border-top: 1px solid #e5edf7;
+  border-top: 1px solid #eef2f7;
 }
 
 .recruiter-top-notification-view-more-btn {
@@ -263,12 +265,11 @@
 }
 
 .recruiter-top-notification-item {
-  display: grid;
-  grid-template-columns: 44px 1fr;
-  gap: 12px;
-  align-items: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 12px 14px;
-  border-bottom: 1px solid #e5edf7;
+  border-bottom: 1px solid #f0f3f8;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -282,7 +283,7 @@
 }
 
 .recruiter-top-notification-item.unread {
-  background: #eef5ff;
+  background: #f1f7ff;
 }
 
 .recruiter-top-notification-item.read {
@@ -290,18 +291,26 @@
 }
 
 .recruiter-top-notification-avatar {
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  min-height: 38px;
+  max-width: 38px;
+  max-height: 38px;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid #d6e4f4;
-  background: #f8fbff;
+  border: 1px solid #d9e4f2;
+  background: #ffffff;
+  flex-shrink: 0;
+  display: block;
 }
 
 .recruiter-top-notification-avatar.recruiter-logo {
-  border-radius: 10px;
+  width: 44px;
+  height: 30px;
+  border-radius: 0;
   object-fit: contain;
-  padding: 2px;
   border: none;
   background: transparent;
 }
@@ -319,77 +328,113 @@
 }
 
 .recruiter-top-notification-status {
-  background: #d8efdf;
-  color: #177a3c;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #dbeafe;
+  color: #1d4ed8;
   border-radius: 999px;
   padding: 3px 10px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
+  text-transform: capitalize;
+  font-family: "Montserrat", sans-serif;
   white-space: nowrap;
 }
 
+.recruiter-top-notification-status.status-application {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.recruiter-top-notification-status.status-review {
+  background: #ede9fe;
+  color: #4338ca;
+}
+
+.recruiter-top-notification-status.status-accepted {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.recruiter-top-notification-status.status-new-request {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.recruiter-top-notification-status.status-message-pill {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
 .recruiter-top-notification-time {
-  color: #6f7f96;
-  font-size: 12px;
+  color: #7c8a9a;
+  font-size: 11px;
+  font-family: "Montserrat", sans-serif;
   white-space: nowrap;
 }
 
 .recruiter-top-notification-message {
   margin: 0;
-  color: #24374f;
-  font-size: 15px;
-  line-height: 1.45;
+  color: #0f283c;
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
 }
 
 @media (max-width: 768px) {
   .recruiter-top-notification-dropdown {
     right: -8px;
-    width: 340px;
-  }
-
-  .recruiter-top-notification-header {
-    font-size: 18px;
+    width: min(92vw, 360px);
   }
 }
 
 .recruiter-top-toast-stack {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
+  top: 92px;
+  right: 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  z-index: 2100;
+  gap: 10px;
+  z-index: 140;
 }
 
 .recruiter-top-toast {
-  width: min(360px, calc(100vw - 32px));
+  width: min(360px, calc(100vw - 24px));
   background: #ffffff;
-  border: 1px solid #d9e6f5;
-  border-radius: 14px;
-  box-shadow: 0 18px 38px rgba(15, 40, 60, 0.2);
-  padding: 12px 14px;
+  border: 1px solid #dfe7f1;
+  border-radius: 12px;
+  box-shadow: 0 14px 30px rgba(16, 24, 40, 0.2);
+  padding: 12px 14px 14px;
   position: relative;
-  cursor: pointer;
-  transition: transform 0.26s ease, opacity 0.26s ease;
+  opacity: 1;
+  transform: translateX(0);
+  transition: transform 0.28s ease, opacity 0.28s ease;
 }
 
 .recruiter-top-toast.is-dismissing {
-  transform: translateX(120%);
   opacity: 0;
+  transform: translateX(120%);
 }
 
 .recruiter-top-toast-close {
   position: absolute;
   top: 8px;
   right: 8px;
-  border: none;
-  background: #f3f7fb;
-  color: #40536c;
-  border-radius: 8px;
   width: 24px;
   height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #334155;
   cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.recruiter-top-toast-close:hover {
+  background: #e2e8f0;
 }
 
 .recruiter-top-toast-head {
@@ -400,24 +445,35 @@
 }
 
 .recruiter-top-toast-avatar {
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  min-height: 38px;
+  max-width: 38px;
+  max-height: 38px;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid #d6e4f4;
+  border: 1px solid #d9e4f2;
+  flex-shrink: 0;
+  display: block;
 }
 
 .recruiter-top-toast-avatar.recruiter-logo {
-  border-radius: 8px;
+  width: 52px;
+  height: 34px;
+  border-radius: 0;
   object-fit: contain;
-  border: none;
   background: transparent;
+  border: none;
 }
 
 .recruiter-top-toast-message {
   margin: 0;
-  color: #24374f;
+  color: #102a43;
   font-size: 14px;
-  line-height: 1.4;
-  padding-right: 20px;
+  font-weight: 600;
+  line-height: 1.45;
+  font-family: "Montserrat", sans-serif;
+  padding-right: 22px;
 }

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+﻿import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -958,7 +958,7 @@ const JobListingPage = () => {
               setApplyMessage("");
             }}
           >
-            ×
+            x
           </button>
         </div>
       )}
@@ -1667,7 +1667,7 @@ const JobListingPage = () => {
                   <div className="joblist-card-buttons">
                     <button
                       className="joblist-btn-outline"
-                      onClick={() => navigate(`${API_BASE_URL}/jobs/${job.id}`)}
+                      onClick={() => navigate(`/jobs/${job.id}`)}
                     >
                       View Details
                     </button>
@@ -1688,7 +1688,7 @@ const JobListingPage = () => {
                             job.assessmentRequired &&
                             !appliedJobs[job.id]
                           ) {
-                            navigate(`${API_BASE_URL}/jobs/${job.id}`);
+                            navigate(`/jobs/${job.id}`);
                             return;
                           }
                           openApplyModal(job.id);
@@ -1875,6 +1875,7 @@ const JobListingPage = () => {
 };
 
 export default JobListingPage;
+
 
 
 

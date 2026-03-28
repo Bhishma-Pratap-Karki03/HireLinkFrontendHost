@@ -55,10 +55,20 @@ interface MessageConversationItem {
 }
 const NOTIFICATION_DROPDOWN_LIMIT = 20;
 
+const API_BASE_URL =
+  String(import.meta.env.VITE_API_BASE_URL || "").trim() ||
+  "http://localhost:5000/api";
+
+const getBackendBaseUrl = () => {
+  const configured = String(import.meta.env.VITE_BACKEND_URL || "").trim();
+  if (configured) return configured;
+  return API_BASE_URL.replace(/\/api\/?$/, "");
+};
+
 const resolveAvatar = (value?: string) => {
   if (!value) return defaultAvatar;
   if (value.startsWith("http")) return value;
-  return `${import.meta.env.VITE_BACKEND_URL}${value}`;
+  return `${getBackendBaseUrl()}${value}`;
 };
 
 const getNotificationTime = (item: NotificationItem) => {
@@ -66,6 +76,27 @@ const getNotificationTime = (item: NotificationItem) => {
   if (!Number.isNaN(primary)) return primary;
   const fallback = new Date(item.createdAt).getTime();
   return Number.isNaN(fallback) ? 0 : fallback;
+};
+
+const formatApplicationNotificationMessage = (item: NotificationItem) => {
+  const raw = (item.message || "").trim();
+  if (item.type !== "application_status_updated" || !raw) return raw;
+
+  const companyName = item.actor?.fullName?.trim() || "the company";
+  const withCompanyMatch = raw.match(
+    /^Your application for "(.+?)" at (.+?) was updated to (.+)\.$/i
+  );
+  if (withCompanyMatch) {
+    return `Your application for "${withCompanyMatch[1]}" at ${companyName} was updated to ${withCompanyMatch[3]}.`;
+  }
+
+  const withoutCompanyMatch = raw.match(
+    /^Your application for "(.+?)" was updated to (.+)\.$/i
+  );
+  if (withoutCompanyMatch) {
+    return `Your application for "${withoutCompanyMatch[1]}" at ${companyName} was updated to ${withoutCompanyMatch[2]}.`;
+  }
+  return `${raw} (${companyName})`;
 };
 
 const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
@@ -122,6 +153,16 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
     return "New Request";
   };
 
+  const getNotificationStatusClass = (type: NotificationItem["type"]) => {
+    if (type === "message_received") return "status-message-pill";
+    if (type === "application_status_updated") return "status-application";
+    if (type === "project_review_received" || type === "company_review_received") {
+      return "status-review";
+    }
+    if (type === "connection_request_accepted") return "status-accepted";
+    return "status-new-request";
+  };
+
   const dismissToast = (notificationId: string) => {
     setDismissingToastIds((prev) =>
       prev.includes(notificationId) ? prev : [...prev, notificationId],
@@ -152,7 +193,7 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
         setNotificationError("");
       }
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/connections/notifications?limit=${NOTIFICATION_DROPDOWN_LIMIT}`,
+        `${API_BASE_URL}/connections/notifications?limit=${NOTIFICATION_DROPDOWN_LIMIT}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -191,7 +232,7 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
         setNotificationError("");
       }
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/messages/conversations`,
+        `${API_BASE_URL}/messages/conversations`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -292,7 +333,7 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
     if (token) {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/connections/notifications/read`,
+          `${API_BASE_URL}/connections/notifications/read`,
           {
             method: "POST",
             headers: {
@@ -342,7 +383,7 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
       if (toastTimersRef.current[toast.id]) return;
       toastTimersRef.current[toast.id] = window.setTimeout(() => {
         dismissToast(toast.id);
-      }, 20000);
+      }, 8000);
     });
 
     Object.keys(toastTimersRef.current).forEach((toastId) => {
@@ -458,7 +499,7 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
     try {
       await Promise.all(
         unreadConnectionIds.map((notificationId) =>
-          fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/notifications/read`, {
+          fetch(`${API_BASE_URL}/connections/notifications/read`, {
             method: "POST",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -587,7 +628,11 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
                         />
                         <div className="recruiter-top-notification-content">
                           <div className="recruiter-top-notification-top">
-                            <span className="recruiter-top-notification-status">
+                            <span
+                              className={`recruiter-top-notification-status ${getNotificationStatusClass(
+                                item.type
+                              )}`}
+                            >
                               {getNotificationLabel(item.type)}
                             </span>
                             <span className="recruiter-top-notification-time">
@@ -597,7 +642,7 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
                             </span>
                           </div>
                           <p className="recruiter-top-notification-message">
-                            {item.message}
+                            {formatApplicationNotificationMessage(item)}
                           </p>
                         </div>
                       </li>
@@ -658,11 +703,17 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
                     e.currentTarget.src = defaultAvatar;
                   }}
                 />
-                <span className="recruiter-top-notification-status">
+                <span
+                  className={`recruiter-top-notification-status ${getNotificationStatusClass(
+                    item.type
+                  )}`}
+                >
                   {getNotificationLabel(item.type)}
                 </span>
               </div>
-              <p className="recruiter-top-toast-message">{item.message}</p>
+              <p className="recruiter-top-toast-message">
+                {formatApplicationNotificationMessage(item)}
+              </p>
             </div>
           ))}
         </div>
@@ -672,5 +723,12 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
 };
 
 export default RecruiterTopBar;
+
+
+
+
+
+
+
 
 

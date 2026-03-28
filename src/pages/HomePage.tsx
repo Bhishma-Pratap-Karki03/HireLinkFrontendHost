@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+﻿import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -673,7 +673,7 @@ const HomePage = () => {
               setApplyMessage("");
             }}
           >
-            ×
+            x
           </button>
         </div>
       )}
@@ -890,7 +890,7 @@ const HomePage = () => {
                           navigate("/login");
                           return;
                         }
-                        navigate(`${API_BASE_URL}/jobs/${job.id}`);
+                        navigate(`/jobs/${job.id}`);
                       }}
                     >
                       View Details
@@ -907,7 +907,7 @@ const HomePage = () => {
                             return;
                           }
                           if (job.assessmentRequired) {
-                            navigate(`${API_BASE_URL}/jobs/${job.id}`);
+                            navigate(`/jobs/${job.id}`);
                             return;
                           }
                           openApplyModal(job.id);
@@ -1238,6 +1238,7 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
 
 
 

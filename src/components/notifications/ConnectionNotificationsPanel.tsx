@@ -32,10 +32,41 @@ type ConnectionNotificationsPanelProps = {
   searchQuery?: string;
 };
 
+const API_BASE_URL =
+  String(import.meta.env.VITE_API_BASE_URL || "").trim() ||
+  "http://localhost:5000/api";
+
+const getBackendBaseUrl = () => {
+  const configured = String(import.meta.env.VITE_BACKEND_URL || "").trim();
+  if (configured) return configured;
+  return API_BASE_URL.replace(/\/api\/?$/, "");
+};
+
 const resolveAvatar = (value?: string) => {
   if (!value) return defaultAvatar;
   if (value.startsWith("http")) return value;
-  return `${import.meta.env.VITE_BACKEND_URL}${value}`;
+  return `${getBackendBaseUrl()}${value}`;
+};
+
+const formatApplicationNotificationMessage = (item: NotificationItem) => {
+  const raw = (item.message || "").trim();
+  if (item.type !== "application_status_updated" || !raw) return raw;
+
+  const companyName = item.actor?.fullName?.trim() || "the company";
+  const withCompanyMatch = raw.match(
+    /^Your application for "(.+?)" at (.+?) was updated to (.+)\.$/i
+  );
+  if (withCompanyMatch) {
+    return `Your application for "${withCompanyMatch[1]}" at ${companyName} was updated to ${withCompanyMatch[3]}.`;
+  }
+
+  const withoutCompanyMatch = raw.match(
+    /^Your application for "(.+?)" was updated to (.+)\.$/i
+  );
+  if (withoutCompanyMatch) {
+    return `Your application for "${withoutCompanyMatch[1]}" at ${companyName} was updated to ${withoutCompanyMatch[2]}.`;
+  }
+  return `${raw} (${companyName})`;
 };
 
 const ConnectionNotificationsPanel = ({
@@ -78,7 +109,7 @@ const ConnectionNotificationsPanel = ({
       }
 
       const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/connections/notifications?${params.toString()}`,
+        `${API_BASE_URL}/connections/notifications?${params.toString()}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -138,7 +169,7 @@ const ConnectionNotificationsPanel = ({
     if (!token) return;
 
     try {
-      await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/notifications/read`, {
+      await fetch(`${API_BASE_URL}/connections/notifications/read`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -179,7 +210,7 @@ const ConnectionNotificationsPanel = ({
 
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/connections/notifications/delete`,
+        `${API_BASE_URL}/connections/notifications/delete`,
         {
           method: "POST",
           headers: {
@@ -335,7 +366,7 @@ const ConnectionNotificationsPanel = ({
                       </span>
                     </div>
                   </div>
-                  <p>{item.message}</p>
+                  <p>{formatApplicationNotificationMessage(item)}</p>
                 </div>
                 <button
                   type="button"
@@ -402,5 +433,12 @@ const ConnectionNotificationsPanel = ({
 };
 
 export default ConnectionNotificationsPanel;
+
+
+
+
+
+
+
 
 

@@ -55,10 +55,20 @@ interface MessageConversationItem {
 }
 const NOTIFICATION_DROPDOWN_LIMIT = 20;
 
+const API_BASE_URL =
+  String(import.meta.env.VITE_API_BASE_URL || "").trim() ||
+  "http://localhost:5000/api";
+
+const getBackendBaseUrl = () => {
+  const configured = String(import.meta.env.VITE_BACKEND_URL || "").trim();
+  if (configured) return configured;
+  return API_BASE_URL.replace(/\/api\/?$/, "");
+};
+
 const resolveAvatar = (value?: string) => {
   if (!value) return defaultAvatar;
   if (value.startsWith("http")) return value;
-  return `${import.meta.env.VITE_BACKEND_URL}${value}`;
+  return `${getBackendBaseUrl()}${value}`;
 };
 
 const getNotificationTime = (item: NotificationItem) => {
@@ -66,6 +76,27 @@ const getNotificationTime = (item: NotificationItem) => {
   if (!Number.isNaN(primary)) return primary;
   const fallback = new Date(item.createdAt).getTime();
   return Number.isNaN(fallback) ? 0 : fallback;
+};
+
+const formatApplicationNotificationMessage = (item: NotificationItem) => {
+  const raw = (item.message || "").trim();
+  if (item.type !== "application_status_updated" || !raw) return raw;
+
+  const companyName = item.actor?.fullName?.trim() || "the company";
+  const withCompanyMatch = raw.match(
+    /^Your application for "(.+?)" at (.+?) was updated to (.+)\.$/i
+  );
+  if (withCompanyMatch) {
+    return `Your application for "${withCompanyMatch[1]}" at ${companyName} was updated to ${withCompanyMatch[3]}.`;
+  }
+
+  const withoutCompanyMatch = raw.match(
+    /^Your application for "(.+?)" was updated to (.+)\.$/i
+  );
+  if (withoutCompanyMatch) {
+    return `Your application for "${withoutCompanyMatch[1]}" at ${companyName} was updated to ${withoutCompanyMatch[2]}.`;
+  }
+  return `${raw} (${companyName})`;
 };
 
 const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
@@ -76,6 +107,7 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
   const navigate = useNavigate();
   const notificationRef = useRef<HTMLDivElement | null>(null);
   const toastTimersRef = useRef<Record<string, number>>({});
+  const shownToastIdsRef = useRef<Set<string>>(new Set());
   const parsedUser =
     typeof window !== "undefined"
       ? (() => {
@@ -121,6 +153,16 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
     return "New Request";
   };
 
+  const getNotificationStatusClass = (type: NotificationItem["type"]) => {
+    if (type === "message_received") return "status-message-pill";
+    if (type === "application_status_updated") return "status-application";
+    if (type === "project_review_received" || type === "company_review_received") {
+      return "status-review";
+    }
+    if (type === "connection_request_accepted") return "status-accepted";
+    return "status-new-request";
+  };
+
   const dismissToast = (notificationId: string) => {
     setDismissingToastIds((prev) =>
       prev.includes(notificationId) ? prev : [...prev, notificationId],
@@ -151,7 +193,7 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
         setNotificationError("");
       }
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/connections/notifications?limit=${NOTIFICATION_DROPDOWN_LIMIT}`,
+        `${API_BASE_URL}/connections/notifications?limit=${NOTIFICATION_DROPDOWN_LIMIT}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -190,7 +232,7 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
         setNotificationError("");
       }
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/messages/conversations`,
+        `${API_BASE_URL}/messages/conversations`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -291,7 +333,7 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
     if (token) {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/connections/notifications/read`,
+          `${API_BASE_URL}/connections/notifications/read`,
           {
             method: "POST",
             headers: {
@@ -341,7 +383,7 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
       if (toastTimersRef.current[toast.id]) return;
       toastTimersRef.current[toast.id] = window.setTimeout(() => {
         dismissToast(toast.id);
-      }, 20000);
+      }, 8000);
     });
 
     Object.keys(toastTimersRef.current).forEach((toastId) => {
@@ -386,6 +428,7 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
       );
       setNotificationToasts((prev) => {
         const merged = [incoming, ...prev.filter((item) => item.id !== incoming.id)];
+        shownToastIdsRef.current.add(incoming.id);
         return merged.slice(0, 3);
       });
     };
@@ -446,6 +489,24 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
     };
   }, [userId, userRole]);
 
+  useEffect(() => {
+    const unreadItems = connectionNotificationItems
+      .filter((item) => !item.isRead)
+      .slice(0, 3);
+    if (unreadItems.length === 0) return;
+
+    setNotificationToasts((prev) => {
+      const next = [...prev];
+      unreadItems.forEach((item) => {
+        if (shownToastIdsRef.current.has(item.id)) return;
+        if (next.some((existing) => existing.id === item.id)) return;
+        next.unshift(item);
+        shownToastIdsRef.current.add(item.id);
+      });
+      return next.slice(0, 3);
+    });
+  }, [connectionNotificationItems]);
+
   const handleMarkAllNotificationsRead = async () => {
     const token = localStorage.getItem("authToken");
     if (!token) return;
@@ -457,7 +518,7 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
     try {
       await Promise.all(
         unreadConnectionIds.map((notificationId) =>
-          fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/notifications/read`, {
+          fetch(`${API_BASE_URL}/connections/notifications/read`, {
             method: "POST",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -595,7 +656,11 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
                         />
                         <div className="candidate-top-notification-content">
                           <div className="candidate-top-notification-top">
-                            <span className="candidate-top-notification-status">
+                            <span
+                              className={`candidate-top-notification-status ${getNotificationStatusClass(
+                                item.type
+                              )}`}
+                            >
                               {getNotificationLabel(item.type)}
                             </span>
                             <span className="candidate-top-notification-time">
@@ -605,7 +670,7 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
                             </span>
                           </div>
                           <p className="candidate-top-notification-message">
-                            {item.message}
+                            {formatApplicationNotificationMessage(item)}
                           </p>
                         </div>
                       </li>
@@ -666,11 +731,17 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
                     e.currentTarget.src = defaultAvatar;
                   }}
                 />
-                <span className="candidate-top-notification-status">
+                <span
+                  className={`candidate-top-notification-status ${getNotificationStatusClass(
+                    item.type
+                  )}`}
+                >
                   {getNotificationLabel(item.type)}
                 </span>
               </div>
-              <p className="candidate-top-toast-message">{item.message}</p>
+              <p className="candidate-top-toast-message">
+                {formatApplicationNotificationMessage(item)}
+              </p>
             </div>
           ))}
         </div>
@@ -680,5 +751,12 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
 };
 
 export default CandidateTopBar;
+
+
+
+
+
+
+
 
 

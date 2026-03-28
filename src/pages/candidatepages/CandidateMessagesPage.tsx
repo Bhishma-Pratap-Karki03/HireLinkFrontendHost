@@ -15,6 +15,10 @@ const CandidateMessagesPage = () => {
   );
 
   const handleSelectUser = (userId: string) => {
+    if (!userId) {
+      navigate("/candidate/messages", { replace: true });
+      return;
+    }
     navigate(`/candidate/messages?user=${userId}`, { replace: true });
   };
 

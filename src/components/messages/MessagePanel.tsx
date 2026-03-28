@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import defaultAvatar from "../../images/Register Page Images/Default Profile.webp";
 import sendIcon from "../../images/Recruiter Job Post Page Images/sendIcon.png";
+import deleteIcon from "../../images/Candidate Profile Page Images/trash.png";
 import defaultMessageIllustration from "../../images/Recruiter Job Post Page Images/default-message-screen-icon.png";
 import searchIcon from "../../images/Recruiter Profile Page Images/search icon.svg";
 import { connectSocket, getSocket } from "../../lib/socketClient";
@@ -41,10 +42,29 @@ type MessagePanelProps = {
   onSelectUser?: (userId: string) => void;
 };
 
+const API_BASE_URL =
+  String(import.meta.env.VITE_API_BASE_URL || "").trim() ||
+  "http://localhost:5000/api";
+
+const parseJsonResponse = async (response: Response) => {
+  const contentType = response.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    return response.json();
+  }
+  const text = await response.text();
+  if (text.trim().startsWith("<!DOCTYPE") || text.trim().startsWith("<html")) {
+    throw new Error("API returned HTML instead of JSON. Check API base URL.");
+  }
+  return {};
+};
+
 const resolveAvatar = (value?: string) => {
   if (!value) return defaultAvatar;
   if (value.startsWith("http")) return value;
-  return `${import.meta.env.VITE_BACKEND_URL}${value}`;
+  const backendBase =
+    String(import.meta.env.VITE_BACKEND_URL || "").trim() ||
+    API_BASE_URL.replace(/\/api\/?$/, "");
+  return `${backendBase}${value}`;
 };
 
 const formatTime = (value?: string) => {
@@ -72,6 +92,7 @@ const MessagePanel = ({
   const [loadingConversations, setLoadingConversations] = useState(false);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const [sending, setSending] = useState(false);
+  const [deletingConversation, setDeletingConversation] = useState(false);
   const [draft, setDraft] = useState("");
   const [conversationSearch, setConversationSearch] = useState("");
   const [error, setError] = useState("");
@@ -98,12 +119,12 @@ const MessagePanel = ({
         setError("");
       }
       const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/messages/conversations`,
+        `${API_BASE_URL}/messages/conversations`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (!res.ok) {
         throw new Error(data?.message || "Failed to load conversations");
       }
@@ -139,12 +160,12 @@ const MessagePanel = ({
         setError("");
       }
       const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/messages/conversation/${targetUserId}`,
+        `${API_BASE_URL}/messages/conversation/${targetUserId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (!res.ok) {
         throw new Error(data?.message || "Failed to load chat");
       }
@@ -278,13 +299,39 @@ const MessagePanel = ({
       );
     };
 
+    const handleConversationDeleted = (payload: any) => {
+      const fromUser = String(payload?.userId || "");
+      const toUser = String(payload?.otherUserId || "");
+      if (!fromUser || !toUser || !currentUserId) return;
+
+      const removedUserId = fromUser === currentUserId ? toUser : fromUser;
+      if (!removedUserId) return;
+
+      setConversations((prev) =>
+        prev.filter((item) => item.user.id !== removedUserId),
+      );
+
+      if (activeUserId === removedUserId) {
+        setActiveUserId("");
+        setActiveUser(null);
+        setMessages([]);
+        setDraft("");
+        if (onSelectUser) onSelectUser("");
+      }
+    };
+
     socket.on("message:new", handleMessageNew);
     socket.on("message:read", handleMessageRead);
+    socket.on("message:conversation:deleted", handleConversationDeleted);
 
     return () => {
       const connectedSocket = getSocket();
       connectedSocket?.off("message:new", handleMessageNew);
       connectedSocket?.off("message:read", handleMessageRead);
+      connectedSocket?.off(
+        "message:conversation:deleted",
+        handleConversationDeleted,
+      );
     };
   }, [token, currentUserId, activeUserId]);
 
@@ -305,7 +352,7 @@ const MessagePanel = ({
     try {
       setSending(true);
       setError("");
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/messages/send`, {
+      const res = await fetch(`${API_BASE_URL}/messages/send`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -316,7 +363,7 @@ const MessagePanel = ({
           content,
         }),
       });
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (!res.ok) {
         throw new Error(data?.message || "Failed to send message");
       }
@@ -370,6 +417,40 @@ const MessagePanel = ({
     if (activeUserId) return;
     if (conversations.length === 0) return;
     handleSelectConversation(conversations[0].user.id);
+  };
+
+  const handleDeleteConversation = async () => {
+    if (!activeUserId || !token || deletingConversation) return;
+
+    try {
+      setDeletingConversation(true);
+      setError("");
+      const res = await fetch(
+        `${API_BASE_URL}/messages/conversation/${activeUserId}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      const data = await parseJsonResponse(res);
+      if (!res.ok) {
+        throw new Error(data?.message || "Failed to delete conversation");
+      }
+
+      const deletedUserId = activeUserId;
+      setConversations((prev) =>
+        prev.filter((item) => item.user.id !== deletedUserId),
+      );
+      setActiveUserId("");
+      setActiveUser(null);
+      setMessages([]);
+      setDraft("");
+      if (onSelectUser) onSelectUser("");
+    } catch (err: any) {
+      setError(err?.message || "Failed to delete conversation");
+    } finally {
+      setDeletingConversation(false);
+    }
   };
 
   return (
@@ -478,6 +559,16 @@ const MessagePanel = ({
                     <h3>{activeUser.fullName}</h3>
                   </div>
                 </div>
+                <button
+                  type="button"
+                  className="message-page-delete-chat-btn"
+                  onClick={handleDeleteConversation}
+                  disabled={deletingConversation}
+                  aria-label="Delete conversation"
+                  title="Delete conversation"
+                >
+                  <img src={deleteIcon} alt="Delete" />
+                </button>
               </header>
 
               <div className="message-page-chat-body">
@@ -535,5 +626,7 @@ const MessagePanel = ({
 };
 
 export default MessagePanel;
+
+
 
 

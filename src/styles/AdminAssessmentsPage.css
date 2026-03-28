@@ -409,12 +409,17 @@
 
 .admin-manage-table-head.admin-assessment-attempts-table-head,
 .admin-manage-row.admin-assessment-attempts-table-row {
-  grid-template-columns: 2fr 0.8fr 1.4fr 0.9fr 1.2fr 0.9fr;
+  grid-template-columns: 2fr 0.8fr 1.3fr 0.9fr 0.9fr 1.1fr 0.9fr;
 }
 
 .admin-assessment-attempts-table-row small {
   color: #5f7592;
   font-size: 12px;
+}
+
+.admin-assessment-attempt-score {
+  color: #0f8a73;
+  font-weight: 700;
 }
 
 .admin-assessments-actions {

@@ -1,4 +1,4 @@
-import PortalFooter from "../../components/PortalFooter";
+﻿import PortalFooter from "../../components/PortalFooter";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CandidateSidebar from "../../components/candidatecomponents/CandidateSidebar";
@@ -32,6 +32,18 @@ type ConnectedUserItem = {
   connectedAt?: string;
 };
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
+const parseJsonResponse = async (response: Response) => {
+  const contentType = response.headers.get("content-type") || "";
+  if (!contentType.includes("application/json")) {
+    throw new Error(
+      "API returned HTML instead of JSON. Check frontend API base URL configuration."
+    );
+  }
+  return response.json();
+};
 const CandidateFriendRequestsPage = () => {
   const ITEMS_PER_PAGE = 20;
   const navigate = useNavigate();
@@ -54,10 +66,10 @@ const CandidateFriendRequestsPage = () => {
         setLoading(true);
         setError("");
       }
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/incoming`, {
+      const res = await fetch(`${API_BASE_URL}/connections/incoming`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (!res.ok) {
         throw new Error(data?.message || "Failed to load friend requests");
       }
@@ -78,7 +90,7 @@ const CandidateFriendRequestsPage = () => {
     if (!token || !requesterId) return;
     try {
       setActionLoadingId(requesterId);
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/respond`, {
+      const res = await fetch(`${API_BASE_URL}/connections/respond`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,7 +98,7 @@ const CandidateFriendRequestsPage = () => {
         },
         body: JSON.stringify({ requesterId, action }),
       });
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (!res.ok) {
         throw new Error(data?.message || "Failed to update request");
       }
@@ -142,10 +154,10 @@ const CandidateFriendRequestsPage = () => {
     const token = localStorage.getItem("authToken");
     if (!token) return;
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/friends`, {
+      const res = await fetch(`${API_BASE_URL}/connections/friends`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (!res.ok) {
         throw new Error(data?.message || "Failed to load connections");
       }
@@ -160,7 +172,7 @@ const CandidateFriendRequestsPage = () => {
     if (!token || !targetUserId) return;
     try {
       setActionLoadingId(targetUserId);
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/remove`, {
+      const res = await fetch(`${API_BASE_URL}/connections/remove`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -168,7 +180,7 @@ const CandidateFriendRequestsPage = () => {
         },
         body: JSON.stringify({ targetUserId }),
       });
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (!res.ok) {
         throw new Error(data?.message || "Failed to remove connection");
       }
@@ -276,6 +288,7 @@ const CandidateFriendRequestsPage = () => {
           }
           onSearch={setTopSearch}
         />
+        <div className="candidate-friend-content-wrapper">
         <section className="candidate-friend-content-card">
           <header className="candidate-friend-header">
             <h1>Friend Requests</h1>
@@ -498,13 +511,15 @@ const CandidateFriendRequestsPage = () => {
             </div>
           )}
         </section>
-              <PortalFooter />
+        <PortalFooter />
+        </div>
 </main>
     </div>
   );
 };
 
 export default CandidateFriendRequestsPage;
+
 
 
 

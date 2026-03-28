@@ -19,6 +19,9 @@ import friendIcon from "../images/Employers Page Images/friend-icon.png";
 import messageIcon from "../images/Employers Page Images/message-icon.png";
 import { resolveAssetUrl } from "../utils/assetUrl";
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
 type Skill = {
   skillName: string;
   proficiencyLevel?: string;
@@ -240,7 +243,7 @@ const CandidateDetailsPage = () => {
         setPrivateNotice("");
         const token = localStorage.getItem("authToken");
 
-        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/user/${id}`, {
+        const res = await fetch(`${API_BASE_URL}/profile/user/${id}`, {
           headers: token
             ? {
                 Authorization: `Bearer ${token}`,
@@ -254,7 +257,7 @@ const CandidateDetailsPage = () => {
               Boolean(currentUserId) && String(currentUserId) === String(id);
 
             if (isSelfRequest && token) {
-              const meRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/profile/me`, {
+              const meRes = await fetch(`${API_BASE_URL}/profile/me`, {
                 headers: {
                   Authorization: `Bearer ${token}`,
                   "Content-Type": "application/json",
@@ -276,33 +279,53 @@ const CandidateDetailsPage = () => {
             );
 
             // Keep hero card visible by loading basic candidate data.
-            const basicRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/candidates`);
-            const basicData = await basicRes.json();
-            if (basicRes.ok && Array.isArray(basicData?.candidates)) {
-              const matched = basicData.candidates.find((item: any) => {
-                const itemId = item?.id || item?._id || "";
-                return String(itemId) === String(id);
-              });
-              if (matched) {
-                setProfile({
-                  id: matched.id || matched._id,
-                  fullName: matched.fullName || "Candidate",
-                  email: matched.email || "",
-                  currentJobTitle: matched.currentJobTitle || "",
-                  address: matched.address || "",
-                  profilePicture: matched.profilePicture || "",
-                  about: "",
-                  skills: [],
-                  experience: [],
-                  education: [],
-                  certifications: [],
-                  languages: [],
-                  projects: [],
+            try {
+              const basicRes = await fetch(`${API_BASE_URL}/users/candidates`);
+              const basicData = await basicRes.json();
+              if (basicRes.ok && Array.isArray(basicData?.candidates)) {
+                const matched = basicData.candidates.find((item: any) => {
+                  const itemId = item?.id || item?._id || "";
+                  return String(itemId) === String(id);
                 });
-                return;
+                if (matched) {
+                  setProfile({
+                    id: matched.id || matched._id,
+                    fullName: matched.fullName || "Candidate",
+                    email: matched.email || "",
+                    currentJobTitle: matched.currentJobTitle || "",
+                    address: matched.address || "",
+                    profilePicture: matched.profilePicture || "",
+                    about: "",
+                    skills: [],
+                    experience: [],
+                    education: [],
+                    certifications: [],
+                    languages: [],
+                    projects: [],
+                  });
+                  return;
+                }
               }
+            } catch {
+              // Ignore fallback load errors and still show private notice.
             }
-            throw new Error("Candidate profile not found.");
+
+            setProfile({
+              id: String(id),
+              fullName: "Candidate",
+              email: "",
+              currentJobTitle: "",
+              address: "",
+              profilePicture: "",
+              about: "",
+              skills: [],
+              experience: [],
+              education: [],
+              certifications: [],
+              languages: [],
+              projects: [],
+            });
+            return;
           }
           if (res.status === 404) {
             throw new Error("Candidate profile not found.");
@@ -330,7 +353,7 @@ const CandidateDetailsPage = () => {
 
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/connections/statuses?targetIds=${profile.id}`,
+          `${API_BASE_URL}/connections/statuses?targetIds=${profile.id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -366,7 +389,7 @@ const CandidateDetailsPage = () => {
 
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/connections/mutual/${profile.id}`,
+          `${API_BASE_URL}/connections/mutual/${profile.id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -394,7 +417,7 @@ const CandidateDetailsPage = () => {
 
     try {
       setSendingConnection(true);
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/connections/request`, {
+      const res = await fetch(`${API_BASE_URL}/connections/request`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -473,7 +496,7 @@ const CandidateDetailsPage = () => {
 
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/assessments/candidate/${profile.id}/showcase`,
+          `${API_BASE_URL}/assessments/candidate/${profile.id}/showcase`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -515,7 +538,7 @@ const CandidateDetailsPage = () => {
 
           try {
             const response = await fetch(
-              `${import.meta.env.VITE_API_BASE_URL}/reviews/project/${profile.id}/${projectKey}`,
+              `${API_BASE_URL}/reviews/project/${profile.id}/${projectKey}`,
               token
                 ? { headers: { Authorization: `Bearer ${token}` } }
                 : undefined,
@@ -529,7 +552,7 @@ const CandidateDetailsPage = () => {
           if (token && canReviewProject) {
             try {
               const response = await fetch(
-                `${import.meta.env.VITE_API_BASE_URL}/reviews/project/${profile.id}/${projectKey}/my-review`,
+                `${API_BASE_URL}/reviews/project/${profile.id}/${projectKey}/my-review`,
                 { headers: { Authorization: `Bearer ${token}` } },
               );
               const data = await response.json();
@@ -601,8 +624,8 @@ const CandidateDetailsPage = () => {
       setProjectReviewSaving((prev) => ({ ...prev, [projectKey]: true }));
       const existing = myProjectReviews[projectKey];
       const url = existing
-        ? `${import.meta.env.VITE_API_BASE_URL}/reviews/${existing.id}`
-        : `${import.meta.env.VITE_API_BASE_URL}/reviews/project/${profile.id}/${projectKey}`;
+        ? `${API_BASE_URL}/reviews/${existing.id}`
+        : `${API_BASE_URL}/reviews/project/${profile.id}/${projectKey}`;
       const method = existing ? "PUT" : "POST";
 
       const response = await fetch(url, {
@@ -635,6 +658,66 @@ const CandidateDetailsPage = () => {
       setProjectReviewErrors((prev) => ({
         ...prev,
         [projectKey]: err?.message || "Failed to save review",
+      }));
+    } finally {
+      setProjectReviewSaving((prev) => ({ ...prev, [projectKey]: false }));
+    }
+  };
+
+  const deleteProjectReview = async (project: Project) => {
+    const projectKey = getProjectKey(project);
+    if (!projectKey || !canReviewProject) return;
+
+    const existing = myProjectReviews[projectKey];
+    if (!existing) return;
+
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      setProjectReviewSaving((prev) => ({ ...prev, [projectKey]: true }));
+      setProjectReviewErrors((prev) => ({ ...prev, [projectKey]: "" }));
+
+      const response = await fetch(
+        `${API_BASE_URL}/reviews/${existing.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      let data: any = {};
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
+
+      if (!response.ok) {
+        throw new Error(data?.message || "Failed to delete review");
+      }
+
+      setMyProjectReviews((prev) => ({ ...prev, [projectKey]: null }));
+      setProjectReviews((prev) => ({
+        ...prev,
+        [projectKey]: (prev[projectKey] || []).filter(
+          (item) => item.id !== existing.id,
+        ),
+      }));
+      setProjectReviewForms((prev) => ({
+        ...prev,
+        [projectKey]: { rating: 5, description: "" },
+      }));
+      setProjectReviewFormOpen((prev) => ({ ...prev, [projectKey]: false }));
+    } catch (err: any) {
+      setProjectReviewErrors((prev) => ({
+        ...prev,
+        [projectKey]: err?.message || "Failed to delete review",
       }));
     } finally {
       setProjectReviewSaving((prev) => ({ ...prev, [projectKey]: false }));
@@ -1233,18 +1316,30 @@ const CandidateDetailsPage = () => {
                                       {projectReviewErrors[getProjectKey(item)]}
                                     </p>
                                   )}
-                                  <button
-                                    type="button"
-                                    className="candidate-project-review-submit"
-                                    onClick={() => submitProjectReview(item)}
-                                    disabled={projectReviewSaving[getProjectKey(item)]}
-                                  >
-                                    {projectReviewSaving[getProjectKey(item)]
-                                      ? "Saving..."
-                                      : myProjectReviews[getProjectKey(item)]
-                                        ? "Update Review"
-                                        : "Submit Review"}
-                                  </button>
+                                  <div className="candidate-project-review-form-actions">
+                                    <button
+                                      type="button"
+                                      className="candidate-project-review-submit"
+                                      onClick={() => submitProjectReview(item)}
+                                      disabled={projectReviewSaving[getProjectKey(item)]}
+                                    >
+                                      {projectReviewSaving[getProjectKey(item)]
+                                        ? "Saving..."
+                                        : myProjectReviews[getProjectKey(item)]
+                                          ? "Update Review"
+                                          : "Submit Review"}
+                                    </button>
+                                    {myProjectReviews[getProjectKey(item)] && (
+                                      <button
+                                        type="button"
+                                        className="candidate-project-review-delete"
+                                        onClick={() => deleteProjectReview(item)}
+                                        disabled={projectReviewSaving[getProjectKey(item)]}
+                                      >
+                                        Delete Review
+                                      </button>
+                                    )}
+                                  </div>
                                 </div>
                               )}
                             </div>
@@ -1274,6 +1369,7 @@ const CandidateDetailsPage = () => {
 };
 
 export default CandidateDetailsPage;
+
 
 
 

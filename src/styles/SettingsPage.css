@@ -153,6 +153,45 @@
   box-shadow: 0 0 0 3px rgba(18, 112, 206, 0.15);
 }
 
+.settings-password-wrap {
+  position: relative;
+}
+
+.settings-password-wrap input {
+  padding-right: 46px;
+}
+
+.settings-toggle-pw {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  padding: 2px;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #6f7f96;
+  cursor: pointer;
+}
+
+.settings-toggle-pw svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.settings-toggle-pw:hover {
+  color: #0f5fc9;
+}
+
 .settings-page-actions {
   margin-top: 16px;
   display: flex;
@@ -230,6 +269,71 @@
   background: #edf9f1;
   color: #1d7b3c;
   border: 1px solid #bfdfca;
+}
+
+.settings-toast {
+  position: fixed;
+  top: 92px;
+  right: 16px;
+  z-index: 2200;
+  width: min(360px, calc(100vw - 24px));
+  background: #ffffff;
+  border: 1px solid #dfe7f1;
+  border-radius: 12px;
+  box-shadow: 0 14px 30px rgba(16, 24, 40, 0.2);
+  padding: 12px 14px 14px;
+}
+
+.settings-toast.success {
+  border-color: #bfe6cc;
+  background: #f3fbf6;
+}
+
+.settings-toast.error {
+  border-color: #f2c8cd;
+  background: #fff5f6;
+}
+
+.settings-toast-head {
+  margin: 0 28px 6px 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.settings-toast.success .settings-toast-head {
+  color: #1d7b3c;
+}
+
+.settings-toast.error .settings-toast-head {
+  color: #c52a3d;
+}
+
+.settings-toast-message {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #102a43;
+  line-height: 1.45;
+  padding-right: 22px;
+}
+
+.settings-toast-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #334155;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.settings-toast-close:hover {
+  background: #e2e8f0;
 }
 
 @media (max-width: 1200px) {

@@ -943,7 +943,7 @@ a {
 
 .candidate-experience-description {
   font-size: 14px;
-  color: #656565;
+  color: #334155;
   line-height: 1.6;
   margin-top: 20px;
 }
@@ -952,7 +952,7 @@ a {
 .candidate-experience-description h1,
 .candidate-experience-description h2,
 .candidate-experience-description h3 {
-  color: #656565;
+  color: #1f2f46;
   margin-top: 16px;
   margin-bottom: 8px;
 }
@@ -1006,7 +1006,7 @@ a {
 
 .candidate-experience-description strong {
   font-weight: 600;
-  color: #656565;
+  color: #1f2f46;
 }
 
 .candidate-experience-description a {
@@ -1083,7 +1083,7 @@ a {
 
 .candidate-education-description {
   font-size: 14px;
-  color: #656565;
+  color: #334155;
   line-height: 1.6;
   margin-top: 20px;
 }
@@ -1092,7 +1092,7 @@ a {
 .candidate-education-description h1,
 .candidate-education-description h2,
 .candidate-education-description h3 {
-  color: #656565;
+  color: #1f2f46;
   margin-top: 16px;
   margin-bottom: 8px;
 }
@@ -1128,7 +1128,7 @@ a {
 
 .candidate-education-description strong {
   font-weight: 600;
-  color: #656565;
+  color: #1f2f46;
 }
 
 .candidate-education-description a {
@@ -1856,7 +1856,7 @@ a {
 
 .candidate-description-text,
 .candidate-description-text-project {
-  color: #54657d;
+  color: #334155;
   line-height: 1.65;
 }
 

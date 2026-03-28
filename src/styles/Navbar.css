@@ -670,9 +670,10 @@
 
 .notification-toast-message {
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 600;
   line-height: 1.45;
-  color: #0f283c;
+  color: #102a43;
   font-family: "Montserrat", sans-serif;
   padding-right: 22px;
 }

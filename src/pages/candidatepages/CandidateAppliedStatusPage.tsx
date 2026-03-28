@@ -1,4 +1,4 @@
-import PortalFooter from "../../components/PortalFooter";
+﻿import PortalFooter from "../../components/PortalFooter";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CandidateSidebar from "../../components/candidatecomponents/CandidateSidebar";
@@ -33,6 +33,18 @@ type AppliedStatusItem = {
   } | null;
 };
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
+const parseJsonResponse = async (response: Response) => {
+  const contentType = response.headers.get("content-type") || "";
+  if (!contentType.includes("application/json")) {
+    throw new Error(
+      "API returned HTML instead of JSON. Check frontend API base URL configuration."
+    );
+  }
+  return response.json();
+};
 const CandidateAppliedStatusPage = () => {
   const ITEMS_PER_PAGE = 20;
   const navigate = useNavigate();
@@ -64,7 +76,7 @@ const CandidateAppliedStatusPage = () => {
 
   const cleanLabel = (value?: string) =>
     String(value || "")
-      .replace(/•/g, "-")
+      .replace(/â€¢/g, "-")
       .replace(/\?/g, "-")
       .trim();
 
@@ -99,7 +111,11 @@ const CandidateAppliedStatusPage = () => {
   const filteredItems = useMemo(() => {
     const query = titleSearch.trim().toLowerCase();
     if (!query) return items;
-    return items.filter((item) => item.jobTitle.toLowerCase().includes(query));
+    return items.filter((item) =>
+      [item.jobTitle, item.companyName, item.recruiter?.fullName]
+        .filter(Boolean)
+        .some((value) => String(value).toLowerCase().includes(query)),
+    );
   }, [items, titleSearch]);
 
   const totalPages = Math.max(1, Math.ceil(filteredItems.length / ITEMS_PER_PAGE));
@@ -133,10 +149,10 @@ const CandidateAppliedStatusPage = () => {
     try {
       setLoading(true);
       setError("");
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/applications/mine`, {
+      const res = await fetch(`${API_BASE_URL}/applications/mine`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      const data = await res.json();
+      const data = await parseJsonResponse(res);
       if (!res.ok) {
         throw new Error(data?.message || "Failed to load applied jobs");
       }
@@ -158,7 +174,7 @@ const CandidateAppliedStatusPage = () => {
       <main className="candidate-applied-main">
         <CandidateTopBar
           showSearch
-          searchPlaceholder="Search by job title..."
+          searchPlaceholder="Search by job title or company name..."
           onSearch={setTitleSearch}
         />
         <div className="candidate-applied-content-wrapper">
@@ -226,7 +242,12 @@ const CandidateAppliedStatusPage = () => {
                   <div className="candidate-applied-cell candidate-applied-job">
                     <h4>{item.jobTitle}</h4>
                     <p>
-                      {cleanLabel(item.companyName)} - {cleanLabel(item.location)}
+                      {cleanLabel(item.companyName) ||
+                        cleanLabel(item.recruiter?.fullName) ||
+                        "Company"}
+                      {cleanLabel(item.location)
+                        ? ` - ${cleanLabel(item.location)}`
+                        : ""}
                     </p>
                   </div>
                   <div className="candidate-applied-cell">
@@ -266,8 +287,9 @@ const CandidateAppliedStatusPage = () => {
                     <button
                       type="button"
                       className="candidate-applied-icon-btn"
-                      onClick={() => navigate(`/jobs/${item.jobId}`)}
-                      title="View job details"
+                      onClick={() => item.jobId && navigate(`/jobs/${item.jobId}`)}
+                      title={item.jobId ? "View job details" : "Job details not available"}
+                      disabled={!item.jobId}
                     >
                       <img src={actionResumeIcon} alt="View details" />
                     </button>
@@ -324,6 +346,12 @@ const CandidateAppliedStatusPage = () => {
 };
 
 export default CandidateAppliedStatusPage;
+
+
+
+
+
+
 
 
 

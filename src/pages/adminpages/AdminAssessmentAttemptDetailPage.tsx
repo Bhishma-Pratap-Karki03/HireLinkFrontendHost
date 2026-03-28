@@ -166,6 +166,16 @@ const AdminAssessmentAttemptDetailPage = () => {
                 <span>Completed In</span>
                 <strong>{formatDuration(attempt.startTime, attempt.submittedAt)}</strong>
               </div>
+              {typeof attempt.score === "number" && (
+                <div className="recruiter-assessment-page-row">
+                  <span>Score</span>
+                  <strong>
+                    {assessment.type === "quiz" && (assessment.quizTotal ?? 0) > 0
+                      ? `${attempt.score}/${assessment.quizTotal}`
+                      : attempt.score}
+                  </strong>
+                </div>
+              )}
 
               {assessment.description && (
                 <div className="recruiter-assessment-page-block">
