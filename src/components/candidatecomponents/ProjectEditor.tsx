@@ -276,8 +276,9 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
       newErrors.push("Start date is required");
     }
 
-    // Cover image is mandatory while adding a new project.
-    if (!project && !selectedFile) {
+    // Cover image is mandatory while adding and updating a project.
+    // In edit mode, if user removes existing image, they must upload a new one.
+    if ((!project && !selectedFile) || (project && !selectedFile && removeExistingImage)) {
       newErrors.push("Project cover image is required");
     }
 
@@ -482,7 +483,14 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
         name: selectedFile.name,
         size: selectedFile.size,
       };
-    } else if (project?.coverImageFileName) {
+    }
+
+    // Hide existing cover file details when user has confirmed remove.
+    if (removeExistingImage) {
+      return null;
+    }
+
+    if (project?.coverImageFileName) {
       return {
         name: project.coverImageFileName,
         size: project.coverImageFileSize || 0,
