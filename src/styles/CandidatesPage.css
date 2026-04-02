@@ -104,36 +104,119 @@
 }
 
 .candidates-filters {
+  background-color: #e7f7ff;
+  border: 1px solid #d8e7f6;
+  border-radius: 14px;
+  box-shadow: 0 12px 24px rgba(15, 35, 60, 0.08);
+  padding: 22px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 0;
 }
 
-.candidates-filter-card {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.05);
+.candidates-filter-group {
+  margin-bottom: 18px;
 }
 
-.candidates-filter-card h3 {
-  margin: 0 0 10px;
-  font-size: 15px;
-  color: #0f283c;
+.candidates-filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #1e2937;
+  font-size: 14px;
 }
 
-.candidates-filter-card input {
-  width: 100%;
-  border: 1px solid #d7dfea;
+.candidates-toggle-icon {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.candidates-toggle-icon img {
+  width: 16px;
+  height: 16px;
+}
+
+.candidates-input-wrapper {
+  background-color: #fff;
   border-radius: 10px;
-  padding: 8px 12px;
-  font-size: 13px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #d9e3f2;
+}
+
+.candidates-input-wrapper input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
   color: #1f2937;
   font-family: "Montserrat", sans-serif;
 }
 
-.candidates-filter-card input::placeholder {
+.candidates-input-wrapper input::placeholder {
+  color: #87929b;
   font-family: "Montserrat", sans-serif;
+}
+
+.candidates-divider {
+  height: 1px;
+  background-color: #0068ce;
+  opacity: 0.1;
+  margin: 0 0 20px 0;
+}
+
+.candidates-filter-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.candidates-btn-apply-filter {
+  width: 100%;
+  background-color: #0068ce;
+  color: #ffffff;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-align: center;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  transition: background-color 0.2s;
+}
+
+.candidates-btn-apply-filter:hover {
+  background-color: #0056b3;
+}
+
+.candidates-btn-clear-filter {
+  width: 100%;
+  background-color: #ffffff;
+  color: #0068ce;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-align: center;
+  font-size: 14px;
+  border: 1px solid #0068ce;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  transition: background-color 0.2s;
+}
+
+.candidates-btn-clear-filter:hover {
+  background-color: #f2f6ff;
 }
 
 .candidates-grid {

@@ -12,6 +12,8 @@ import messageIcon from "../images/Employers Page Images/message-icon.png";
 import viewProfileIcon from "../images/Employers Page Images/view-profile-icon.png";
 import prevIcon from "../images/Employers Page Images/Prev Icon.svg";
 import nextIcon from "../images/Employers Page Images/Next Icon.svg";
+import minusIcon from "../images/Employers Page Images/minus.png";
+import plusIcon from "../images/Employers Page Images/expand.png";
 
 type CandidateSkill = {
   skillName: string;
@@ -85,6 +87,16 @@ const CandidatesPage = () => {
   const [locationFilter, setLocationFilter] = useState("");
   const [skillFilter, setSkillFilter] = useState("");
   const [minExperience, setMinExperience] = useState("");
+  const [expandedSections, setExpandedSections] = useState<
+    Record<string, boolean>
+  >({
+    location: true,
+    skill: true,
+    experience: true,
+  });
+  const [locationInput, setLocationInput] = useState("");
+  const [skillInput, setSkillInput] = useState("");
+  const [minExperienceInput, setMinExperienceInput] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [connectionStatuses, setConnectionStatuses] = useState<
     Record<string, ConnectionState>
@@ -354,6 +366,30 @@ const CandidatesPage = () => {
     setCurrentPage(1);
   };
 
+  const applyFilters = () => {
+    setLocationFilter(locationInput.trim());
+    setSkillFilter(skillInput.trim());
+    setMinExperience(minExperienceInput.trim());
+    setCurrentPage(1);
+  };
+
+  const clearFilters = () => {
+    setLocationInput("");
+    setSkillInput("");
+    setMinExperienceInput("");
+    setLocationFilter("");
+    setSkillFilter("");
+    setMinExperience("");
+    setCurrentPage(1);
+  };
+
+  const toggleSection = (section: "location" | "skill" | "experience") => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
+
   return (
     <div className="candidates-page">
       <Navbar />
@@ -396,33 +432,109 @@ const CandidatesPage = () => {
 
       <section className="candidates-body">
         <aside className="candidates-filters">
-          <div className="candidates-filter-card">
-            <h3>Location</h3>
-            <input
-              type="text"
-              placeholder="e.g. Kathmandu"
-              value={locationFilter}
-              onChange={(e) => setLocationFilter(e.target.value)}
-            />
+          <div className="candidates-filter-group">
+            <div className="candidates-filter-header">
+              <span>Location</span>
+              <button
+                type="button"
+                className="candidates-toggle-icon"
+                onClick={() => toggleSection("location")}
+                aria-label={expandedSections.location ? "Collapse" : "Expand"}
+              >
+                <img
+                  src={expandedSections.location ? minusIcon : plusIcon}
+                  alt={expandedSections.location ? "Collapse" : "Expand"}
+                />
+              </button>
+            </div>
+            {expandedSections.location && (
+              <div className="candidates-input-wrapper">
+                <input
+                  type="text"
+                  placeholder="e.g. Kathmandu"
+                  value={locationInput}
+                  onChange={(e) => setLocationInput(e.target.value)}
+                />
+              </div>
+            )}
           </div>
-          <div className="candidates-filter-card">
-            <h3>Skill</h3>
-            <input
-              type="text"
-              placeholder="e.g. React, UI/UX"
-              value={skillFilter}
-              onChange={(e) => setSkillFilter(e.target.value)}
-            />
+
+          <div className="candidates-divider"></div>
+
+          <div className="candidates-filter-group">
+            <div className="candidates-filter-header">
+              <span>Skill</span>
+              <button
+                type="button"
+                className="candidates-toggle-icon"
+                onClick={() => toggleSection("skill")}
+                aria-label={expandedSections.skill ? "Collapse" : "Expand"}
+              >
+                <img
+                  src={expandedSections.skill ? minusIcon : plusIcon}
+                  alt={expandedSections.skill ? "Collapse" : "Expand"}
+                />
+              </button>
+            </div>
+            {expandedSections.skill && (
+              <div className="candidates-input-wrapper">
+                <input
+                  type="text"
+                  placeholder="e.g. React, UI/UX"
+                  value={skillInput}
+                  onChange={(e) => setSkillInput(e.target.value)}
+                />
+              </div>
+            )}
           </div>
-          <div className="candidates-filter-card">
-            <h3>Experience (years)</h3>
-            <input
-              type="number"
-              min="0"
-              placeholder="Min years"
-              value={minExperience}
-              onChange={(e) => setMinExperience(e.target.value)}
-            />
+
+          <div className="candidates-divider"></div>
+
+          <div className="candidates-filter-group">
+            <div className="candidates-filter-header">
+              <span>Experience (years)</span>
+              <button
+                type="button"
+                className="candidates-toggle-icon"
+                onClick={() => toggleSection("experience")}
+                aria-label={expandedSections.experience ? "Collapse" : "Expand"}
+              >
+                <img
+                  src={expandedSections.experience ? minusIcon : plusIcon}
+                  alt={expandedSections.experience ? "Collapse" : "Expand"}
+                />
+              </button>
+            </div>
+            {expandedSections.experience && (
+              <div className="candidates-input-wrapper">
+                <input
+                  type="number"
+                  min="0"
+                  placeholder="Min years"
+                  value={minExperienceInput}
+                  onChange={(e) => setMinExperienceInput(e.target.value)}
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="candidates-divider"></div>
+
+          <div className="candidates-filter-actions">
+            <button
+              type="button"
+              className="candidates-btn-apply-filter"
+              onClick={applyFilters}
+            >
+              Apply Filter
+            </button>
+            <button
+              type="button"
+              className="candidates-btn-clear-filter"
+              onClick={clearFilters}
+            >
+              Cancel Filter
+            </button>
           </div>
         </aside>
 

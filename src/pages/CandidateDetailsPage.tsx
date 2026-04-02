@@ -1265,11 +1265,9 @@ const CandidateDetailsPage = () => {
                                   }))
                                 }
                               >
-                                {projectReviewFormOpen[getProjectKey(item)]
-                                  ? "Cancel"
-                                  : myProjectReviews[getProjectKey(item)]
-                                    ? "Edit Your Review"
-                                    : "Write a Review"}
+                                {myProjectReviews[getProjectKey(item)]
+                                  ? "Edit Your Review"
+                                  : "Write a Review"}
                               </button>
 
                               {projectReviewFormOpen[getProjectKey(item)] && (
@@ -1328,6 +1326,19 @@ const CandidateDetailsPage = () => {
                                         : myProjectReviews[getProjectKey(item)]
                                           ? "Update Review"
                                           : "Submit Review"}
+                                    </button>
+                                    <button
+                                      type="button"
+                                      className="candidate-project-review-cancel"
+                                      onClick={() =>
+                                        setProjectReviewFormOpen((prev) => ({
+                                          ...prev,
+                                          [getProjectKey(item)]: false,
+                                        }))
+                                      }
+                                      disabled={projectReviewSaving[getProjectKey(item)]}
+                                    >
+                                      Cancel
                                     </button>
                                     {myProjectReviews[getProjectKey(item)] && (
                                       <button

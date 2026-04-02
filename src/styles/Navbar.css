@@ -107,9 +107,9 @@
 .site-header .btn.btn-primary {
   background-color: #9979f6;
   color: #ffffff;
-  padding: 12px 20px;
+  padding: 10px 16px;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   text-align: center;
   border: none;
@@ -743,6 +743,24 @@
   font: inherit;
   cursor: pointer;
   text-align: left;
+}
+
+.mobile-action-label {
+  flex: 1;
+}
+
+.mobile-notification-badge {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
 }
 
 .mobile-menu-list .mobile-action-icon img {

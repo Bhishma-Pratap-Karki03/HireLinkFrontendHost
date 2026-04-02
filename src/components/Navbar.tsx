@@ -183,6 +183,7 @@ const Navbar = (_props: NavbarProps) => {
   const [connectionUnreadCount, setConnectionUnreadCount] = useState(0);
   const [messageUnreadCount, setMessageUnreadCount] = useState(0);
   const [adminContactUnreadCount, setAdminContactUnreadCount] = useState(0);
+  const [isNotificationCountsReady, setIsNotificationCountsReady] = useState(false);
   const [notificationToasts, setNotificationToasts] = useState<NotificationItem[]>([]);
   const [dismissingToastIds, setDismissingToastIds] = useState<string[]>([]);
   const [profileImage, setProfileImage] = useState<string>(defaultAvatar);
@@ -570,6 +571,30 @@ const Navbar = (_props: NavbarProps) => {
     }
   };
 
+  const syncNotificationCounts = async (silent = true) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      setConnectionNotificationItems([]);
+      setMessageNotificationItems([]);
+      setAdminContactNotificationItems([]);
+      setConnectionUnreadCount(0);
+      setMessageUnreadCount(0);
+      setAdminContactUnreadCount(0);
+      setIsNotificationCountsReady(true);
+      return;
+    }
+
+    setIsNotificationCountsReady(false);
+    if (isAdminUser) {
+      await fetchAdminContactNotifications(silent);
+      setIsNotificationCountsReady(true);
+      return;
+    }
+
+    await Promise.all([fetchNotifications(silent), fetchMessageNotifications(silent)]);
+    setIsNotificationCountsReady(true);
+  };
+
   const toggleNotificationMenu = () => {
     setIsNotificationOpen((prev) => {
       const next = !prev;
@@ -577,8 +602,7 @@ const Navbar = (_props: NavbarProps) => {
         if (isAdminUser) {
           fetchAdminContactNotifications();
         } else {
-          fetchNotifications();
-          fetchMessageNotifications();
+          syncNotificationCounts();
         }
       }
       return next;
@@ -816,16 +840,14 @@ const Navbar = (_props: NavbarProps) => {
     };
 
     const handleSocketConnect = () => {
-      fetchNotifications(true);
-      fetchMessageNotifications(true);
+      syncNotificationCounts(true);
     };
 
     socket.on("connect", handleSocketConnect);
     socket.on("notification:connection:new", handleRealtimeNotification);
     socket.on("message:new", handleMessageNotification);
 
-    fetchNotifications(true);
-    fetchMessageNotifications(true);
+    syncNotificationCounts(true);
 
     return () => {
       const activeSocket = getSocket();
@@ -853,7 +875,10 @@ const Navbar = (_props: NavbarProps) => {
     const token = localStorage.getItem("authToken") || "";
     if (!token || !isAdminUser) return;
 
-    fetchAdminContactNotifications(true);
+    setIsNotificationCountsReady(false);
+    fetchAdminContactNotifications(true).finally(() => {
+      setIsNotificationCountsReady(true);
+    });
     const intervalId = window.setInterval(() => {
       fetchAdminContactNotifications(true);
     }, 5000);
@@ -1122,7 +1147,7 @@ const Navbar = (_props: NavbarProps) => {
               onClick={toggleNotificationMenu}
             >
               <img src={notificationIcon} alt="Notifications" />
-              {unreadNotificationCount > 0 && (
+              {isNotificationCountsReady && unreadNotificationCount > 0 && (
                 <span className="notification-badge">
                   {unreadNotificationCount > 99 ? "99+" : unreadNotificationCount}
                 </span>
@@ -1310,12 +1335,12 @@ const Navbar = (_props: NavbarProps) => {
 
   const renderUnauthenticatedActions = () => (
     <>
-      <a href="#" className="apply-now-link">
+      <Link to="/register" className="apply-now-link">
         <img src={applyDot} alt="" className="apply-dot" />
-        Apply Now
-      </a>
+        Register
+      </Link>
       <Link to="/login" className="btn btn-primary">
-        Register/Login
+        Login Now
       </Link>
     </>
   );
@@ -1349,7 +1374,12 @@ const Navbar = (_props: NavbarProps) => {
               onClick={handleMobileNotificationHistoryClick}
             >
               <img src={notificationIcon} alt="Notifications" />
-              Notifications{unreadNotificationCount > 0 ? ` (${unreadNotificationCount})` : ""}
+              <span className="mobile-action-label">Notifications</span>
+              {isNotificationCountsReady && unreadNotificationCount > 0 && (
+                <span className="mobile-notification-badge">
+                  {unreadNotificationCount > 99 ? "99+" : unreadNotificationCount}
+                </span>
+              )}
             </button>
           </li>
         )}
@@ -1427,10 +1457,10 @@ const Navbar = (_props: NavbarProps) => {
   const renderMobileUnauthenticatedActions = () => (
     <>
       <li>
-        <a href="#" className="mobile-apply-now" onClick={closeMobileMenu}>
+        <Link to="/register" className="mobile-apply-now" onClick={closeMobileMenu}>
           <img src={applyDot} alt="" className="apply-dot" />
-          Apply Now
-        </a>
+          Register
+        </Link>
       </li>
       <li>
         <Link
@@ -1438,7 +1468,7 @@ const Navbar = (_props: NavbarProps) => {
           className="btn btn-primary mobile-register-btn"
           onClick={closeMobileMenu}
         >
-          Register/Login
+          Login Now
         </Link>
       </li>
     </>
