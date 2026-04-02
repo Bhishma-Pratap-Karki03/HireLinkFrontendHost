@@ -608,7 +608,7 @@ const EmployersPage = () => {
             <div className="employerspublic-listing-header">
               <span className="employerspublic-result-count">
                 {loading
-                  ? "Loading companies..."
+                  ? "Loading"
                   : `All ${sortedCompanies.length} company found`}
               </span>
               <div className="employerspublic-sort-dropdown" ref={sortDropdownRef}>
@@ -667,7 +667,7 @@ const EmployersPage = () => {
             {/* Loading State */}
             {loading && (
               <div className="employerspublic-loading">
-                <p>Loading companies from database...</p>
+                <p>Loading</p>
               </div>
             )}
 

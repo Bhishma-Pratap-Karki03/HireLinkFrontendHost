@@ -300,7 +300,7 @@ const ConnectionNotificationsPanel = ({
         </div>
       </header>
 
-      {loading && <div className="connection-notification-state">Loading...</div>}
+      {loading && <div className="connection-notification-state">Loading</div>}
       {!loading && error && (
         <div className="connection-notification-state error">{error}</div>
       )}

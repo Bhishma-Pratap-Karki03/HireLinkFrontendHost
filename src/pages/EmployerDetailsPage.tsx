@@ -1190,7 +1190,7 @@ const EmployerDetailsPage = () => {
           {/* Loading State */}
           {loading && (
             <div className="employer-details-loading">
-              <p>Loading company details...</p>
+              <p>Loading</p>
             </div>
           )}
 
@@ -1748,7 +1748,7 @@ const EmployerDetailsPage = () => {
 
               {jobsLoading && (
                 <div className="employer-details-jobs-state">
-                  Loading openings...
+                  Loading
                 </div>
               )}
               {jobsError && !jobsLoading && (

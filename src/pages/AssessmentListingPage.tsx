@@ -381,7 +381,7 @@ const AssessmentListingPage = () => {
 
       <section className="assessment-listing-content">
         <div className="assessment-listing-container">
-          {loading && <div className="assessment-state">Loading...</div>}
+          {loading && <div className="assessment-state">Loading</div>}
           {error && !loading && (
             <div className="assessment-state assessment-error">{error}</div>
           )}

@@ -1541,7 +1541,7 @@ const JobListingPage = () => {
             <div className="joblist-main-header">
               <span>
                 {loading
-                  ? "Loading jobs..."
+                  ? "Loading"
                   : `Showing ${startIndex}-${endIndex} of ${totalJobs} jobs`}
               </span>
               <div className="joblist-sort" ref={sortDropdownRef}>
@@ -1610,11 +1610,15 @@ const JobListingPage = () => {
             </div>
 
             {error && <div className="public-empty-state">{error}</div>}
+            {!error && loading && (
+              <div className="app-loading-state">Loading</div>
+            )}
             {!error && !loading && jobCards.length === 0 && (
               <div className="public-empty-state">No data found currently.</div>
             )}
             <div className="joblist-grid">
-              {jobCards.map((job) => (
+              {!loading &&
+                jobCards.map((job) => (
                 <article key={job.id} className="joblist-card-item">
                   <div className="joblist-card-top">
                     <img

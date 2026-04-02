@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+﻿import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../components/admincomponents/AdminSidebar";
 import AdminTopBar from "../../components/admincomponents/AdminTopBar";
@@ -272,14 +272,24 @@ const AdminProfilePage: React.FC = () => {
 
     // For relative paths, prepend the backend URL with cache busting
     return `${import.meta.env.VITE_BACKEND_URL}${userProfile.profilePicture}?t=${Date.now()}`;
-  };
-
-  // Loading state
+  };  // Loading state
   if (isLoading) {
     return (
       <div className="admin-profile-page-container">
-        <div className="admin-loading-container">
-          <p>Loading...</p>
+        <div className="admin-profile-layout">
+          <AdminSidebar />
+          <div className="admin-profile-main-area">
+            <div className="admin-profile-topbar-wrapper">
+              <AdminTopBar onSearch={handleSearch} />
+            </div>
+            <div className="admin-profile-scrollable-content">
+              <div className="admin-profile-content-wrapper">
+                <div className="admin-loading-container">
+                  <p>Loading</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -327,7 +337,7 @@ const AdminProfilePage: React.FC = () => {
                     </div>
                     <div className="admin-upload-info">
                       <span>
-                        Recommended: 400×400px (JPG, PNG). Max Size 2MB
+                        Recommended: 400Ã—400px (JPG, PNG). Max Size 2MB
                       </span>
                     </div>
                     <div className="admin-upload-actions">
@@ -453,5 +463,6 @@ const AdminProfilePage: React.FC = () => {
 };
 
 export default AdminProfilePage;
+
 
 

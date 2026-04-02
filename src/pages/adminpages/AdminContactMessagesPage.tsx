@@ -262,7 +262,7 @@ const AdminContactMessagesPage = () => {
               </header>
 
               {loading && (
-                <div className="admin-contact-state">Loading messages...</div>
+                <div className="admin-contact-state">Loading</div>
               )}
               {!loading && error && (
                 <div className="admin-contact-state error">{error}</div>

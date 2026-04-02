@@ -338,7 +338,7 @@ const Login = () => {
 
             <form className="login-form" onSubmit={handleSubmit}>
               <div className="login-field">
-                <label htmlFor="email">Email Address</label>
+                <label htmlFor="email">Email Address *</label>
                 <div className="login-input-wrap">
                   <span className="login-inp-icon">
                     <svg viewBox="0 0 24 24">
@@ -360,7 +360,7 @@ const Login = () => {
               </div>
 
               <div className="login-field">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">Password *</label>
                 <div className="login-input-wrap">
                   <span className="login-inp-icon">
                     <svg viewBox="0 0 24 24">

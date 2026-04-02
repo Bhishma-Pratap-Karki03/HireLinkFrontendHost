@@ -645,7 +645,7 @@ const JobDetailsPage = () => {
 
       <section className="job-details-content">
         <div className="job-details-container">
-          {loading && <div className="job-details-state">Loading...</div>}
+          {loading && <div className="job-details-state">Loading</div>}
           {error && !loading && (
             <div className="job-details-state job-details-error">{error}</div>
           )}
@@ -748,7 +748,7 @@ const JobDetailsPage = () => {
                 <section className="job-details-section">
                   <h2>Assessment / Quiz</h2>
                   {assessmentLoading && (
-                    <p className="job-details-muted">Loading assessment...</p>
+                    <p className="job-details-muted">Loading</p>
                   )}
                   {assessmentError && !assessmentLoading && (
                     <p className="job-details-muted">{assessmentError}</p>

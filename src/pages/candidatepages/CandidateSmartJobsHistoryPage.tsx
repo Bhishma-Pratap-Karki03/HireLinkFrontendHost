@@ -129,7 +129,7 @@ const CandidateSmartJobsHistoryPage = () => {
             </div>
           </header>
 
-          {loading && <div className="candidate-smart-state">Loading recommendations...</div>}
+          {loading && <div className="candidate-smart-state">Loading</div>}
           {!loading && error && (
             <div className="candidate-smart-state candidate-smart-error">{error}</div>
           )}

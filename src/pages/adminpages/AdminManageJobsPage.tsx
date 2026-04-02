@@ -265,7 +265,7 @@ const AdminManageJobsPage = () => {
                 <span>Actions</span>
               </header>
 
-              {loading && <div className="admin-manage-jobs-state">Loading jobs...</div>}
+              {loading && <div className="admin-manage-jobs-state">Loading</div>}
               {!loading && error && (
                 <div className="admin-manage-jobs-state error">{error}</div>
               )}

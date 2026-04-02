@@ -205,7 +205,7 @@ const RecruiterJobPostingsListPage = () => {
               </button>
             </div>
 
-            {loading && <div className="recruiter-joblist-state">Loading...</div>}
+            {loading && <div className="recruiter-joblist-state">Loading</div>}
             {error && !loading && (
               <div className="recruiter-joblist-state error">{error}</div>
             )}

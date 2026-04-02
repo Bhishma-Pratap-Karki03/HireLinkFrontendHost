@@ -87,7 +87,7 @@ const ApplyJobModal = ({
           </button>
         </div>
 
-        {loading && <p>Loading details...</p>}
+        {loading && <p>Loading</p>}
         {!loading && job && (
           <div className="apply-modal-body">
             <div className="apply-modal-section">

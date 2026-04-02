@@ -630,8 +630,10 @@ const CandidateProfilePage = () => {
     if (!coverImage || coverImage.trim() === "") {
       return projectImage; // default project image
     }
-    if (coverImage.startsWith("http")) return coverImage;
-    return `${import.meta.env.VITE_BACKEND_URL}${coverImage}`;
+    const value = coverImage.trim();
+
+    if (value.startsWith("http")) return value;
+    return `${import.meta.env.VITE_BACKEND_URL}${value}`;
   };
 
   /**
@@ -1527,8 +1529,9 @@ const CandidateProfilePage = () => {
       <div className="candidate-dashboard-container">
         <SideNavigation />
         <main className="candidate-main-content">
+          <CandidateTopBar />
           <div className="loading-container">
-            <p>Loading profile...</p>
+            <p>Loading</p>
           </div>
         </main>
       </div>
@@ -1995,7 +1998,7 @@ const CandidateProfilePage = () => {
               </p>
               {quizLoading ? (
                 <p className="candidate-description-text">
-                  Loading assessment history...
+                  Loading
                 </p>
               ) : quizResults.length === 0 ? (
                 <p className="candidate-description-text">
@@ -2445,3 +2448,5 @@ const CandidateProfilePage = () => {
 };
 
 export default CandidateProfilePage;
+
+

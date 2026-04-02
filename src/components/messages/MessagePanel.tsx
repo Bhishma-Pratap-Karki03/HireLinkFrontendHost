@@ -471,7 +471,7 @@ const MessagePanel = ({
             </div>
           </div>
           {loadingConversations && (
-            <div className="message-page-state">Loading conversations...</div>
+            <div className="message-page-state">Loading</div>
           )}
           {!loadingConversations && conversations.length === 0 && (
             <div className="message-page-state">
@@ -573,7 +573,7 @@ const MessagePanel = ({
 
               <div className="message-page-chat-body">
                 {loadingMessages && (
-                  <div className="message-page-state">Loading messages...</div>
+                  <div className="message-page-state">Loading</div>
                 )}
                 {!loadingMessages && messages.length === 0 && (
                   <div className="message-page-state">

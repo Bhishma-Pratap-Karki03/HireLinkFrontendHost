@@ -1,4 +1,4 @@
-﻿import PortalFooter from "../../components/PortalFooter";
+import PortalFooter from "../../components/PortalFooter";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CandidateSidebar from "../../components/candidatecomponents/CandidateSidebar";
@@ -76,7 +76,7 @@ const CandidateAppliedStatusPage = () => {
 
   const cleanLabel = (value?: string) =>
     String(value || "")
-      .replace(/â€¢/g, "-")
+      .replace(/•/g, "-")
       .replace(/\?/g, "-")
       .trim();
 
@@ -220,7 +220,7 @@ const CandidateAppliedStatusPage = () => {
             </header>
 
             {loading && (
-              <div className="candidate-applied-state">Loading applied jobs...</div>
+              <div className="candidate-applied-state">Loading</div>
             )}
             {!loading && error && (
               <div className="candidate-applied-state candidate-applied-error">

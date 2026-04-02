@@ -1,4 +1,4 @@
-﻿import PortalFooter from "../../components/PortalFooter";
+import PortalFooter from "../../components/PortalFooter";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CandidateSidebar from "../../components/candidatecomponents/CandidateSidebar";
@@ -316,7 +316,7 @@ const CandidateFriendRequestsPage = () => {
             </button>
           </div>
 
-          {loading && <div className="candidate-friend-state">Loading...</div>}
+          {loading && <div className="candidate-friend-state">Loading</div>}
           {error && !loading && (
             <div className="candidate-friend-state error">{error}</div>
           )}

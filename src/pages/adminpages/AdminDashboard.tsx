@@ -867,7 +867,7 @@ const AdminDashboard = () => {
 
                 {loading && (
                   <div className="admin-dashboard-state">
-                    Loading dashboard...
+                    Loading
                   </div>
                 )}
                 {!loading && error && (

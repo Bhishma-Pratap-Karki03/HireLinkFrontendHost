@@ -467,6 +467,9 @@
   padding: 14px 18px;
   font-size: 14px;
   color: #5f6f88;
+  width: 100%;
+  box-sizing: border-box;
+  grid-column: 1 / -1;
 }
 
 .candidates-state.error {

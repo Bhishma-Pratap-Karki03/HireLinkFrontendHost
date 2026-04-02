@@ -540,7 +540,7 @@ const CandidatesPage = () => {
 
         <div className="candidates-results">
           <div className="candidates-grid">
-            {loading && <div className="candidates-state">Loading...</div>}
+            {loading && <div className="candidates-state">Loading</div>}
             {error && !loading && (
               <div className="public-empty-state">{error}</div>
             )}

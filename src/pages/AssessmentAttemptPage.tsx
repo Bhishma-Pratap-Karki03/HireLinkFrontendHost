@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -467,12 +467,12 @@ const AssessmentAttemptPage = () => {
                 onClick={() => setSubmitToast("")}
                 aria-label="Close"
               >
-                ×
+                �
               </button>
               <p className="assessment-submit-toast-message">{submitToast}</p>
             </div>
           )}
-          {loading && <div className="assessment-state">Loading...</div>}
+          {loading && <div className="assessment-state">Loading</div>}
           {error && !loading && (
             <div className="assessment-state assessment-error">{error}</div>
           )}

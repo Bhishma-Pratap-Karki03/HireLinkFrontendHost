@@ -76,6 +76,7 @@ type CandidateDashboardStats = {
   connections: {
     pending: number;
     accepted: number;
+    totalConnectedUsers?: number;
   };
   trends: {
     labels: string[];
@@ -563,8 +564,8 @@ const CandidateDashboard = () => {
             </article>
             <article className="candidate-insight-stat-card">
               <div className="candidate-insight-stat-content">
-                <h3>Connections</h3>
-                <p>{stats.connections.accepted}</p>
+                <h3>Total Connected Users</h3>
+                <p>{stats.connections.totalConnectedUsers ?? stats.connections.accepted}</p>
                 <small>{stats.connections.pending} pending requests</small>
               </div>
               <img
@@ -737,7 +738,7 @@ const CandidateDashboard = () => {
           </section>
 
           {loading && (
-            <div className="candidate-insight-state">Loading dashboard...</div>
+            <div className="candidate-insight-state">Loading</div>
           )}
           {!loading && error && (
             <div className="candidate-insight-state error">{error}</div>

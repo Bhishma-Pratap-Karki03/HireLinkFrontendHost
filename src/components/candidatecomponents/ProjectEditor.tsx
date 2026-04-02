@@ -272,6 +272,11 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
       newErrors.push("Start date is required");
     }
 
+    // Cover image is mandatory while adding a new project.
+    if (!project && !selectedFile) {
+      newErrors.push("Project cover image is required");
+    }
+
     if (!isOngoing && endDate && startDate) {
       const start = new Date(startDate);
       const end = new Date(endDate);
@@ -581,7 +586,7 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
               {/* Start Date and End Date in same row */}
               <div className="project-showcase-form-row">
                 <div className="project-showcase-form-group project-showcase-form-group-half">
-                  <label className="project-showcase-form-label">
+                  <label className="project-showcase-form-label" data-required="*">
                     Start Date
                   </label>
                   <input
@@ -631,6 +636,11 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
               </div>
 
               {/* Cover Image Upload Area - Similar to resume upload */}
+              <div className="project-showcase-form-group">
+                <label className="project-showcase-form-label" data-required="*">
+                  Cover Image
+                </label>
+              </div>
               <div
                 className="project-showcase-upload-area"
                 onClick={triggerFileInput}
@@ -767,7 +777,7 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
                   </div>
 
                   {isReviewsLoading ? (
-                    <p className="project-showcase-reviews-empty">Loading reviews...</p>
+                    <p className="project-showcase-reviews-empty">Loading</p>
                   ) : filteredReviews.length === 0 ? (
                     <p className="project-showcase-reviews-empty">
                       No reviews found.

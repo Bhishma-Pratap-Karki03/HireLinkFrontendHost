@@ -1,0 +1,133 @@
+.app-loading-state,
+.assessment-state,
+.candidates-state,
+.savedjobs-state,
+.candidate-friend-state,
+.recruiter-friend-state,
+.candidate-smart-state,
+.recruiter-joblist-state,
+.recruiter-applicants-state,
+.recruiter-assessment-page-state,
+.recruiter-candidates-state,
+.recruiter-dashboard-state,
+.admin-manage-state,
+.admin-contact-state,
+.admin-assessment-loading,
+.home-jobs-loading,
+.message-page-state,
+.connection-notification-state,
+.notification-dropdown-state,
+.candidate-top-notification-state,
+.recruiter-top-notification-state,
+.admin-top-notification-state,
+.employerspublic-loading,
+.loading-sidebar,
+.admin-loading-sidebar,
+.loading-container,
+.admin-loading-container,
+.recruiter-profile-reviews-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px dashed #bfd1e8;
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: #f7fbff;
+  color: #2d547a;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.4;
+}
+
+.app-loading-state::before,
+.assessment-state::before,
+.candidates-state::before,
+.savedjobs-state::before,
+.candidate-friend-state::before,
+.recruiter-friend-state::before,
+.candidate-smart-state::before,
+.recruiter-joblist-state::before,
+.recruiter-applicants-state::before,
+.recruiter-assessment-page-state::before,
+.recruiter-candidates-state::before,
+.recruiter-dashboard-state::before,
+.admin-manage-state::before,
+.admin-contact-state::before,
+.admin-assessment-loading::before,
+.home-jobs-loading::before,
+.message-page-state::before,
+.connection-notification-state::before,
+.notification-dropdown-state::before,
+.candidate-top-notification-state::before,
+.recruiter-top-notification-state::before,
+.admin-top-notification-state::before,
+.employerspublic-loading::before,
+.loading-sidebar::before,
+.admin-loading-sidebar::before,
+.loading-container::before,
+.admin-loading-container::before,
+.recruiter-profile-reviews-loading::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #c8dbf3;
+  border-top-color: #1d72c9;
+  animation: app-loading-spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+.assessment-state.error,
+.candidates-state.error,
+.candidate-friend-state.error,
+.recruiter-friend-state.error,
+.candidate-smart-state.error,
+.recruiter-joblist-state.error,
+.recruiter-applicants-state.error,
+.recruiter-assessment-page-state.error,
+.recruiter-candidates-state.error,
+.recruiter-dashboard-state.error,
+.admin-manage-state.error,
+.admin-contact-state.error,
+.message-page-state.error,
+.connection-notification-state.error,
+.notification-dropdown-state.error,
+.candidate-top-notification-state.error,
+.recruiter-top-notification-state.error,
+.admin-top-notification-state.error {
+  border-color: #f4c4be;
+  background: #fff5f4;
+  color: #c0392b;
+}
+
+.assessment-state.error::before,
+.candidates-state.error::before,
+.candidate-friend-state.error::before,
+.recruiter-friend-state.error::before,
+.candidate-smart-state.error::before,
+.recruiter-joblist-state.error::before,
+.recruiter-applicants-state.error::before,
+.recruiter-assessment-page-state.error::before,
+.recruiter-candidates-state.error::before,
+.recruiter-dashboard-state.error::before,
+.admin-manage-state.error::before,
+.admin-contact-state.error::before,
+.message-page-state.error::before,
+.connection-notification-state.error::before,
+.notification-dropdown-state.error::before,
+.candidate-top-notification-state.error::before,
+.recruiter-top-notification-state.error::before,
+.admin-top-notification-state.error::before {
+  display: none;
+}
+
+@keyframes app-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

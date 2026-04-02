@@ -135,6 +135,7 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
   >([]);
   const [connectionUnreadCount, setConnectionUnreadCount] = useState(0);
   const [messageUnreadCount, setMessageUnreadCount] = useState(0);
+  const [isNotificationCountReady, setIsNotificationCountReady] = useState(false);
   const [notificationToasts, setNotificationToasts] = useState<NotificationItem[]>([]);
   const [dismissingToastIds, setDismissingToastIds] = useState<string[]>([]);
 
@@ -310,6 +311,14 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
     }
   };
 
+  const syncNotificationCounts = async () => {
+    await Promise.all([
+      fetchConnectionNotifications(true),
+      fetchMessageNotifications(true),
+    ]);
+    setIsNotificationCountReady(true);
+  };
+
   const toggleNotificationMenu = () => {
     setIsNotificationOpen((prev) => {
       const next = !prev;
@@ -450,8 +459,11 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
       setConnectionUnreadCount((prev) =>
         typeof payload?.unreadCount === "number"
           ? Number(payload.unreadCount)
-          : prev + 1,
+          : prev,
       );
+      if (typeof payload?.unreadCount !== "number") {
+        void fetchConnectionNotifications(true);
+      }
       setNotificationToasts((prev) => {
         const merged = [incoming, ...prev.filter((item) => item.id !== incoming.id)];
         return merged.slice(0, 3);
@@ -488,20 +500,18 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
         const merged = [updatedItem, ...prev.filter((item) => item.id !== updatedItem.id)];
         return merged.slice(0, NOTIFICATION_DROPDOWN_LIMIT);
       });
-      setMessageUnreadCount((prev) => prev + 1);
+      void fetchMessageNotifications(true);
     };
 
     const handleSocketConnect = () => {
-      fetchConnectionNotifications(true);
-      fetchMessageNotifications(true);
+      void syncNotificationCounts();
     };
 
     socket.on("connect", handleSocketConnect);
     socket.on("notification:connection:new", handleConnectionNotification);
     socket.on("message:new", handleMessageNotification);
 
-    fetchConnectionNotifications(true);
-    fetchMessageNotifications(true);
+    void syncNotificationCounts();
 
     return () => {
       const activeSocket = getSocket();
@@ -586,7 +596,7 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
             onClick={toggleNotificationMenu}
           >
             <img src={notificationsIcon} alt="Notifications" />
-            {unreadNotificationCount > 0 && (
+            {isNotificationCountReady && unreadNotificationCount > 0 && (
               <span className="recruiter-top-notification-badge">
                 {unreadNotificationCount > 99 ? "99+" : unreadNotificationCount}
               </span>
@@ -606,7 +616,7 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
                 </button>
               </div>
               {notificationLoading && (
-                <div className="recruiter-top-notification-state">Loading...</div>
+                <div className="recruiter-top-notification-state">Loading</div>
               )}
               {!notificationLoading && notificationError && (
                 <div className="recruiter-top-notification-state error">

@@ -821,14 +821,24 @@ const RecruiterProfilePage: React.FC = () => {
       );
     }
     return stars;
-  };
-
-  // Loading state
+  };  // Loading state
   if (isLoading) {
     return (
       <div className="recruiter-profile-page-container">
-        <div className="loading-container">
-          <p>Loading...</p>
+        <div className="recruiter-profile-layout">
+          <RecruiterSidebar />
+          <div className="recruiter-profile-main-area">
+            <div className="recruiter-profile-topbar-wrapper">
+              <RecruiterTopBar onPostJob={handlePostJob} onSearch={handleSearch} />
+            </div>
+            <div className="recruiter-profile-scrollable-content">
+              <div className="recruiter-profile-content-wrapper">
+                <div className="loading-container">
+                  <p>Loading</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -1318,7 +1328,7 @@ const RecruiterProfilePage: React.FC = () => {
 
                 {isLoadingReviews ? (
                   <div className="recruiter-profile-reviews-loading">
-                    <p>Loading reviews...</p>
+                    <p>Loading</p>
                   </div>
                 ) : reviews.length === 0 ? (
                   <div className="recruiter-profile-no-reviews">
@@ -1408,7 +1418,7 @@ const RecruiterProfilePage: React.FC = () => {
                       disabled={isLoadingReviews}
                     >
                       <span>
-                        {isLoadingReviews ? "Loading..." : "Load More Reviews"}
+                        {isLoadingReviews ? "Loading" : "Load More Reviews"}
                       </span>
                       <img src={loadMoreIcon} alt="Arrow" />
                     </button>
@@ -1478,6 +1488,7 @@ const RecruiterProfilePage: React.FC = () => {
 };
 
 export default RecruiterProfilePage;
+
 
 
 

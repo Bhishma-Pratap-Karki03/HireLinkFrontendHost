@@ -176,7 +176,7 @@ const RecruiterCandidatesPage = () => {
 
             <section className="recruiter-candidates-grid">
               {loading && (
-                <div className="recruiter-candidates-state">Loading...</div>
+                <div className="recruiter-candidates-state">Loading</div>
               )}
               {error && !loading && (
                 <div className="recruiter-candidates-state error">{error}</div>

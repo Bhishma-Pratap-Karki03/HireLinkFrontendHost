@@ -235,7 +235,7 @@ const RecruiterSidebar: React.FC = () => {
             </Link>
           </div>
           <div className="loading-sidebar">
-            <p>Loading...</p>
+            <p>Loading</p>
           </div>
         </aside>
       </>

@@ -207,15 +207,40 @@
 
 .candidate-details-state {
   margin-top: 16px;
-  background: #ffffff;
+  background: #f7fbff;
+  border: 1px dashed #bfd1e8;
   border-radius: 12px;
   padding: 12px 16px;
-  color: #6b7280;
+  color: #2d547a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.candidate-details-state::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #c8dbf3;
+  border-top-color: #1d72c9;
+  animation: app-loading-spin 0.8s linear infinite;
+  flex-shrink: 0;
 }
 
 .candidate-details-state.error {
+  display: block;
   background: #fff5f4;
+  border: 1px dashed #f4c4be;
   color: #c0392b;
+  font-weight: 600;
+}
+
+.candidate-details-state.error::before {
+  display: none;
 }
 
 .candidate-details-content {

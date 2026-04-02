@@ -582,7 +582,7 @@ const AdminAssessmentEditPage: React.FC = () => {
               )}
 
               {loading ? (
-                <div className="admin-assessment-loading">Loading...</div>
+                <div className="admin-assessment-loading">Loading</div>
               ) : (
                 <>
                   {submitError && (

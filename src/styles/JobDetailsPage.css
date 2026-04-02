@@ -485,18 +485,39 @@
 }
 
 .job-details-state {
-  background: #ffffff;
-  border: 1px solid #e6edf5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #f7fbff;
+  border: 1px dashed #bfd1e8;
   border-radius: 12px;
-  padding: 16px 18px;
+  padding: 12px 14px;
   font-size: 14px;
-  color: #5f6f88;
+  color: #2d547a;
+  font-weight: 600;
+}
+
+.job-details-state::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #c8dbf3;
+  border-top-color: #1d72c9;
+  animation: app-loading-spin 0.8s linear infinite;
+  flex-shrink: 0;
 }
 
 .job-details-error {
-  border-color: #f3c1bc;
+  border-color: #f4c4be;
   color: #c0392b;
   background: #fff5f4;
+  font-weight: 600;
+}
+
+.job-details-error::before {
+  display: none;
 }
 
 .job-details-muted {

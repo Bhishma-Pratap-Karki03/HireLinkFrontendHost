@@ -73,7 +73,7 @@ const AssessmentPreviewPage = () => {
       <Navbar />
       <section className="assessment-attempt-content">
         <div className="assessment-attempt-container">
-          {loading && <div className="assessment-state">Loading...</div>}
+          {loading && <div className="assessment-state">Loading</div>}
           {error && !loading && (
             <div className="assessment-state assessment-error">{error}</div>
           )}

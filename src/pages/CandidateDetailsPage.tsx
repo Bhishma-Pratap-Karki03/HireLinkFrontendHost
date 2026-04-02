@@ -148,8 +148,11 @@ const resolveAvatar = (profilePicture?: string) => {
 
 const getProjectImageUrl = (coverImage?: string) => {
   if (!coverImage) return projectImage;
-  if (coverImage.startsWith("http")) return coverImage;
-  return `${import.meta.env.VITE_BACKEND_URL}${coverImage}`;
+  const value = coverImage.trim();
+  if (!value) return projectImage;
+
+  if (value.startsWith("http")) return value;
+  return `${import.meta.env.VITE_BACKEND_URL}${value}`;
 };
 
 const formatProjectDateRange = (
@@ -808,7 +811,7 @@ const CandidateDetailsPage = () => {
               )}
             </div>
           )}
-          {loading && <div className="candidate-details-state">Loading...</div>}
+          {loading && <div className="candidate-details-state">Loading</div>}
           {error && !loading && (
             <div className="candidate-details-state error">{error}</div>
           )}

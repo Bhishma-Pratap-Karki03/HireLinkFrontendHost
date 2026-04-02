@@ -485,7 +485,7 @@ const Register = () => {
             <form className="register-form" onSubmit={handleSubmit}>
               <div className="register-field">
                 <label htmlFor="fullName">
-                  {userType === "recruiter" ? "Company Name" : "Full Name"}
+                  {userType === "recruiter" ? "Company Name *" : "Full Name *"}
                 </label>
                 <div className="register-input-wrap">
                   <input
@@ -503,7 +503,7 @@ const Register = () => {
               </div>
 
               <div className="register-field">
-                <label htmlFor="email">Email Address</label>
+                <label htmlFor="email">Email Address *</label>
                 <div className="register-input-wrap">
                   <input
                     type="email"
@@ -518,7 +518,7 @@ const Register = () => {
               </div>
 
               <div className="register-field">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">Password *</label>
                 <div className="register-input-wrap">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -544,7 +544,7 @@ const Register = () => {
               </div>
 
               <div className="register-field">
-                <label htmlFor="confirm-password">Confirm Password</label>
+                <label htmlFor="confirm-password">Confirm Password *</label>
                 <div className="register-input-wrap">
                   <input
                     type={showConfirmPassword ? "text" : "password"}

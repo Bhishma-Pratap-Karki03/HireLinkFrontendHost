@@ -122,7 +122,7 @@ const SettingsContent = ({ title, subtitle }: SettingsContentProps) => {
           <p>Enter your current password and set a new one.</p>
 
           <form onSubmit={handleChangePassword} className="settings-page-form">
-            <label htmlFor="currentPassword">Current Password</label>
+            <label htmlFor="currentPassword">Current Password *</label>
             <div className="settings-password-wrap">
               <input
                 id="currentPassword"
@@ -145,7 +145,7 @@ const SettingsContent = ({ title, subtitle }: SettingsContentProps) => {
               </button>
             </div>
 
-            <label htmlFor="newPassword">New Password</label>
+            <label htmlFor="newPassword">New Password *</label>
             <div className="settings-password-wrap">
               <input
                 id="newPassword"
@@ -168,7 +168,7 @@ const SettingsContent = ({ title, subtitle }: SettingsContentProps) => {
               </button>
             </div>
 
-            <label htmlFor="confirmPassword">Confirm New Password</label>
+            <label htmlFor="confirmPassword">Confirm New Password *</label>
             <div className="settings-password-wrap">
               <input
                 id="confirmPassword"

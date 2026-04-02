@@ -1,4 +1,4 @@
-﻿import PortalFooter from "../../components/PortalFooter";
+import PortalFooter from "../../components/PortalFooter";
 import { useEffect, useMemo, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -388,7 +388,7 @@ const SavedJobsPage = () => {
           <p>Jobs you bookmarked for later review.</p>
         </div>
 
-        {loading && <div className="savedjobs-state">Loading...</div>}
+        {loading && <div className="savedjobs-state">Loading</div>}
         {error && !loading && (
           <div className="savedjobs-state savedjobs-error">{error}</div>
         )}
@@ -511,7 +511,7 @@ const SavedJobsPage = () => {
               </button>
             </div>
 
-            {applyLoading && <p>Loading details...</p>}
+            {applyLoading && <p>Loading</p>}
             {!applyLoading && applyJobDetails && (
               <div className="apply-modal-body">
                 <div className="apply-modal-section">

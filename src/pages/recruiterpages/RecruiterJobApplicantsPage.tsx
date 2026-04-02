@@ -465,7 +465,7 @@ const RecruiterJobApplicantsPage = () => {
               <div className="recruiter-applicants-state error">{runError}</div>
             )}
             {loading && (
-              <div className="recruiter-applicants-state">Loading...</div>
+              <div className="recruiter-applicants-state">Loading</div>
             )}
             {error && !loading && (
               <div className="recruiter-applicants-state error">{error}</div>

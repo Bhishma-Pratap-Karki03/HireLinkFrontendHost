@@ -135,6 +135,7 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
   >([]);
   const [connectionUnreadCount, setConnectionUnreadCount] = useState(0);
   const [messageUnreadCount, setMessageUnreadCount] = useState(0);
+  const [isNotificationCountReady, setIsNotificationCountReady] = useState(false);
   const [notificationToasts, setNotificationToasts] = useState<NotificationItem[]>([]);
   const [dismissingToastIds, setDismissingToastIds] = useState<string[]>([]);
 
@@ -310,6 +311,14 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
     }
   };
 
+  const syncNotificationCounts = async () => {
+    await Promise.all([
+      fetchConnectionNotifications(true),
+      fetchMessageNotifications(true),
+    ]);
+    setIsNotificationCountReady(true);
+  };
+
   const toggleNotificationMenu = () => {
     setIsNotificationOpen((prev) => {
       const next = !prev;
@@ -451,8 +460,11 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
       setConnectionUnreadCount((prev) =>
         typeof payload?.unreadCount === "number"
           ? Number(payload.unreadCount)
-          : prev + 1,
+          : prev,
       );
+      if (typeof payload?.unreadCount !== "number") {
+        void fetchConnectionNotifications(true);
+      }
       setNotificationToasts((prev) => {
         const merged = [incoming, ...prev.filter((item) => item.id !== incoming.id)];
         shownToastIdsRef.current.add(incoming.id);
@@ -490,20 +502,18 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
         const merged = [updatedItem, ...prev.filter((item) => item.id !== updatedItem.id)];
         return merged.slice(0, NOTIFICATION_DROPDOWN_LIMIT);
       });
-      setMessageUnreadCount((prev) => prev + 1);
+      void fetchMessageNotifications(true);
     };
 
     const handleSocketConnect = () => {
-      fetchConnectionNotifications(true);
-      fetchMessageNotifications(true);
+      void syncNotificationCounts();
     };
 
     socket.on("connect", handleSocketConnect);
     socket.on("notification:connection:new", handleConnectionNotification);
     socket.on("message:new", handleMessageNotification);
 
-    fetchConnectionNotifications(true);
-    fetchMessageNotifications(true);
+    void syncNotificationCounts();
 
     return () => {
       const activeSocket = getSocket();
@@ -616,7 +626,7 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
             onClick={toggleNotificationMenu}
           >
             <img src={notificationsIcon} alt="Notifications" />
-            {unreadNotificationCount > 0 && (
+            {isNotificationCountReady && unreadNotificationCount > 0 && (
               <span className="candidate-top-notification-badge">
                 {unreadNotificationCount > 99 ? "99+" : unreadNotificationCount}
               </span>
@@ -636,7 +646,7 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
                 </button>
               </div>
               {notificationLoading && (
-                <div className="candidate-top-notification-state">Loading...</div>
+                <div className="candidate-top-notification-state">Loading</div>
               )}
               {!notificationLoading && notificationError && (
                 <div className="candidate-top-notification-state error">

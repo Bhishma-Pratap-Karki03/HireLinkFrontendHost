@@ -705,7 +705,7 @@ const RecruiterDashboard = () => {
                 </div>
               </section>
 
-              {loading && <div className="recruiter-dashboard-state">Loading dashboard...</div>}
+              {loading && <div className="recruiter-dashboard-state">Loading</div>}
               {!loading && error && <div className="recruiter-dashboard-state error">{error}</div>}
             </div>
           </div>

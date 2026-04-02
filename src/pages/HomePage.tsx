@@ -770,7 +770,7 @@ const HomePage = () => {
             <div className="home-empty-state">{companiesError}</div>
           )}
           {companiesLoading && (
-            <div className="home-jobs-loading">Loading companies...</div>
+            <div className="home-jobs-loading">Loading</div>
           )}
 
           {!companiesLoading && !companiesError && displayedCompanies.length > 0 && (
@@ -822,7 +822,7 @@ const HomePage = () => {
           </div>
 
           {jobsError && <div className="home-jobs-error">{jobsError}</div>}
-          {jobsLoading && <div className="home-jobs-loading">Loading jobs...</div>}
+          {jobsLoading && <div className="home-jobs-loading">Loading</div>}
 
           {!jobsLoading && !jobsError && jobs.length === 0 && (
             <div className="home-empty-state">No data found currently.</div>

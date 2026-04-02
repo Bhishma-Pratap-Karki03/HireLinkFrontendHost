@@ -36,6 +36,7 @@ const AdminTopBar: React.FC<AdminTopBarProps> = ({
     AdminContactNotification[]
   >([]);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [isNotificationCountReady, setIsNotificationCountReady] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [notificationToasts, setNotificationToasts] = useState<
@@ -100,6 +101,7 @@ const AdminTopBar: React.FC<AdminTopBarProps> = ({
             !viewedMessageIdsRef.current.has(item._id),
         ).length,
       );
+      setIsNotificationCountReady(true);
     } catch (err: any) {
       if (!silent) {
         setError(err?.message || "Failed to load notifications");
@@ -263,7 +265,7 @@ const AdminTopBar: React.FC<AdminTopBarProps> = ({
         <div className="admin-top-notification-wrapper" ref={notificationRef}>
           <button className="admin-action-btn" onClick={toggleNotificationMenu}>
             <img src={notificationsIcon} alt="Notifications" />
-            {unreadCount > 0 && (
+            {isNotificationCountReady && unreadCount > 0 && (
               <span className="admin-top-notification-badge">
                 {unreadCount > 99 ? "99+" : unreadCount}
               </span>
@@ -283,7 +285,7 @@ const AdminTopBar: React.FC<AdminTopBarProps> = ({
                 </button>
               </div>
               {loading && (
-                <div className="admin-top-notification-state">Loading...</div>
+                <div className="admin-top-notification-state">Loading</div>
               )}
               {!loading && error && (
                 <div className="admin-top-notification-state error">{error}</div>

@@ -306,7 +306,7 @@ const RecruiterFriendRequestsPage = () => {
             </button>
           </div>
 
-          {loading && <div className="recruiter-friend-state">Loading...</div>}
+          {loading && <div className="recruiter-friend-state">Loading</div>}
           {error && !loading && (
             <div className="recruiter-friend-state error">{error}</div>
           )}

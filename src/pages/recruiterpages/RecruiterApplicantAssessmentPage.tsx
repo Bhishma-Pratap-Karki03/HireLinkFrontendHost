@@ -144,7 +144,7 @@ const RecruiterApplicantAssessmentPage = () => {
             </button>
           </div>
 
-          {loading && <div className="recruiter-assessment-page-state">Loading...</div>}
+          {loading && <div className="recruiter-assessment-page-state">Loading</div>}
           {error && !loading && (
             <div className="recruiter-assessment-page-state error">{error}</div>
           )}

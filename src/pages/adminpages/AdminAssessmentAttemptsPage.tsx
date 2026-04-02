@@ -194,7 +194,7 @@ const AdminAssessmentAttemptsPage = () => {
                   <span>Actions</span>
                 </header>
 
-                {loading && <div className="admin-manage-state">Loading attempts...</div>}
+                {loading && <div className="admin-manage-state">Loading</div>}
                 {error && !loading && <div className="admin-manage-state error">{error}</div>}
                 {!loading && !error && filteredAttempts.length === 0 && (
                   <div className="admin-manage-state">No assessment attempts found.</div>

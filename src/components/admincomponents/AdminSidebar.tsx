@@ -210,7 +210,7 @@ const AdminSidebar: React.FC = () => {
             </Link>
           </div>
           <div className="admin-loading-sidebar">
-            <p>Loading...</p>
+            <p>Loading</p>
           </div>
         </aside>
       </>

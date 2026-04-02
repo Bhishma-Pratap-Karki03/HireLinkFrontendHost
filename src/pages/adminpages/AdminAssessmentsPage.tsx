@@ -453,7 +453,7 @@ const AdminAssessmentsPage: React.FC = () => {
 
                 {loading && (
                   <div className="admin-manage-state admin-assessments-state">
-                    Loading...
+                    Loading
                   </div>
                 )}
                 {error && !loading && (

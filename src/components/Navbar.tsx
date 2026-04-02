@@ -1167,7 +1167,7 @@ const Navbar = (_props: NavbarProps) => {
                   </button>
                 </div>
                 {notificationLoading && (
-                  <div className="notification-dropdown-state">Loading...</div>
+                  <div className="notification-dropdown-state">Loading</div>
                 )}
                 {!notificationLoading && notificationError && (
                   <div className="notification-dropdown-state error">
