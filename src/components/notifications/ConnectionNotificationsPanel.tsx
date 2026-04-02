@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type MouseEvent } from "react";
+﻿import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { connectSocket, getSocket } from "../../lib/socketClient";
 import defaultAvatar from "../../images/Register Page Images/Default Profile.webp";
@@ -260,6 +260,46 @@ const ConnectionNotificationsPanel = ({
     setCurrentPage(1);
   };
 
+  const handleMarkAllAsRead = async () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) return;
+
+    try {
+      const [notificationsRes] = await Promise.all([
+        fetch(`${API_BASE_URL}/connections/notifications/read-all`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }),
+        fetch(`${API_BASE_URL}/messages/read-all`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }),
+      ]);
+      const data = await notificationsRes.json();
+      if (!notificationsRes.ok) {
+        throw new Error(data?.message || "Failed to mark notifications as read");
+      }
+
+      setItems((prev) => prev.map((entry) => ({ ...entry, isRead: true })));
+
+      window.dispatchEvent(
+        new CustomEvent("connectionNotificationsReadAll", {
+          detail: {
+            unreadCount: Number(data?.unreadCount || 0),
+          },
+        })
+      );
+    } catch {
+      // ignore action error to avoid blocking page usage
+    }
+  };
+
   const visiblePages = useMemo(
     () =>
       Array.from({ length: Math.min(totalPages, 7) }, (_, index) => index + 1),
@@ -297,6 +337,16 @@ const ConnectionNotificationsPanel = ({
           <button type="button" onClick={clearDateFilter}>
             Clear
           </button>
+          <div className="connection-notification-mark-read-row">
+            <button
+              type="button"
+              className="connection-notification-mark-read-btn"
+              onClick={handleMarkAllAsRead}
+              disabled={!items.some((item) => !item.isRead)}
+            >
+              Mark all as read
+            </button>
+          </div>
         </div>
       </header>
 
@@ -433,6 +483,7 @@ const ConnectionNotificationsPanel = ({
 };
 
 export default ConnectionNotificationsPanel;
+
 
 
 

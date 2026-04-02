@@ -916,6 +916,29 @@ const Navbar = (_props: NavbarProps) => {
       window.removeEventListener("connectionNotificationDeleted", onDeleted);
   }, []);
 
+  useEffect(() => {
+    const onReadAll = (event: Event) => {
+      const custom = event as CustomEvent<{ unreadCount?: number }>;
+      const nextUnread =
+        typeof custom.detail?.unreadCount === "number"
+          ? Number(custom.detail.unreadCount)
+          : 0;
+
+      setConnectionNotificationItems((prev) =>
+        prev.map((item) => ({ ...item, isRead: true }),
+      ));
+      setMessageNotificationItems((prev) =>
+        prev.map((item) => ({ ...item, isRead: true, unreadMessageCount: 0 }),
+      ));
+      setConnectionUnreadCount(nextUnread);
+      setMessageUnreadCount(0);
+    };
+
+    window.addEventListener("connectionNotificationsReadAll", onReadAll);
+    return () =>
+      window.removeEventListener("connectionNotificationsReadAll", onReadAll);
+  }, []);
+
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -1089,8 +1112,8 @@ const Navbar = (_props: NavbarProps) => {
           .filter((item) => !item.isRead)
           .map((item) => item.id);
 
-        await Promise.all(
-          unreadConnectionIds.map((notificationId) =>
+        await Promise.all([
+          ...unreadConnectionIds.map((notificationId) =>
             fetch(`${API_BASE_URL}/connections/notifications/read`, {
               method: "POST",
               headers: {
@@ -1100,7 +1123,14 @@ const Navbar = (_props: NavbarProps) => {
               body: JSON.stringify({ notificationId }),
             }),
           ),
-        );
+          fetch(`${API_BASE_URL}/messages/read-all`, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }),
+        ]);
 
         setConnectionNotificationItems((prev) =>
           prev.map((item) => ({ ...item, isRead: true })),

@@ -69,6 +69,7 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [showRemoveConfirm, setShowRemoveConfirm] = useState(false);
+  const [removeExistingImage, setRemoveExistingImage] = useState(false);
   const [reviews, setReviews] = useState<ManagedProjectReview[]>([]);
   const [isReviewsLoading, setIsReviewsLoading] = useState(false);
   const [reviewActionLoadingId, setReviewActionLoadingId] = useState<string | null>(null);
@@ -111,6 +112,7 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
       setIsSaving(false);
       setError(null);
       setShowRemoveConfirm(false);
+      setRemoveExistingImage(false);
       setReviews([]);
       setReviewsError(null);
       setActiveReviewTab("all");
@@ -219,6 +221,7 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
       }
 
       setSelectedFile(file);
+      setRemoveExistingImage(false);
       setError(null);
       setShowRemoveConfirm(false);
     }
@@ -245,6 +248,7 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
   const confirmRemoveImage = () => {
     setSelectedFile(null);
     setShowRemoveConfirm(false);
+    setRemoveExistingImage(true);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -327,7 +331,7 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
 
       if (selectedFile) {
         formData.append("coverImage", selectedFile);
-      } else if (showRemoveConfirm) {
+      } else if (removeExistingImage) {
         // This indicates we want to remove existing image
         formData.append("removeCoverImage", "true");
       }
@@ -492,7 +496,7 @@ const ProjectEditor: React.FC<ProjectEditorProps> = ({
 
   const currentFileInfo = getCurrentFileInfo();
   const hasCoverImage =
-    currentFileInfo || (project?.coverImage && !showRemoveConfirm);
+    currentFileInfo || (project?.coverImage && !removeExistingImage);
 
   return (
     <div

@@ -59,11 +59,38 @@
   gap: 14px;
 }
 
+.connection-notification-mark-read-btn {
+  height: 34px;
+  border: 1px solid #c8d7eb;
+  border-radius: 8px;
+  padding: 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #ffffff;
+  color: #1f3a56;
+  min-width: 140px;
+  width: auto;
+}
+
+.connection-notification-mark-read-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.connection-notification-mark-read-row {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .connection-notification-filter {
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
   align-items: center;
+  justify-content: end;
   gap: 8px;
-  flex-wrap: wrap;
+  margin-left: auto;
 }
 
 .connection-notification-filter input {
@@ -95,6 +122,12 @@
 .connection-notification-filter button:last-of-type {
   background: #ffffff;
   color: #1f3a56;
+}
+
+@media (max-width: 1024px) {
+  .connection-notification-filter {
+    grid-template-columns: auto auto;
+  }
 }
 
 .connection-notification-state {

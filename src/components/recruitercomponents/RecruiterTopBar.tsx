@@ -524,6 +524,29 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
     };
   }, [userId, userRole]);
 
+  useEffect(() => {
+    const onReadAll = (event: Event) => {
+      const custom = event as CustomEvent<{ unreadCount?: number }>;
+      const nextUnread =
+        typeof custom.detail?.unreadCount === "number"
+          ? Number(custom.detail.unreadCount)
+          : 0;
+
+      setConnectionNotificationItems((prev) =>
+        prev.map((item) => ({ ...item, isRead: true })),
+      );
+      setMessageNotificationItems((prev) =>
+        prev.map((item) => ({ ...item, isRead: true, unreadMessageCount: 0 })),
+      );
+      setConnectionUnreadCount(nextUnread);
+      setMessageUnreadCount(0);
+    };
+
+    window.addEventListener("connectionNotificationsReadAll", onReadAll);
+    return () =>
+      window.removeEventListener("connectionNotificationsReadAll", onReadAll);
+  }, []);
+
   const handleMarkAllNotificationsRead = async () => {
     const token = localStorage.getItem("authToken");
     if (!token) return;
@@ -533,8 +556,8 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
       .map((item) => item.id);
 
     try {
-      await Promise.all(
-        unreadConnectionIds.map((notificationId) =>
+      await Promise.all([
+        ...unreadConnectionIds.map((notificationId) =>
           fetch(`${API_BASE_URL}/connections/notifications/read`, {
             method: "POST",
             headers: {
@@ -544,7 +567,14 @@ const RecruiterTopBar: React.FC<RecruiterTopBarProps> = ({
             body: JSON.stringify({ notificationId }),
           }),
         ),
-      );
+        fetch(`${API_BASE_URL}/messages/read-all`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }),
+      ]);
     } catch {
       // best-effort
     }
