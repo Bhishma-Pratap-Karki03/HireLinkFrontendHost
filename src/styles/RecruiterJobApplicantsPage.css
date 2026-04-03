@@ -182,6 +182,68 @@
   background: #ecfdf5;
 }
 
+.recruiter-applicants-toast {
+  position: fixed;
+  top: 96px;
+  right: 24px;
+  z-index: 2200;
+  min-width: 300px;
+  max-width: 420px;
+  padding: 14px 44px 14px 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  box-shadow: 0 10px 30px rgba(2, 16, 34, 0.12);
+}
+
+.recruiter-applicants-toast.success {
+  background: #ecfdf3;
+  border-color: #9fe3b8;
+}
+
+.recruiter-applicants-toast.error {
+  background: #fff1f2;
+  border-color: #f7b4bf;
+}
+
+.recruiter-applicants-toast-head {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.recruiter-applicants-toast.success .recruiter-applicants-toast-head {
+  color: #0f6f3f;
+}
+
+.recruiter-applicants-toast.error .recruiter-applicants-toast-head {
+  color: #a5152d;
+}
+
+.recruiter-applicants-toast-message {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #24405f;
+}
+
+.recruiter-applicants-toast-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: #4b6178;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.recruiter-applicants-toast-close:hover {
+  color: #0d1b2a;
+}
+
 .recruiter-applicants-list {
   display: flex;
   flex-direction: column;

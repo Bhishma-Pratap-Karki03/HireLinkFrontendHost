@@ -142,8 +142,10 @@ const RecruiterJobApplicantsPage = () => {
   const [reports, setReports] = useState<ReportItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [scanMessage, setScanMessage] = useState("");
-  const [runError, setRunError] = useState("");
+  const [atsToastMessage, setAtsToastMessage] = useState("");
+  const [atsToastType, setAtsToastType] = useState<"success" | "error">(
+    "success",
+  );
   const [runningMode, setRunningMode] = useState<"all" | "new" | null>(null);
   const [statusUpdating, setStatusUpdating] = useState<string | null>(null);
   const [selectedReport, setSelectedReport] = useState<ReportItem | null>(null);
@@ -151,6 +153,14 @@ const RecruiterJobApplicantsPage = () => {
   const [openStatusDropdownId, setOpenStatusDropdownId] = useState<
     string | null
   >(null);
+
+  useEffect(() => {
+    if (!atsToastMessage) return;
+    const timer = window.setTimeout(() => {
+      setAtsToastMessage("");
+    }, 4000);
+    return () => window.clearTimeout(timer);
+  }, [atsToastMessage]);
 
   const reportsByApplicationId = useMemo(
     () =>
@@ -233,8 +243,7 @@ const RecruiterJobApplicantsPage = () => {
 
     try {
       setRunningMode(mode);
-      setRunError("");
-      setScanMessage("");
+      setAtsToastMessage("");
 
       const scanRes = await fetch(`${apiBaseUrl}/ats/scan/${id}`, {
         method: "POST",
@@ -248,10 +257,12 @@ const RecruiterJobApplicantsPage = () => {
       if (!scanRes.ok) {
         throw new Error(scanData?.message || "Failed to run ATS scan");
       }
-      setScanMessage(scanData?.message || "ATS scan completed.");
+      setAtsToastType("success");
+      setAtsToastMessage(scanData?.message || "ATS scan completed.");
       await loadApplicantsAndAts();
     } catch (err: any) {
-      setRunError(err?.message || "Failed to run ATS");
+      setAtsToastType("error");
+      setAtsToastMessage(err?.message || "Failed to run ATS");
     } finally {
       setRunningMode(null);
     }
@@ -393,6 +404,28 @@ const RecruiterJobApplicantsPage = () => {
         </div>
         <div className="recruiter-applicants-scrollable-content">
           <div className="recruiter-applicants-content">
+            {atsToastMessage && (
+              <div
+                className={`recruiter-applicants-toast ${
+                  atsToastType === "success" ? "success" : "error"
+                }`}
+              >
+                <div className="recruiter-applicants-toast-head">
+                  {atsToastType === "success" ? "Success" : "Error"}
+                </div>
+                <p className="recruiter-applicants-toast-message">
+                  {atsToastMessage}
+                </p>
+                <button
+                  type="button"
+                  className="recruiter-applicants-toast-close"
+                  onClick={() => setAtsToastMessage("")}
+                  aria-label="Close toast"
+                >
+                  x
+                </button>
+              </div>
+            )}
             <div className="recruiter-applicants-header">
               <div>
                 <h1>Applicants</h1>
@@ -456,14 +489,6 @@ const RecruiterJobApplicantsPage = () => {
               </div>
             </div>
 
-            {scanMessage && (
-              <div className="recruiter-applicants-state success">
-                {scanMessage}
-              </div>
-            )}
-            {runError && (
-              <div className="recruiter-applicants-state error">{runError}</div>
-            )}
             {loading && (
               <div className="recruiter-applicants-state">Loading</div>
             )}

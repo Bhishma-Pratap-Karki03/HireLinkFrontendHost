@@ -155,6 +155,68 @@
   color: #b43737;
 }
 
+.candidate-smart-toast {
+  position: fixed;
+  top: 96px;
+  right: 24px;
+  z-index: 2200;
+  min-width: 300px;
+  max-width: 420px;
+  padding: 14px 44px 14px 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  box-shadow: 0 10px 30px rgba(2, 16, 34, 0.12);
+}
+
+.candidate-smart-toast.success {
+  background: #ecfdf3;
+  border-color: #9fe3b8;
+}
+
+.candidate-smart-toast.error {
+  background: #fff1f2;
+  border-color: #f7b4bf;
+}
+
+.candidate-smart-toast-head {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.candidate-smart-toast.success .candidate-smart-toast-head {
+  color: #0f6f3f;
+}
+
+.candidate-smart-toast.error .candidate-smart-toast-head {
+  color: #a5152d;
+}
+
+.candidate-smart-toast-message {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #24405f;
+}
+
+.candidate-smart-toast-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: #4b6178;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.candidate-smart-toast-close:hover {
+  color: #0d1b2a;
+}
+
 .candidate-smart-list {
   margin-top: 18px;
   display: grid;

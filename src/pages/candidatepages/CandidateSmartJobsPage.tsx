@@ -1,4 +1,4 @@
-import PortalFooter from "../../components/PortalFooter";
+﻿import PortalFooter from "../../components/PortalFooter";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CandidateSidebar from "../../components/candidatecomponents/CandidateSidebar";
@@ -19,8 +19,9 @@ const CandidateSmartJobsPage = () => {
   const ITEMS_PER_PAGE = 20;
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [hasRun, setHasRun] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [statusType, setStatusType] = useState<"success" | "error">("success");
   const [history, setHistory] = useState<RecommendationHistoryItem[]>([]);
   const [draftDateFrom, setDraftDateFrom] = useState("");
   const [draftDateTo, setDraftDateTo] = useState("");
@@ -51,7 +52,7 @@ const CandidateSmartJobsPage = () => {
 
     try {
       setLoading(true);
-      setError("");
+      setStatusMessage("");
       const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/recommendations/me?limit=12`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -60,9 +61,12 @@ const CandidateSmartJobsPage = () => {
         throw new Error(data?.message || "Failed to load recommendations");
       }
       setHasRun(true);
+      setStatusType("success");
+      setStatusMessage("Recommendation run completed.");
       fetchHistory();
     } catch (err: any) {
-      setError(err?.message || "Failed to load recommendations");
+      setStatusType("error");
+      setStatusMessage(err?.message || "Failed to load recommendations");
     } finally {
       setLoading(false);
     }
@@ -86,7 +90,8 @@ const CandidateSmartJobsPage = () => {
       }
       setHistory((prev) => prev.filter((item) => item.id !== id));
     } catch (err: any) {
-      setError(err?.message || "Failed to delete recommendation history");
+      setStatusType("error");
+      setStatusMessage(err?.message || "Failed to delete recommendation history");
     }
   };
 
@@ -144,6 +149,14 @@ const CandidateSmartJobsPage = () => {
   }, [dateFrom, dateTo]);
 
   useEffect(() => {
+    if (!statusMessage) return;
+    const timer = window.setTimeout(() => {
+      setStatusMessage("");
+    }, 4000);
+    return () => window.clearTimeout(timer);
+  }, [statusMessage]);
+
+  useEffect(() => {
     if (currentPage > totalPages) {
       setCurrentPage(totalPages);
     }
@@ -155,12 +168,32 @@ const CandidateSmartJobsPage = () => {
       <main className="candidate-smart-main">
         <CandidateTopBar />
         <div className="candidate-smart-content-wrapper">
+          {statusMessage && (
+            <div
+              className={`candidate-smart-toast ${
+                statusType === "success" ? "success" : "error"
+              }`}
+            >
+              <div className="candidate-smart-toast-head">
+                {statusType === "success" ? "Success" : "Error"}
+              </div>
+              <p className="candidate-smart-toast-message">{statusMessage}</p>
+              <button
+                type="button"
+                className="candidate-smart-toast-close"
+                onClick={() => setStatusMessage("")}
+                aria-label="Close toast"
+              >
+                x
+              </button>
+            </div>
+          )}
           <section className="candidate-smart-shell">
             <header className="candidate-smart-header">
               <div className="candidate-smart-header-left">
                 <h2>Smart Jobs</h2>
                 <p>AI-ranked jobs based on your profile, skills, and experience.</p>
-                {!loading && !error && !hasRun && (
+                {!loading && !hasRun && (
                   <p className="candidate-smart-helper-text">
                     Click Run Recommendation to generate smart jobs.
                   </p>
@@ -202,15 +235,6 @@ const CandidateSmartJobsPage = () => {
               </div>
             </header>
 
-            {loading && <div className="candidate-smart-state">Loading</div>}
-            {!loading && error && (
-              <div className="candidate-smart-state candidate-smart-error">{error}</div>
-            )}
-            {!loading && !error && hasRun && (
-              <div className="candidate-smart-state">
-                Recommendation run completed. Use the eye icon in history to view the list.
-              </div>
-            )}
             {!loading && history.length > 0 && (
               <section className="candidate-smart-history">
                 <h4>Recommendation History</h4>
