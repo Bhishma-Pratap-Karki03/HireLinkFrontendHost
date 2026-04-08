@@ -780,7 +780,7 @@ const CandidateProfilePage = () => {
           const response = await fetch(
             `${import.meta.env.VITE_API_BASE_URL}/profile/me/picture`, // CHANGED FROM /upload-picture to /me/picture
             {
-              method: "POST", // CHANGED FROM PUT to POST
+              method: "POST",
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -1997,9 +1997,7 @@ const CandidateProfilePage = () => {
                 the eye icon to choose which assessments appear here.
               </p>
               {quizLoading ? (
-                <p className="candidate-description-text">
-                  Loading
-                </p>
+                <p className="candidate-description-text">Loading</p>
               ) : quizResults.length === 0 ? (
                 <p className="candidate-description-text">
                   No completed assessments yet.
@@ -2448,5 +2446,3 @@ const CandidateProfilePage = () => {
 };
 
 export default CandidateProfilePage;
-
-
