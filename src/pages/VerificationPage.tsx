@@ -246,6 +246,7 @@ const VerificationPage = () => {
     }
   };
 
+// OTP Code handler
   const handleVerify = async () => {
     const code = verificationCode.join("");
 
