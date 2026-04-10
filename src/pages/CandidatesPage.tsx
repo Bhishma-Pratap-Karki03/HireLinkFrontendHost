@@ -47,6 +47,8 @@ type MutualConnection = {
 
 const resolveAvatar = (profilePicture?: string) => {
   if (!profilePicture) return defaultAvatar;
+  const decoded = decodeURIComponent(profilePicture).toLowerCase();
+  if (decoded.includes("default profile")) return defaultAvatar;
   if (profilePicture.startsWith("http")) return profilePicture;
   return `${import.meta.env.VITE_BACKEND_URL}${profilePicture}`;
 };
@@ -579,6 +581,9 @@ const CandidatesPage = () => {
                     <img
                       src={resolveAvatar(candidate.profilePicture)}
                       alt={candidate.fullName}
+                      onError={(e) => {
+                        e.currentTarget.src = defaultAvatar;
+                      }}
                     />
                     <div>
                       <h3>{candidate.fullName}</h3>
@@ -600,6 +605,9 @@ const CandidatesPage = () => {
                             key={item.id}
                             src={resolveAvatar(item.profilePicture)}
                             alt={item.fullName}
+                            onError={(e) => {
+                              e.currentTarget.src = defaultAvatar;
+                            }}
                             className={
                               item.role === "recruiter"
                                 ? "candidates-mutual-logo"

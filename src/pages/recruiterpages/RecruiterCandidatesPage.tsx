@@ -29,6 +29,8 @@ type CandidateItem = {
 
 const resolveAvatar = (profilePicture?: string) => {
   if (!profilePicture) return defaultAvatar;
+  const decoded = decodeURIComponent(profilePicture).toLowerCase();
+  if (decoded.includes("default profile")) return defaultAvatar;
   if (profilePicture.startsWith("http")) return profilePicture;
   return `${import.meta.env.VITE_BACKEND_URL}${profilePicture}`;
 };
@@ -201,6 +203,9 @@ const RecruiterCandidatesPage = () => {
                       <img
                         src={resolveAvatar(candidate.profilePicture)}
                         alt={candidate.fullName}
+                        onError={(e) => {
+                          e.currentTarget.src = defaultAvatar;
+                        }}
                       />
                       <div>
                         <h3>{candidate.fullName}</h3>
