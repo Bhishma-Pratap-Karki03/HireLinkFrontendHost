@@ -9,6 +9,8 @@ import prevIcon from "../../images/Employers Page Images/Prev Icon.svg";
 import nextIcon from "../../images/Employers Page Images/Next Icon.svg";
 import "../../styles/RecruiterFriendRequestsPage.css";
 
+const LAST_ACCEPTED_CONNECTION_KEY = "lastAcceptedConnectionRequest";
+
 type FriendRequestItem = {
   id: string;
   requester: {
@@ -92,6 +94,17 @@ const RecruiterFriendRequestsPage = () => {
       }
       setRequests((prev) => prev.filter((item) => item.requester.id !== requesterId));
       if (action === "accept") {
+        try {
+          localStorage.setItem(
+            LAST_ACCEPTED_CONNECTION_KEY,
+            JSON.stringify({
+              requesterId,
+              acceptedAt: Date.now(),
+            }),
+          );
+        } catch {
+          // ignore storage issues
+        }
         fetchFriends();
       }
     } catch (err: any) {
@@ -306,7 +319,7 @@ const RecruiterFriendRequestsPage = () => {
             </button>
           </div>
 
-          {loading && <div className="recruiter-friend-state">Loading</div>}
+          {loading && <div className="recruiter-friend-state loading">Loading</div>}
           {error && !loading && (
             <div className="recruiter-friend-state error">{error}</div>
           )}

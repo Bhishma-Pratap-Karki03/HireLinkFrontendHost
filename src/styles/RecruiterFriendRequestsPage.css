@@ -85,6 +85,14 @@
   background: #fff5f4;
 }
 
+.recruiter-friend-state::before {
+  display: none;
+}
+
+.recruiter-friend-state.loading::before {
+  display: block;
+}
+
 .recruiter-friend-list {
   display: grid;
   gap: 14px;

@@ -82,6 +82,14 @@
   background: #fff5f4;
 }
 
+.candidate-friend-state::before {
+  display: none;
+}
+
+.candidate-friend-state.loading::before {
+  display: block;
+}
+
 .candidate-friend-list {
   display: grid;
   gap: 14px;

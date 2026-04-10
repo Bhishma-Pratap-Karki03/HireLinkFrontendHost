@@ -86,6 +86,8 @@ interface AdminContactNotificationItem {
 }
 
 const NOTIFICATION_TOAST_STORAGE_PREFIX = "connectionNotificationToasts:";
+const TOAST_DISMISSED_STORAGE_PREFIX = "notificationToastDismissed:";
+const LAST_ACCEPTED_CONNECTION_KEY = "lastAcceptedConnectionRequest";
 
 const readStoredUserData = (): UserData | null => {
   if (typeof window === "undefined") return null;
@@ -109,6 +111,12 @@ const getToastStorageKey = () => {
   const storedUser = readStoredUserData();
   const userId = storedUser?.id || "guest";
   return `${NOTIFICATION_TOAST_STORAGE_PREFIX}${userId}`;
+};
+
+const getDismissedToastStorageKey = () => {
+  const storedUser = readStoredUserData();
+  const userId = storedUser?.id || "guest";
+  return `${TOAST_DISMISSED_STORAGE_PREFIX}${userId}`;
 };
 
 const getBackendBaseUrl = () => {
@@ -156,6 +164,47 @@ const formatApplicationNotificationMessage = (item: NotificationItem) => {
   }
   return `${raw} (${companyName})`;
 };
+
+const shouldSuppressAcceptedNotificationToast = (
+  notification: NotificationItem,
+  currentUserId?: string,
+) => {
+  if (
+    notification.type !== "connection_request_accepted" ||
+    !notification.actor?.id ||
+    !currentUserId
+  ) {
+    return false;
+  }
+
+  try {
+    const raw = localStorage.getItem(LAST_ACCEPTED_CONNECTION_KEY);
+    if (!raw) return false;
+    const parsed = JSON.parse(raw) as {
+      requesterId?: string;
+      acceptedAt?: number;
+    };
+    const acceptedAt = Number(parsed?.acceptedAt || 0);
+    const requesterId = String(parsed?.requesterId || "");
+    const isFresh = Date.now() - acceptedAt <= 15000;
+    if (!isFresh) {
+      localStorage.removeItem(LAST_ACCEPTED_CONNECTION_KEY);
+      return false;
+    }
+    return requesterId !== "" && notification.actor.id === requesterId;
+  } catch {
+    return false;
+  }
+};
+
+const shouldSuppressSelfProjectReviewToast = (
+  notification: NotificationItem,
+  currentUserId?: string,
+) =>
+  notification.type === "project_review_received" &&
+  Boolean(currentUserId) &&
+  Boolean(notification.actor?.id) &&
+  notification.actor?.id === currentUserId;
 const NOTIFICATION_DROPDOWN_LIMIT = 20;
 
 const Navbar = (_props: NavbarProps) => {
@@ -191,6 +240,7 @@ const Navbar = (_props: NavbarProps) => {
   const mobileUserDropdownRef = useRef<HTMLDivElement | null>(null);
   const notificationRef = useRef<HTMLDivElement | null>(null);
   const toastTimersRef = useRef<Record<string, number>>({});
+  const dismissedToastIdsRef = useRef<Set<string>>(new Set());
   const knownAdminContactIdsRef = useRef<Set<string>>(new Set());
   const viewedAdminContactIdsRef = useRef<Set<string>>(new Set());
   const hasLoadedAdminContactsRef = useRef(false);
@@ -691,6 +741,15 @@ const Navbar = (_props: NavbarProps) => {
   };
 
   const dismissToast = (notificationId: string) => {
+    dismissedToastIdsRef.current.add(notificationId);
+    try {
+      localStorage.setItem(
+        getDismissedToastStorageKey(),
+        JSON.stringify(Array.from(dismissedToastIdsRef.current)),
+      );
+    } catch {
+      // ignore local storage write errors
+    }
     setDismissingToastIds((prev) =>
       prev.includes(notificationId) ? prev : [...prev, notificationId]
     );
@@ -720,6 +779,20 @@ const Navbar = (_props: NavbarProps) => {
       // ignore invalid local storage values
     }
   }, []);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(getDismissedToastStorageKey());
+      if (!raw) return;
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return;
+      dismissedToastIdsRef.current = new Set(
+        parsed.filter((id) => typeof id === "string"),
+      );
+    } catch {
+      dismissedToastIdsRef.current = new Set();
+    }
+  }, [userData?.id]);
 
   useEffect(() => {
     try {
@@ -779,6 +852,8 @@ const Navbar = (_props: NavbarProps) => {
     }) => {
       const incoming = payload?.notification;
       if (!incoming) return;
+      if (dismissedToastIdsRef.current.has(incoming.id)) return;
+      if (shouldSuppressAcceptedNotificationToast(incoming, userData?.id)) return;
       setConnectionNotificationItems((prev) => {
         const merged = [incoming, ...prev.filter((item) => item.id !== incoming.id)];
         return merged.slice(0, NOTIFICATION_DROPDOWN_LIMIT);
@@ -789,6 +864,9 @@ const Navbar = (_props: NavbarProps) => {
           : (prev) => prev + 1
       );
       setNotificationToasts((prev) => {
+        if (shouldSuppressSelfProjectReviewToast(incoming, userData?.id)) {
+          return prev;
+        }
         const next = [incoming, ...prev.filter((item) => item.id !== incoming.id)];
         return next.slice(0, 3);
       });
@@ -856,6 +934,25 @@ const Navbar = (_props: NavbarProps) => {
       activeSocket?.off("message:new", handleMessageNotification);
     };
   }, [userData?.role, userData?.id, isAdminUser]);
+
+  useEffect(() => {
+    if (isAdminUser) return;
+    const unreadItems = connectionNotificationItems
+      .filter((item) => !item.isRead)
+      .slice(0, 3);
+    if (unreadItems.length === 0) return;
+
+    setNotificationToasts((prev) => {
+      const next = [...prev];
+      unreadItems.forEach((item) => {
+        if (dismissedToastIdsRef.current.has(item.id)) return;
+        if (shouldSuppressSelfProjectReviewToast(item, userData?.id)) return;
+        if (next.some((existing) => existing.id === item.id)) return;
+        next.unshift(item);
+      });
+      return next.slice(0, 3);
+    });
+  }, [connectionNotificationItems, isAdminUser, userData?.id]);
 
   useEffect(() => {
     try {

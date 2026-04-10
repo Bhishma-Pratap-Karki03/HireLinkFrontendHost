@@ -1370,7 +1370,7 @@ const CandidateDetailsPage = () => {
           </>
         )}
         {profile && isPrivateProfile && (
-          <div className="candidate-details-state">
+          <div className="candidate-details-state candidate-details-state-private">
             {privateNotice ||
               "This candidate has set their profile to private. Only basic profile information is visible."}
           </div>

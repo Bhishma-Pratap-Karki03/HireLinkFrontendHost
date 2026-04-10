@@ -34,6 +34,7 @@ type ConnectedUserItem = {
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+const LAST_ACCEPTED_CONNECTION_KEY = "lastAcceptedConnectionRequest";
 
 const parseJsonResponse = async (response: Response) => {
   const contentType = response.headers.get("content-type") || "";
@@ -104,6 +105,17 @@ const CandidateFriendRequestsPage = () => {
       }
       setRequests((prev) => prev.filter((item) => item.requester.id !== requesterId));
       if (action === "accept") {
+        try {
+          localStorage.setItem(
+            LAST_ACCEPTED_CONNECTION_KEY,
+            JSON.stringify({
+              requesterId,
+              acceptedAt: Date.now(),
+            }),
+          );
+        } catch {
+          // ignore storage issues
+        }
         fetchFriends();
       }
     } catch (err: any) {
@@ -316,7 +328,7 @@ const CandidateFriendRequestsPage = () => {
             </button>
           </div>
 
-          {loading && <div className="candidate-friend-state">Loading</div>}
+          {loading && <div className="candidate-friend-state loading">Loading</div>}
           {error && !loading && (
             <div className="candidate-friend-state error">{error}</div>
           )}

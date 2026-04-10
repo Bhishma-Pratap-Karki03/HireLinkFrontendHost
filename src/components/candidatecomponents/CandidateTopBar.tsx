@@ -55,6 +55,7 @@ interface MessageConversationItem {
 }
 const NOTIFICATION_DROPDOWN_LIMIT = 20;
 const TOAST_DISMISSED_STORAGE_PREFIX = "notificationToastDismissed:";
+const LAST_ACCEPTED_CONNECTION_KEY = "lastAcceptedConnectionRequest";
 
 const API_BASE_URL =
   String(import.meta.env.VITE_API_BASE_URL || "").trim() ||
@@ -99,6 +100,46 @@ const formatApplicationNotificationMessage = (item: NotificationItem) => {
   }
   return `${raw} (${companyName})`;
 };
+
+const shouldSuppressAcceptedNotificationToast = (
+  notification: NotificationItem,
+  currentUserId: string,
+) => {
+  if (
+    notification.type !== "connection_request_accepted" ||
+    !notification.actor?.id ||
+    !currentUserId
+  ) {
+    return false;
+  }
+
+  try {
+    const raw = localStorage.getItem(LAST_ACCEPTED_CONNECTION_KEY);
+    if (!raw) return false;
+    const parsed = JSON.parse(raw) as {
+      requesterId?: string;
+      acceptedAt?: number;
+    };
+    const acceptedAt = Number(parsed?.acceptedAt || 0);
+    const requesterId = String(parsed?.requesterId || "");
+    const isFresh = Date.now() - acceptedAt <= 15000;
+    if (!isFresh) {
+      localStorage.removeItem(LAST_ACCEPTED_CONNECTION_KEY);
+      return false;
+    }
+    return requesterId !== "" && notification.actor.id === requesterId;
+  } catch {
+    return false;
+  }
+};
+
+const shouldSuppressSelfProjectReviewToast = (
+  notification: NotificationItem,
+  currentUserId: string,
+) =>
+  notification.type === "project_review_received" &&
+  Boolean(notification.actor?.id) &&
+  notification.actor?.id === currentUserId;
 
 const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
   onSearch = () => {},
@@ -452,6 +493,7 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
     }) => {
       const incoming = payload?.notification;
       if (!incoming) return;
+      if (shouldSuppressAcceptedNotificationToast(incoming, userId)) return;
       if (dismissedToastIdsRef.current.has(incoming.id)) return;
       setConnectionNotificationItems((prev) => {
         const merged = [incoming, ...prev.filter((item) => item.id !== incoming.id)];
@@ -466,6 +508,9 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
         void fetchConnectionNotifications(true);
       }
       setNotificationToasts((prev) => {
+        if (shouldSuppressSelfProjectReviewToast(incoming, userId)) {
+          return prev;
+        }
         const merged = [incoming, ...prev.filter((item) => item.id !== incoming.id)];
         shownToastIdsRef.current.add(incoming.id);
         return merged.slice(0, 3);
@@ -535,6 +580,8 @@ const CandidateTopBar: React.FC<CandidateTopBarProps> = ({
     setNotificationToasts((prev) => {
       const next = [...prev];
       unreadItems.forEach((item) => {
+        if (shouldSuppressAcceptedNotificationToast(item, userId)) return;
+        if (shouldSuppressSelfProjectReviewToast(item, userId)) return;
         if (dismissedToastIdsRef.current.has(item.id)) return;
         if (shownToastIdsRef.current.has(item.id)) return;
         if (next.some((existing) => existing.id === item.id)) return;
