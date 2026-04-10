@@ -44,6 +44,13 @@ const ProfilePictureEditor: React.FC<ProfilePictureEditorProps> = ({
   const [hasImageChanged, setHasImageChanged] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
+  const isDefaultProfileImage = (image?: string) => {
+    if (!image || image === "") return true;
+    if (image === defaultAvatar) return true;
+    const decoded = decodeURIComponent(image).toLowerCase();
+    return decoded.includes("default profile");
+  };
+
   useEffect(() => {
     // Reset selected image to current image when modal opens
     if (isOpen) {
@@ -51,12 +58,16 @@ const ProfilePictureEditor: React.FC<ProfilePictureEditorProps> = ({
     }
 
     // Check if current image is the default one
-    const isDefault =
-      !currentImage ||
-      currentImage === "" ||
-      currentImage.includes("Default Profile") ||
-      currentImage.includes("Default Profile.webp");
+    const isDefault = isDefaultProfileImage(currentImage);
     setIsDefaultImage(isDefault);
+    if (isDefault) {
+      setCurrentFileName("");
+    } else {
+      // Show a readable filename even when image comes from backend URL.
+      const fallbackName =
+        currentImage.split("/").pop()?.split("?")[0] || "profile-image";
+      setCurrentFileName(fallbackName);
+    }
 
     // Reset file state
     setImageFile(null);
@@ -179,12 +190,7 @@ const ProfilePictureEditor: React.FC<ProfilePictureEditorProps> = ({
   const handleCancel = () => {
     setSelectedImage(currentImage);
     setImageFile(null);
-    setIsDefaultImage(
-      !currentImage ||
-        currentImage === "" ||
-        currentImage.includes("Default Profile") ||
-        currentImage.includes("Default Profile.webp")
-    );
+    setIsDefaultImage(isDefaultProfileImage(currentImage));
     setCurrentJobTitle(initialJobTitle);
     setIsPublicProfile(currentProfileVisibility === "public");
     setHasImageChanged(false);
@@ -268,12 +274,12 @@ const ProfilePictureEditor: React.FC<ProfilePictureEditorProps> = ({
           <div className="modal-form">
             <div className="form-fields-wrapper">
               {/* File Info Row */}
-              {!isDefaultImage && currentFileName && (
+              {!isDefaultImage && (
                 <div className="file-row">
                   <div className="file-info">
                     <img src={fileIcon} alt="File Icon" className="icon-file" />
                     <span className="file-name" title={currentFileName}>
-                      {truncateFileName(currentFileName)}
+                      {truncateFileName(currentFileName || "profile-image")}
                     </span>
                   </div>
                   <button className="remove-button" onClick={handleRemoveImage}>

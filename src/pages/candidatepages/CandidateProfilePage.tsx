@@ -9,7 +9,7 @@ import PersonalInfoEditor from "../../components/candidatecomponents/PersonalInf
 import AboutUsEditor from "../../components/candidatecomponents/AboutUsEditor.tsx";
 import ResumeEditor from "../../components/candidatecomponents/ResumeEditor.tsx";
 import ExperienceEditor from "../../components/candidatecomponents/ExperienceEditor.tsx";
-import EducationEditor from "../../components/candidatecomponents/EducationEditor.tsx.tsx";
+import EducationEditor from "../../components/candidatecomponents/EducationEditor.tsx";
 import SkillEditor from "../../components/candidatecomponents/SkillEditor.tsx";
 import LanguageEditor from "../../components/candidatecomponents/LanguageEditor.tsx";
 import ProjectEditor from "../../components/candidatecomponents/ProjectEditor.tsx";

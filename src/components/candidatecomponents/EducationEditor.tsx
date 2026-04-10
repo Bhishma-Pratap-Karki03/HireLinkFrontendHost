@@ -112,12 +112,12 @@ const EducationEditor: React.FC<EducationEditorProps> = ({
         setStartDate(
           education.startDate
             ? new Date(education.startDate).toISOString().split("T")[0]
-            : ""
+            : "",
         );
         setEndDate(
           education.endDate && !education.isCurrent
             ? new Date(education.endDate).toISOString().split("T")[0]
-            : ""
+            : "",
         );
         setIsCurrent(education.isCurrent || false);
       } else {
@@ -228,7 +228,7 @@ const EducationEditor: React.FC<EducationEditorProps> = ({
     } catch (error) {
       console.error("Error saving education:", error);
       setSubmitError(
-        error instanceof Error ? error.message : "Failed to save education"
+        error instanceof Error ? error.message : "Failed to save education",
       );
     } finally {
       setIsSaving(false);
@@ -503,8 +503,8 @@ const EducationEditor: React.FC<EducationEditorProps> = ({
                 {isSaving
                   ? "Saving..."
                   : education
-                  ? "Update Education"
-                  : "Add Education"}
+                    ? "Update Education"
+                    : "Add Education"}
               </button>
             </div>
           </div>
