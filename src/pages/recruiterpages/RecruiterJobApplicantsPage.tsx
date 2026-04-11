@@ -496,7 +496,7 @@ const RecruiterJobApplicantsPage = () => {
               <div className="recruiter-applicants-state error">{error}</div>
             )}
             {!loading && !error && applications.length === 0 && (
-              <div className="recruiter-applicants-state">
+              <div className="recruiter-applicants-state no-spinner">
                 No applicants for this job yet.
               </div>
             )}

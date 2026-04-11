@@ -210,7 +210,7 @@ const RecruiterJobPostingsListPage = () => {
               <div className="recruiter-joblist-state error">{error}</div>
             )}
             {!loading && !error && filteredJobs.length === 0 && (
-              <div className="recruiter-joblist-state">
+              <div className="recruiter-joblist-state no-spinner">
                 {jobs.length === 0
                   ? "No job postings yet."
                   : "No jobs found for this title."}

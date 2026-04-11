@@ -118,15 +118,20 @@ const ForgotPassword = () => {
         setStatusType("success");
       }
 
-      setTimeout(() => {
-        navigate("/verify-email", {
-          state: {
-            email,
-            message: "Please enter the password reset code sent to your email",
-            isPasswordReset: true,
-          },
-        });
-      }, 500);
+      const shouldNavigate = Boolean(data.hasActiveCode || data.codeExpired);
+
+      if (shouldNavigate) {
+        setTimeout(() => {
+          navigate("/verify-email", {
+            state: {
+              email,
+              message:
+                "Please enter the password reset code sent to your email",
+              isPasswordReset: true,
+            },
+          });
+        }, 500);
+      }
     } catch (error) {
       console.error("Error requesting password reset:", error);
       setStatusMessage("Something went wrong. Please try again.");

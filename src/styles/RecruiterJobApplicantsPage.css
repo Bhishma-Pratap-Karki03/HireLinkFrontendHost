@@ -182,6 +182,10 @@
   background: #ecfdf5;
 }
 
+.recruiter-applicants-state.no-spinner::before {
+  display: none;
+}
+
 .recruiter-applicants-toast {
   position: fixed;
   top: 96px;

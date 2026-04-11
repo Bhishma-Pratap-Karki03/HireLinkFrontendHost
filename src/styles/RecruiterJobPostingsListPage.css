@@ -144,6 +144,10 @@
   background: #fff5f4;
 }
 
+.recruiter-joblist-state.no-spinner::before {
+  display: none;
+}
+
 .recruiter-joblist-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
