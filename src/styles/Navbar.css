@@ -237,9 +237,14 @@
 .mobile-apply-now {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 8px;
   color: #9979f6;
   text-decoration: none;
+}
+
+.mobile-menu-list li a.mobile-apply-now {
+  justify-content: flex-start;
 }
 
 .mobile-register-btn {
