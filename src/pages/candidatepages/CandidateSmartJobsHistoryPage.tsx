@@ -115,8 +115,8 @@ const CandidateSmartJobsHistoryPage = () => {
         <section className="candidate-smart-shell">
           <header className="candidate-smart-header">
             <div className="candidate-smart-header-left">
-              <h2>Recommendation History</h2>
-              <p>Saved recommendation run results.</p>
+              <h2>Recommendation Results</h2>
+              <p>Ranked jobs from this recommendation run.</p>
             </div>
             <div className="candidate-smart-header-right">
               <button
