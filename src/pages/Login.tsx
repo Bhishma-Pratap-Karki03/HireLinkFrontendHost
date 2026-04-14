@@ -158,9 +158,8 @@ const Login = () => {
     setStatusType(null);
     setIsSubmitting(true);
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setStatusMessage("Please enter a valid email address");
+    if (!formData.email.trim()) {
+      setStatusMessage("Please enter your email address");
       setStatusType("error");
       setIsSubmitting(false);
       return;
@@ -168,6 +167,14 @@ const Login = () => {
 
     if (!formData.password.trim()) {
       setStatusMessage("Please enter your password");
+      setStatusType("error");
+      setIsSubmitting(false);
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setStatusMessage("Please enter a valid email address");
       setStatusType("error");
       setIsSubmitting(false);
       return;
@@ -336,7 +343,7 @@ const Login = () => {
               </p>
             </div>
 
-            <form className="login-form" onSubmit={handleSubmit}>
+            <form className="login-form" onSubmit={handleSubmit} noValidate>
               <div className="login-field">
                 <label htmlFor="email">Email Address *</label>
                 <div className="login-input-wrap">
@@ -353,7 +360,7 @@ const Login = () => {
                     placeholder="you@example.com"
                     value={formData.email}
                     onChange={handleInputChange}
-                    required
+                    aria-required="true"
                     disabled={isSubmitting}
                   />
                 </div>
@@ -375,7 +382,7 @@ const Login = () => {
                     placeholder="Enter your password"
                     value={formData.password}
                     onChange={handleInputChange}
-                    required
+                    aria-required="true"
                     disabled={isSubmitting}
                   />
                   <button

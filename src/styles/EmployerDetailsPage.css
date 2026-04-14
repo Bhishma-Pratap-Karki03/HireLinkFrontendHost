@@ -298,6 +298,25 @@
   flex-shrink: 0;
 }
 
+.employer-details-private-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px dashed #bfd1e8;
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: #f7fbff;
+  color: #2d547a;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.4;
+  text-align: center;
+}
+
 .employer-details-error {
   text-align: center;
   padding: 60px 20px;

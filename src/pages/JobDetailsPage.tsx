@@ -158,6 +158,14 @@ const JobDetailsPage = () => {
   const [confirmRequirements, setConfirmRequirements] = useState(false);
   const [confirmResume, setConfirmResume] = useState(false);
 
+  const isDeadlineExpired = (deadline?: string) => {
+    if (!deadline) return false;
+    const deadlineDate = new Date(deadline);
+    if (Number.isNaN(deadlineDate.getTime())) return false;
+    deadlineDate.setHours(23, 59, 59, 999);
+    return new Date() > deadlineDate;
+  };
+
   const fetchJobDetails = async () => {
     if (!id) return;
     try {
@@ -432,6 +440,10 @@ const JobDetailsPage = () => {
 
   const openApplyModal = async () => {
     if (!job || !isCandidate) return;
+    if (isDeadlineExpired(job.deadline)) {
+      setApplyError("This job has expired. Applications are no longer accepted.");
+      return;
+    }
     if (!canApply) {
       setApplyError("Complete the assessment before applying.");
       return;
@@ -499,6 +511,10 @@ const JobDetailsPage = () => {
     }
     if (!job) {
       setApplyError("Job details not loaded.");
+      return;
+    }
+    if (isDeadlineExpired(job.deadline)) {
+      setApplyError("This job has expired. Applications are no longer accepted.");
       return;
     }
     const token = localStorage.getItem("authToken");
@@ -612,16 +628,28 @@ const JobDetailsPage = () => {
               {isCandidate && (
                 <div className="job-details-hero-actions">
                   <button
-                    className={`job-details-primary-btn${isApplied ? " job-details-applied" : ""}`}
-                    disabled={!canApply || isApplied}
+                    className={`job-details-primary-btn${
+                      isDeadlineExpired(job?.deadline)
+                        ? " job-details-expired"
+                        : isApplied
+                          ? " job-details-applied"
+                          : ""
+                    }`}
+                    disabled={!canApply || isApplied || isDeadlineExpired(job?.deadline)}
                     title={
-                      isMandatoryAssessment && !isAssessmentSubmitted
+                      isDeadlineExpired(job?.deadline)
+                        ? "Applications are closed for this job."
+                        : isMandatoryAssessment && !isAssessmentSubmitted
                         ? "Complete the assessment before applying."
                         : undefined
                     }
                     onClick={openApplyModal}
                   >
-                    {isApplied ? "Applied" : "Apply Now"}
+                    {isDeadlineExpired(job?.deadline)
+                      ? "Expired"
+                      : isApplied
+                        ? "Applied"
+                        : "Apply Now"}
                   </button>
                   <button
                     className="job-details-outline-btn"
@@ -632,7 +660,14 @@ const JobDetailsPage = () => {
                 </div>
               )}
               {isCandidate &&
+                isDeadlineExpired(job?.deadline) && (
+                  <p className="job-details-assessment-note">
+                    This job has expired. Applications are no longer accepted.
+                  </p>
+                )}
+              {isCandidate &&
                 isMandatoryAssessment &&
+                !isDeadlineExpired(job?.deadline) &&
                 !isAssessmentSubmitted && (
                   <p className="job-details-assessment-note">
                     Complete the mandatory assessment before applying.

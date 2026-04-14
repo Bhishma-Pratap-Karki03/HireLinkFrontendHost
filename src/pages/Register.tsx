@@ -151,6 +151,36 @@ const Register = () => {
     setStatusType(null);
     setShowVerificationLink(false);
 
+    if (!formData.fullName.trim()) {
+      setStatusMessage("Please enter your full name");
+      setStatusType("error");
+      return;
+    }
+
+    if (!formData.email.trim()) {
+      setStatusMessage("Please enter your email address");
+      setStatusType("error");
+      return;
+    }
+
+    if (!formData.password) {
+      setStatusMessage("Please enter your password");
+      setStatusType("error");
+      return;
+    }
+
+    if (!formData.confirmPassword) {
+      setStatusMessage("Please confirm your password");
+      setStatusType("error");
+      return;
+    }
+
+    if (!formData.terms) {
+      setStatusMessage("Please accept the terms and conditions");
+      setStatusType("error");
+      return;
+    }
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setStatusMessage(
@@ -186,12 +216,6 @@ const Register = () => {
 
     if (formData.password !== formData.confirmPassword) {
       setStatusMessage("Passwords do not match");
-      setStatusType("error");
-      return;
-    }
-
-    if (!formData.terms) {
-      setStatusMessage("Please accept the terms and conditions");
       setStatusType("error");
       return;
     }
@@ -482,7 +506,7 @@ const Register = () => {
               </button>
             </div>
 
-            <form className="register-form" onSubmit={handleSubmit}>
+            <form className="register-form" onSubmit={handleSubmit} noValidate>
               <div className="register-field">
                 <label htmlFor="fullName">
                   {userType === "recruiter" ? "Company Name *" : "Full Name *"}
@@ -497,7 +521,7 @@ const Register = () => {
                     }
                     value={formData.fullName}
                     onChange={handleInputChange}
-                    required
+                    aria-required="true"
                   />
                 </div>
               </div>
@@ -512,7 +536,7 @@ const Register = () => {
                     placeholder="you@example.com"
                     value={formData.email}
                     onChange={handleInputChange}
-                    required
+                    aria-required="true"
                   />
                 </div>
               </div>
@@ -527,7 +551,7 @@ const Register = () => {
                     placeholder="Enter your password"
                     value={formData.password}
                     onChange={handleInputChange}
-                    required
+                    aria-required="true"
                   />
                   <button
                     type="button"
@@ -553,7 +577,7 @@ const Register = () => {
                     placeholder="Confirm password"
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
-                    required
+                    aria-required="true"
                   />
                   <button
                     type="button"

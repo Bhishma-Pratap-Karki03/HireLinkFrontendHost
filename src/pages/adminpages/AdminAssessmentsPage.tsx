@@ -2,6 +2,7 @@ import React, { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../components/admincomponents/AdminSidebar";
 import AdminTopBar from "../../components/admincomponents/AdminTopBar";
+import PortalFooter from "../../components/PortalFooter";
 import "../../styles/AdminAssessmentsPage.css";
 import "../../styles/AdminManageUsersPage.css";
 import editIcon from "../../images/Recruiter Profile Page Images/6_215.svg";
@@ -253,8 +254,8 @@ const AdminAssessmentsPage: React.FC = () => {
             <AdminTopBar />
           </div>
 
-          <div className="admin-manage-scrollable-content">
-            <div className="admin-manage-shell">
+        <div className="admin-manage-scrollable-content">
+          <div className="admin-manage-shell">
               <div className="admin-manage-header admin-assessments-page-header">
                 <div>
                   <h1>Quiz / Assessment</h1>
@@ -614,6 +615,7 @@ const AdminAssessmentsPage: React.FC = () => {
               )}
             </div>
           </div>
+          <PortalFooter />
         </div>
       </div>
     </div>

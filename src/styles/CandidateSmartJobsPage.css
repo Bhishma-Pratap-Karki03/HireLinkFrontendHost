@@ -151,6 +151,16 @@
   color: #304a67;
 }
 
+.candidate-smart-empty {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #d9e5f2;
+  color: #304a67;
+  text-align: center;
+}
+
 .candidate-smart-error {
   color: #b43737;
 }
@@ -602,6 +612,16 @@
   background: #f8fbff;
   color: #2f4f72;
   font-weight: 500;
+}
+
+.candidate-smart-empty {
+  margin-top: 14px;
+  border-radius: 12px;
+  border: 1px solid #dce8f6;
+  background: #f8fbff;
+  color: #2f4f72;
+  font-weight: 500;
+  text-align: center;
 }
 
 .candidate-smart-error {

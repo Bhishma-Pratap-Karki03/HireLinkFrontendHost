@@ -4,6 +4,7 @@ import AdminSidebar from "../../components/admincomponents/AdminSidebar";
 import AdminTopBar from "../../components/admincomponents/AdminTopBar";
 import AdminProfilePictureEditor from "../../components/admincomponents/AdminProfilePictureEditor";
 import AdminPersonalInfoEditor from "../../components/admincomponents/AdminPersonalInfoEditor";
+import PortalFooter from "../../components/PortalFooter";
 import "../../styles/AdminProfilePage.css";
 import "../../styles/AdminProfilePictureEditor.css";
 import "../../styles/AdminPersonalInfoEditor.css";
@@ -288,6 +289,7 @@ const AdminProfilePage: React.FC = () => {
                   <p>Loading</p>
                 </div>
               </div>
+              <PortalFooter />
             </div>
           </div>
         </div>
@@ -431,6 +433,7 @@ const AdminProfilePage: React.FC = () => {
                 </div>
               </div>
             </div>
+            <PortalFooter />
           </div>
         </div>
       </div>

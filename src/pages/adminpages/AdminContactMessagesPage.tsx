@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import AdminSidebar from "../../components/admincomponents/AdminSidebar";
 import AdminTopBar from "../../components/admincomponents/AdminTopBar";
+import PortalFooter from "../../components/PortalFooter";
 import "../../styles/AdminContactMessagesPage.css";
 import prevIcon from "../../images/Employers Page Images/Prev Icon.svg";
 import nextIcon from "../../images/Employers Page Images/Next Icon.svg";
@@ -382,6 +383,7 @@ const AdminContactMessagesPage = () => {
               )}
             </section>
           </section>
+          <PortalFooter />
         </div>
       </main>
       {selectedMessage && (

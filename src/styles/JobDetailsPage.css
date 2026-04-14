@@ -199,6 +199,21 @@
   opacity: 1;
 }
 
+.job-details-primary-btn.job-details-expired {
+  background: #fff1f2;
+  color: #be123c;
+  border: 1px solid #fecdd3;
+  box-shadow: none;
+  font-weight: 700;
+  font-size: 15px;
+  min-width: 148px;
+}
+
+.job-details-primary-btn.job-details-expired:disabled {
+  opacity: 1;
+  cursor: not-allowed;
+}
+
 .job-details-content {
   padding: 36px 20px 96px;
 }

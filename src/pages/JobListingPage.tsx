@@ -38,6 +38,7 @@ type JobCard = {
   jobType: string;
   companyLogo?: string;
   assessmentRequired?: boolean;
+  deadline?: string;
 };
 
 type ApplyModalJob = {
@@ -197,6 +198,14 @@ const JobListingPage = () => {
       userRole = null;
     }
   }
+
+  const isDeadlineExpired = (deadline?: string) => {
+    if (!deadline) return false;
+    const deadlineDate = new Date(deadline);
+    if (Number.isNaN(deadlineDate.getTime())) return false;
+    deadlineDate.setHours(23, 59, 59, 999);
+    return new Date() > deadlineDate;
+  };
 
   const buildQueryParams = () => {
     const params = new URLSearchParams();
@@ -578,6 +587,7 @@ const JobListingPage = () => {
           jobType: job.jobType || "Full-Time",
           companyLogo: job.companyLogo || "",
           assessmentRequired: Boolean(job.assessmentRequired),
+          deadline: job.deadline || "",
         }));
 
         setJobCards(mappedJobs);
@@ -1555,13 +1565,7 @@ const JobListingPage = () => {
                   aria-haspopup="listbox"
                   aria-expanded={isSortOpen}
                 >
-                  <span>
-                    {sortBy === "oldest"
-                      ? "Oldest Post"
-                      : sortBy === "salary"
-                        ? "Salary"
-                        : "Newest Post"}
-                  </span>
+                  <span>{sortBy === "oldest" ? "Oldest Post" : "Newest Post"}</span>
                   <img
                     src={dropdownArrow}
                     alt=""
@@ -1592,17 +1596,6 @@ const JobListingPage = () => {
                       }}
                     >
                       Oldest Post
-                    </button>
-                    <button
-                      type="button"
-                      className={`joblist-sort-option ${sortBy === "salary" ? "active" : ""}`}
-                      onClick={() => {
-                        setSortBy("salary");
-                        setPage(1);
-                        setIsSortOpen(false);
-                      }}
-                    >
-                      Salary
                     </button>
                   </div>
                 )}
@@ -1678,11 +1671,16 @@ const JobListingPage = () => {
                     {(userRole === "candidate" || !userRole) && (
                       <button
                         className={`joblist-btn-primary ${
-                          userRole === "candidate" && appliedJobs[job.id]
+                          isDeadlineExpired(job.deadline)
+                            ? "joblist-btn-expired"
+                            : userRole === "candidate" && appliedJobs[job.id]
                             ? "joblist-btn-applied"
                             : ""
                         }`}
                         onClick={() => {
+                          if (isDeadlineExpired(job.deadline)) {
+                            return;
+                          }
                           if (!userRole) {
                             navigate("/login");
                             return;
@@ -1697,9 +1695,14 @@ const JobListingPage = () => {
                           }
                           openApplyModal(job.id);
                         }}
-                        disabled={userRole === "candidate" && appliedJobs[job.id]}
+                        disabled={
+                          isDeadlineExpired(job.deadline) ||
+                          (userRole === "candidate" && appliedJobs[job.id])
+                        }
                       >
-                        {userRole === "candidate" && appliedJobs[job.id]
+                        {isDeadlineExpired(job.deadline)
+                          ? "Expired"
+                          : userRole === "candidate" && appliedJobs[job.id]
                           ? "Applied"
                           : "Apply Now"}
                       </button>

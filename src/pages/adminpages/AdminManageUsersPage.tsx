@@ -2,6 +2,7 @@ import { FormEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from "
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../components/admincomponents/AdminSidebar";
 import AdminTopBar from "../../components/admincomponents/AdminTopBar";
+import PortalFooter from "../../components/PortalFooter";
 import defaultAvatar from "../../images/Register Page Images/Default Profile.webp";
 import "../../styles/AdminManageUsersPage.css";
 import statsTotalUsersIcon from "../../images/Candidate Profile Page Images/statsTotalUsersIcon.png";
@@ -667,6 +668,7 @@ const AdminManageUsersPage = () => {
               )}
             </section>
           </section>
+          <PortalFooter />
         </div>
       </main>
       {blockConfirmUser && (

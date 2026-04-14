@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../components/admincomponents/AdminSidebar";
 import AdminTopBar from "../../components/admincomponents/AdminTopBar";
+import PortalFooter from "../../components/PortalFooter";
 import "../../styles/AdminManageUsersPage.css";
 import "../../styles/AdminAssessmentsPage.css";
 import actionEyeIcon from "../../images/Candidate Profile Page Images/eyeIcon.svg";
@@ -155,8 +156,8 @@ const AdminAssessmentAttemptsPage = () => {
           <div className="admin-manage-topbar-wrapper">
             <AdminTopBar />
           </div>
-          <div className="admin-manage-scrollable-content">
-            <div className="admin-manage-shell">
+        <div className="admin-manage-scrollable-content">
+          <div className="admin-manage-shell">
               <header className="admin-manage-header">
                 <div>
                   <h1>Assessment Attempt History</h1>
@@ -317,6 +318,7 @@ const AdminAssessmentAttemptsPage = () => {
               </section>
             </div>
           </div>
+          <PortalFooter />
         </div>
       </div>
     </div>

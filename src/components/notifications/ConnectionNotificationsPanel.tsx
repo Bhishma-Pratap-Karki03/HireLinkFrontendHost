@@ -355,7 +355,7 @@ const ConnectionNotificationsPanel = ({
         <div className="connection-notification-state error">{error}</div>
       )}
       {!loading && !error && items.length === 0 && (
-        <div className="connection-notification-state">No notifications yet.</div>
+        <div className="connection-notification-empty">No notifications yet.</div>
       )}
 
       {!loading && !error && items.length > 0 && (

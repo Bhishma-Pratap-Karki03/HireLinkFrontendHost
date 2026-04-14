@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../components/admincomponents/AdminSidebar";
 import AdminTopBar from "../../components/admincomponents/AdminTopBar";
+import PortalFooter from "../../components/PortalFooter";
 import "../../styles/AdminManageJobsPage.css";
 import statsTotalJobsIcon from "../../images/Candidate Profile Page Images/stats-applied-icon.svg";
 import statsActiveJobsIcon from "../../images/Candidate Profile Page Images/stats-offer-icon.svg";
@@ -386,6 +387,7 @@ const AdminManageJobsPage = () => {
               )}
             </section>
           </section>
+          <PortalFooter />
         </div>
       </main>
     </div>

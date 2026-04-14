@@ -277,6 +277,19 @@
   cursor: default;
 }
 
+.joblist-btn-primary.joblist-btn-expired {
+  background: #fff1f2;
+  color: #be123c;
+  border: 1px solid #fecdd3;
+}
+
+.joblist-btn-primary.joblist-btn-expired:disabled {
+  background: #fff1f2;
+  color: #be123c;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
 .joblist-btn-outline {
   background: #ffffff;
   color: #4c8bf5;

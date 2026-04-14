@@ -4,6 +4,7 @@ import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../components/admincomponents/AdminSidebar";
 import AdminTopBar from "../../components/admincomponents/AdminTopBar";
+import PortalFooter from "../../components/PortalFooter";
 import "../../styles/AdminAssessmentCreatePage.css";
 import addIcon from "../../images/Recruiter Job Post Page Images/addIcon.svg";
 import deleteIcon from "../../images/Recruiter Job Post Page Images/deleteIcon.svg";
@@ -387,8 +388,8 @@ const AdminAssessmentCreatePage: React.FC = () => {
             <AdminTopBar />
           </div>
 
-          <div className="admin-assessment-scrollable-content" ref={scrollRef}>
-            <div className="admin-assessment-content-wrapper">
+        <div className="admin-assessment-scrollable-content" ref={scrollRef}>
+          <div className="admin-assessment-content-wrapper">
               <div className="admin-assessment-page-header">
                 <h1>Create Assessment</h1>
                 <p>Create and publish assessments for job applications.</p>
@@ -924,6 +925,7 @@ const AdminAssessmentCreatePage: React.FC = () => {
               </div>
             </div>
           </div>
+          <PortalFooter />
         </div>
       </div>
     </div>

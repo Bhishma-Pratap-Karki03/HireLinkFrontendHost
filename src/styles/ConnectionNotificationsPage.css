@@ -138,6 +138,15 @@
   border: 1px solid #dbe5f2;
 }
 
+.connection-notification-empty {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: #5f6f88;
+  border: 1px solid #dbe5f2;
+  text-align: center;
+}
+
 .connection-notification-state.error {
   color: #c0392b;
   background: #fff5f4;

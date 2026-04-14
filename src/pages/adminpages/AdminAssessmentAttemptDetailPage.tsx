@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AdminSidebar from "../../components/admincomponents/AdminSidebar";
 import AdminTopBar from "../../components/admincomponents/AdminTopBar";
+import PortalFooter from "../../components/PortalFooter";
 import "../../styles/RecruiterApplicantAssessmentPage.css";
 import "../../styles/AssessmentAttemptPage.css";
 
@@ -337,6 +338,7 @@ const AdminAssessmentAttemptDetailPage = () => {
             </section>
           )}
         </div>
+        <PortalFooter />
       </main>
     </div>
   );

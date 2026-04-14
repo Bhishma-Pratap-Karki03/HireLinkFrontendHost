@@ -1725,7 +1725,7 @@ const EmployerDetailsPage = () => {
           )}
 
           {!loading && isPrivateProfile && company && (
-            <div className="employer-details-loading">
+            <div className="employer-details-private-state">
               <p>
                 {privateNotice ||
                   "This employer profile is private. Only basic profile information is visible."}

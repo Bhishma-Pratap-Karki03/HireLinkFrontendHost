@@ -17,6 +17,7 @@ import type { ChartOptions } from "chart.js";
 import { Doughnut, Line } from "react-chartjs-2";
 import AdminSidebar from "../../components/admincomponents/AdminSidebar";
 import AdminTopBar from "../../components/admincomponents/AdminTopBar";
+import PortalFooter from "../../components/PortalFooter";
 import statsTotalUsersIcon from "../../images/Candidate Profile Page Images/statsTotalUsersIcon.png";
 import statsTotalJobsIcon from "../../images/Candidate Profile Page Images/stats-applied-icon.svg";
 import statsApplicationsIcon from "../../images/Candidate Profile Page Images/statsCandidatesIcon.png";
@@ -875,6 +876,7 @@ const AdminDashboard = () => {
                 )}
               </div>
             </div>
+            <PortalFooter />
           </div>
         </div>
       </div>

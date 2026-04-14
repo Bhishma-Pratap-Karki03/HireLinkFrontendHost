@@ -1,6 +1,7 @@
 import AdminSidebar from "../../components/admincomponents/AdminSidebar";
 import AdminTopBar from "../../components/admincomponents/AdminTopBar";
 import SettingsContent from "../../components/settingsContent/SettingsContent";
+import PortalFooter from "../../components/PortalFooter";
 import "../../styles/SettingsPage.css";
 
 const AdminSettingsPage = () => {
@@ -18,6 +19,7 @@ const AdminSettingsPage = () => {
               subtitle="Update your password and manage your account access."
             />
           </div>
+          <PortalFooter />
         </div>
       </div>
     </div>

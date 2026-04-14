@@ -474,14 +474,14 @@ const MessagePanel = ({
             <div className="message-page-state">Loading</div>
           )}
           {!loadingConversations && conversations.length === 0 && (
-            <div className="message-page-state">
+            <div className="message-page-empty">
               No conversations yet. Open a profile and click Message.
             </div>
           )}
           {!loadingConversations &&
             conversations.length > 0 &&
             filteredConversations.length === 0 && (
-              <div className="message-page-state">No users match your search.</div>
+              <div className="message-page-empty">No users match your search.</div>
             )}
           <div className="message-page-conversation-list">
             {filteredConversations.map((item) => (
@@ -576,7 +576,7 @@ const MessagePanel = ({
                   <div className="message-page-state">Loading</div>
                 )}
                 {!loadingMessages && messages.length === 0 && (
-                  <div className="message-page-state">
+                  <div className="message-page-empty">
                     No messages yet. Send the first message.
                   </div>
                 )}

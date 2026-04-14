@@ -134,10 +134,10 @@ const CandidateSmartJobsHistoryPage = () => {
             <div className="candidate-smart-state candidate-smart-error">{error}</div>
           )}
           {!loading && !error && items.length === 0 && (
-            <div className="candidate-smart-state">No recommendations in this history run.</div>
+            <div className="candidate-smart-empty">No recommendations in this history run.</div>
           )}
           {!loading && !error && items.length > 0 && filteredItems.length === 0 && (
-            <div className="candidate-smart-state">
+            <div className="candidate-smart-empty">
               No jobs match your search.
             </div>
           )}
