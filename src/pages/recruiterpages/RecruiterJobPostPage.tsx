@@ -46,7 +46,6 @@ type AssessmentForm = {
   timeLimit: string;
   maxAttempts: string;
   status: "active" | "inactive";
-  visibleToRecruiters: boolean;
   skillTags: string[];
   quizQuestions: QuizQuestion[];
   writingTask: string;
@@ -150,7 +149,6 @@ const RecruiterJobPostPage: React.FC = () => {
     timeLimit: "",
     maxAttempts: "1",
     status: "active",
-    visibleToRecruiters: true,
     skillTags: [""],
     quizQuestions: [{ question: "", options: [""], correctIndex: null }],
     writingTask: "",
@@ -216,7 +214,6 @@ const RecruiterJobPostPage: React.FC = () => {
       ? String(assessment.maxAttempts)
       : "1",
     status: assessment?.status || "active",
-    visibleToRecruiters: true,
     skillTags:
       Array.isArray(assessment?.skillTags) && assessment.skillTags.length > 0
         ? assessment.skillTags
@@ -843,7 +840,6 @@ const RecruiterJobPostPage: React.FC = () => {
       timeLimit: "",
       maxAttempts: "1",
       status: "active",
-      visibleToRecruiters: true,
       skillTags: [""],
       quizQuestions: [{ question: "", options: [""], correctIndex: null }],
       writingTask: "",
@@ -903,7 +899,6 @@ const RecruiterJobPostPage: React.FC = () => {
           timeLimit: assessmentForm.timeLimit,
           maxAttempts: assessmentForm.maxAttempts,
           status: assessmentForm.status,
-          visibleToRecruiters: assessmentForm.visibleToRecruiters,
           skillTags: assessmentForm.skillTags.filter((tag) => tag.trim()),
           quizQuestions:
             assessmentForm.type === "quiz"

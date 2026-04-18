@@ -4,7 +4,6 @@ import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
 import AdminSidebar from "../../components/admincomponents/AdminSidebar";
 import AdminTopBar from "../../components/admincomponents/AdminTopBar";
-import PortalFooter from "../../components/PortalFooter";
 import "../../styles/AdminAssessmentCreatePage.css";
 import addIcon from "../../images/Recruiter Job Post Page Images/addIcon.svg";
 import deleteIcon from "../../images/Recruiter Job Post Page Images/deleteIcon.svg";
@@ -25,7 +24,6 @@ type AssessmentForm = {
   timeLimit: string;
   maxAttempts: string;
   status: "active" | "inactive";
-  visibleToRecruiters: boolean;
   skillTags: string[];
   quizQuestions: QuizQuestion[];
   writingTask: string;
@@ -55,7 +53,6 @@ const AdminAssessmentEditPage: React.FC = () => {
     timeLimit: "",
     maxAttempts: "1",
     status: "active",
-    visibleToRecruiters: true,
     skillTags: [],
     quizQuestions: [{ question: "", options: [""], correctIndex: null }],
     writingTask: "",
@@ -96,10 +93,6 @@ const AdminAssessmentEditPage: React.FC = () => {
               ? String(assessment.maxAttempts)
               : "1",
           status: assessment.status || "active",
-          visibleToRecruiters:
-            assessment.visibleToRecruiters !== undefined
-              ? Boolean(assessment.visibleToRecruiters)
-              : true,
           skillTags: Array.isArray(assessment.skillTags)
             ? assessment.skillTags
             : [],
@@ -141,10 +134,6 @@ const AdminAssessmentEditPage: React.FC = () => {
               ? String(assessment.maxAttempts)
               : "1",
           status: assessment.status || "active",
-          visibleToRecruiters:
-            assessment.visibleToRecruiters !== undefined
-              ? Boolean(assessment.visibleToRecruiters)
-              : true,
           skillTags: Array.isArray(assessment.skillTags)
             ? assessment.skillTags
             : [],
@@ -400,7 +389,6 @@ const AdminAssessmentEditPage: React.FC = () => {
     timeLimit: value.timeLimit.trim(),
     maxAttempts: value.maxAttempts.trim(),
     status: value.status,
-    visibleToRecruiters: value.visibleToRecruiters,
     skillTags: value.skillTags.map((tag) => tag.trim()).filter(Boolean),
     quizQuestions: value.quizQuestions.map((q) => ({
       question: q.question.trim(),
@@ -475,7 +463,6 @@ const AdminAssessmentEditPage: React.FC = () => {
           timeLimit: form.timeLimit,
           maxAttempts: form.maxAttempts,
           status: form.status,
-          visibleToRecruiters: form.visibleToRecruiters,
           skillTags: form.skillTags.filter((tag) => tag.trim()),
           quizQuestions:
             form.type === "quiz"
@@ -775,22 +762,6 @@ const AdminAssessmentEditPage: React.FC = () => {
                               {item.label}
                             </button>
                           ))}
-                        </div>
-                      </div>
-                      <div className="admin-assessment-form-group">
-                        <label>Visibility</label>
-                        <div className="admin-assessment-toggle">
-                          <input
-                            type="checkbox"
-                            checked={form.visibleToRecruiters}
-                            onChange={(e) =>
-                              updateForm(
-                                "visibleToRecruiters",
-                                e.target.checked,
-                              )
-                            }
-                          />
-                          <span>Available for recruiters</span>
                         </div>
                       </div>
                     </div>
@@ -1096,12 +1067,6 @@ const AdminAssessmentEditPage: React.FC = () => {
                             : "None"}
                         </strong>
                       </div>
-                      <div>
-                        <span>Visibility</span>
-                        <strong>
-                          {form.visibleToRecruiters ? "Recruiters" : "Admins"}
-                        </strong>
-                      </div>
                     </div>
                   </div>
                 </aside>
@@ -1135,7 +1100,6 @@ const AdminAssessmentEditPage: React.FC = () => {
 
             </div>
           </div>
-          <PortalFooter />
         </div>
       </div>
     </div>
